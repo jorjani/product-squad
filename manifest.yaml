@@ -1,186 +1,155 @@
 # Product Squad — Machine-Readable Bundle Index
 # Parse this first when introspecting the bundle programmatically.
-# Humans should read README.md; agents should read AGENTS.md then this.
+# Humans read README.md → QUICKSTART.md. Agents read AGENTS.md then this.
 
-version: 0.1.0-pre
+version: 0.5.0-pre
 name: product-squad
 description: Agentic operating system for one-person dev teams
 license: MIT
 status: pre-release
 public: false  # flips to true at V1 launch
 
-# ─── Agents (the named crew) ──────────────────────────────────────────
+# ─── V0.5 (what exists now — runnable bits) ───────────────────────────
+v0_5:
+  description: |
+    First playable version. Aimed at one specific outsider (CS undergrad
+    learning to scope and ship product) for hands-on feedback before V1.
+    Wedge: the scoping ladder (shape → spec → owit) — runnable in 30 seconds.
+  demo:
+    entry: bin/scope
+    fixture: examples/idea-fixture.md
+    requires:
+      - claude-code
+      - ANTHROPIC_API_KEY
+  commands:
+    - path: commands/shape.md
+      purpose: Decide what to build (Shape Up options menu + capability delta)
+    - path: commands/owit.md
+      purpose: Scenario specification (On, When, If, Then) + flow + choices
+    - path: commands/elon.md
+      purpose: The Algorithm — question, delete, simplify, accelerate, automate-last
+  docs:
+    - README.md
+    - AGENTS.md
+    - QUICKSTART.md
+    - docs/MIGRATION.md
+  snapshots:
+    # One-way copies from David's running pipeline. NOT scrubbed beyond the
+    # demo path. Readable for context; not all runnable in V0.5.
+    # Source SHAs in docs/MIGRATION.md.
+    - agents/foreman/
+    - agents/sarge/
+    - agents/code-reviewer.md
+    - agents/build-fixer.md
+
+# ─── The agent crew (per-agent V0.5 status) ───────────────────────────
 agents:
   foreman:
     role: orchestrator
-    path: agents/foreman/
-    contract: agents/foreman/CONTRACT.md   # populated in M2
-    inputs:
-      - github-project-board-state
-      - ready-tickets
-    outputs:
-      - pr-branches
-      - issue-comments
-      - board-transitions
-    requires:
-      - bash-5+
-      - git
-      - gh-cli
-      - claude-cli-or-AGENT_CMD-equivalent
-
+    snapshot_path: agents/foreman/
+    runnable_v0_5: false
+    notes: |
+      Snapshot only in V0.5. Read agents/foreman/README.md for the
+      conceptual run-through. Becomes runnable + portable in V1 after
+      hidden-coupling fixes (Linux portability, FOREMAN_HOST default,
+      board-id validation abort, .index.json existence check).
   sarge:
     role: pm-scoping
-    path: agents/sarge/
-    contract: agents/sarge/CONTRACT.md     # populated in M2
-    inputs:
-      - pitch-issues
-      - operator-input
-    outputs:
-      - scope-ready-briefs
-      - decision-needed-comments
-    requires:
-      - claude-code  # interactive C0-C5 flow uses Claude Code skills in V1
-    headless_mode:
-      # M3 ships a headless one-shot variant for any agent CLI
-      contract: agents/sarge/CONTRACT_HEADLESS.md
-      requires:
-        - llm-with-stdin-stdout
-
+    snapshot_path: agents/sarge/
+    runnable_v0_5: partial
+    notes: |
+      The scoping ladder (shape → owit → elon) ships as runnable in V0.5
+      via bin/scope. Note: /spec is intentionally excluded from V0.5 because
+      it's tightly coupled to David's GitHub Project board #5 + foreman's
+      board-ids.sh. /elon (The Algorithm — question, delete, simplify) replaces
+      it as the third rung; teaches a cleaner transferable pattern. Full
+      interactive Sarge (with /decompose, /gh-issue, board mutations) arrives
+      V1 — see v1_roadmap.sarge_headless.
   inspector:
     role: verifier
-    path: agents/foreman/inspector/        # lives inside foreman/
-    contract: agents/foreman/inspector/CONTRACT.md
-    inputs:
-      - merged-prs
-      - linked-issue-ac
-    outputs:
-      - verdict: { PASS, FAIL, SKIP, HOLDING }
-    requires:
-      - llm-with-stdin-stdout
-    budgets:
-      per_run_usd: 5
-      hold_days: 7
-
+    snapshot_path: agents/foreman/  # phase, not standalone
+    runnable_v0_5: false
+    notes: |
+      Inspector is a Foreman phase, not a freestanding agent. Adopting
+      it means adopting Foreman.
   code-reviewer:
     role: pr-reviewer
-    path: agents/code-reviewer.md
-    contract: agents/code-reviewer.md      # subagent .md IS the contract
-    inputs:
-      - pr-diff
-      - linked-issue-ac
-    outputs:
-      schema: |
-        { "findings": [
-            { "severity": "Blocker|Major|Nit",
-              "file": "...", "line": N,
-              "rule": "...", "snippet": "...",
-              "why": "...", "fix": "..." }
-          ],
-          "verdict": "LGTM|Needs changes|Blocked" }
-    requires:
-      - llm-with-stdin-stdout
-
+    snapshot_path: agents/code-reviewer.md
+    runnable_v0_5: true
+    notes: |
+      Drop the .md into your ~/.claude/agents/ directory — portable
+      Claude Code subagent format. Zero project couplings beyond a
+      working-dir reference at the top of the file (V1 cleans).
   build-fixer:
     role: build-repair
-    path: agents/build-fixer.md
-    contract: agents/build-fixer.md
-    inputs:
-      - failing-command
-      - error-output
-    outputs:
-      - minimal-diff-fix
-      - retry-verdict: { PASS, FAIL }
-    requires:
-      - llm-with-stdin-stdout
+    snapshot_path: agents/build-fixer.md
+    runnable_v0_5: true
+    notes: |
+      Most portable agent in the bundle. 67 lines, zero couplings.
+      Drop-in subagent for any failing-build → minimal-diff fix loop.
 
-# ─── Commands (curated dev-workflow slash commands) ────────────────────
-commands:
-  # Populated in M2. ~15-20 expected.
-  planned:
-    - /shape       # decide what to build
-    - /spec        # aggregate artifacts; advance Pitch -> Scope
-    - /verify      # confirm AC in deployed env
-    - /is-ready    # pre-build readiness gate
-    - /gh-issue    # create GitHub issue in contract format
-    - /elon        # critical build review
-    - /owit        # scenario spec
-    - /decompose   # atomic scope decomposition
-    - /flow        # T1d edge-table contract
-    - /wireframe   # T1 mid-fi visual
-    - /mockup      # T3 hi-fi static HTML
-    - /sketch      # T0 napkin
-    - /prototype   # T4 interactive HTML
-    - /investigate # systematic debugging
-    - /simplify    # refactoring
-    - /sarge       # dispatch PM scoping
+# ─── V1 roadmap (3-4 weeks out) ───────────────────────────────────────
+v1_roadmap:
+  agent_abstraction:
+    file: lib/agent.sh
+    purpose: |
+      Run any phase via $AGENT env var. Claude Code is the default;
+      Codex CLI is the tested second adapter.
+  portability_fixes:
+    # From the V0.5 hidden-coupling audit (10 ranked findings).
+    - 'orchestrator.sh:97 stat -f %m → Linux-portable (uname-gated)'
+    - 'config/env.sh:47 FOREMAN_HOST default → require explicit (no default)'
+    - 'config/board-ids.sh validation → abort on failure (not warn-continue)'
+    - 'phases/build.sh → .index.json existence check'
+    - 'orchestrator.sh:582 date +%-d → portable (strip leading zero)'
+    - 'phases/review.sh:36 jq presence check'
+    - 'config/env.sh:34 connections/slack/.env → optional + documented'
+    - 'lib/questions.sh:18 SLACK_BOT_TOKEN + SLACK_QUESTIONS_CHANNEL_ID → docs'
+  sarge_headless:
+    file: agents/sarge/CONTRACT_HEADLESS.md
+    purpose: One-shot non-interactive Sarge for any agent CLI
+  cloud:
+    railway:
+      - cloud/railway/Dockerfile
+      - cloud/railway/railway.toml
+      - cloud/railway/deploy-button.md
+    laptop:
+      - cloud/laptop/macos-launchd.md
+      - cloud/laptop/linux-cron.md
+  memory:
+    pattern: memory/README.md
+    templates: memory/template/{user,feedback,project,reference}.md
+    cli: memory/bin/memory
+    adapters: memory/adapters/{claude-code,codex,aider,cursor}.md
+  guardrails:
+    - guardrails/issue-conventions.md
+    - guardrails/spec-commits.md
+    - guardrails/agent.md
+    - guardrails/engineering.md
+    - guardrails/AUDIT.md
+  mcp: mcp/scopes.md
+  scrub: All getqatalyst / jorjani / project-specific refs (~173 hits)
+  release: v1.0.0 public + soft launch (X + IndieHackers; Show HN held for V1.1)
 
-# ─── Cloud deployment paths ────────────────────────────────────────────
-cloud:
-  primary:
-    provider: railway
-    template: cloud/railway/
-    docs: docs/cloud-railway.md          # populated in M5
-    required_env:
-      - GITHUB_TOKEN
-      - ANTHROPIC_API_KEY
-      - GITHUB_ORG
-      - PROJECT_NUMBER
-    optional_env:
-      - SLACK_WEBHOOK_URL
-      - CODE_REVIEW_MERGE_ALLOWLIST
-  fallback:
-    provider: github-actions
-    docs: docs/cloud-fallback.md         # populated in M5
-  laptop:
-    macos: cloud/laptop/macos-launchd.md
-    linux: cloud/laptop/linux-cron.md
-
-# ─── Guardrails ────────────────────────────────────────────────────────
-guardrails:
-  issue_conventions: guardrails/issue-conventions.md
-  spec_commits: guardrails/spec-commits.md
-  agent_behavior: guardrails/agent.md
-  engineering: guardrails/engineering.md
-  audit_playbook: guardrails/AUDIT.md
-  mcp_scoping: mcp/scopes.md
-
-# ─── Memory pattern ────────────────────────────────────────────────────
-memory:
-  pattern_doc: memory/README.md
-  templates: memory/template/
-  per_agent_adapters: memory/adapters/
-  cli: memory/bin/memory
-  privacy:
-    default_excluded: true              # .gitignore blocks all .md by default
-    exceptions:
-      - memory/README.md
-      - memory/MEMORY.md.example
-      - memory/template/**
-      - memory/adapters/**
-      - memory/bin/**
-
-# ─── LLM agent support ─────────────────────────────────────────────────
+# ─── LLM agent support ────────────────────────────────────────────────
 llm_support:
-  default: claude-code
+  v0_5: claude-code-only
   v1_tested:
-    - claude-code           # primary; everything works
-    - codex-cli             # secondary; structured output may need parse tolerance
-  community_welcome:
+    - claude-code
+    - codex-cli
+  community_welcome:  # adapters via lib/agent.sh in V1+
     - aider
     - opencode
     - cursor
     - gemini-cli
-  abstraction_layer: lib/agent.sh     # populated in M3
-  config: config/agent.sh             # populated in M3
 
-# ─── Process discipline ────────────────────────────────────────────────
+# ─── Process discipline ───────────────────────────────────────────────
 process:
   behavior_changes:
     pattern: worktree-branch-pr
-    enforcement: pre-commit-hook
     naming: "<code><issue>-<slug> or exploratory <code>-<slug>"
   specs:
     pattern: direct-to-main
-    doc: guardrails/spec-commits.md
+    note: Docs at repo root + files under specs/ and artifacts/ skip the worktree
   bypasses:
     no_verify_allowed: false
