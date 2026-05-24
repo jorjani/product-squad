@@ -1,0 +1,186 @@
+# Product Squad — Machine-Readable Bundle Index
+# Parse this first when introspecting the bundle programmatically.
+# Humans should read README.md; agents should read AGENTS.md then this.
+
+version: 0.1.0-pre
+name: product-squad
+description: Agentic operating system for one-person dev teams
+license: MIT
+status: pre-release
+public: false  # flips to true at V1 launch
+
+# ─── Agents (the named crew) ──────────────────────────────────────────
+agents:
+  foreman:
+    role: orchestrator
+    path: agents/foreman/
+    contract: agents/foreman/CONTRACT.md   # populated in M2
+    inputs:
+      - github-project-board-state
+      - ready-tickets
+    outputs:
+      - pr-branches
+      - issue-comments
+      - board-transitions
+    requires:
+      - bash-5+
+      - git
+      - gh-cli
+      - claude-cli-or-AGENT_CMD-equivalent
+
+  sarge:
+    role: pm-scoping
+    path: agents/sarge/
+    contract: agents/sarge/CONTRACT.md     # populated in M2
+    inputs:
+      - pitch-issues
+      - operator-input
+    outputs:
+      - scope-ready-briefs
+      - decision-needed-comments
+    requires:
+      - claude-code  # interactive C0-C5 flow uses Claude Code skills in V1
+    headless_mode:
+      # M3 ships a headless one-shot variant for any agent CLI
+      contract: agents/sarge/CONTRACT_HEADLESS.md
+      requires:
+        - llm-with-stdin-stdout
+
+  inspector:
+    role: verifier
+    path: agents/foreman/inspector/        # lives inside foreman/
+    contract: agents/foreman/inspector/CONTRACT.md
+    inputs:
+      - merged-prs
+      - linked-issue-ac
+    outputs:
+      - verdict: { PASS, FAIL, SKIP, HOLDING }
+    requires:
+      - llm-with-stdin-stdout
+    budgets:
+      per_run_usd: 5
+      hold_days: 7
+
+  code-reviewer:
+    role: pr-reviewer
+    path: agents/code-reviewer.md
+    contract: agents/code-reviewer.md      # subagent .md IS the contract
+    inputs:
+      - pr-diff
+      - linked-issue-ac
+    outputs:
+      schema: |
+        { "findings": [
+            { "severity": "Blocker|Major|Nit",
+              "file": "...", "line": N,
+              "rule": "...", "snippet": "...",
+              "why": "...", "fix": "..." }
+          ],
+          "verdict": "LGTM|Needs changes|Blocked" }
+    requires:
+      - llm-with-stdin-stdout
+
+  build-fixer:
+    role: build-repair
+    path: agents/build-fixer.md
+    contract: agents/build-fixer.md
+    inputs:
+      - failing-command
+      - error-output
+    outputs:
+      - minimal-diff-fix
+      - retry-verdict: { PASS, FAIL }
+    requires:
+      - llm-with-stdin-stdout
+
+# ─── Commands (curated dev-workflow slash commands) ────────────────────
+commands:
+  # Populated in M2. ~15-20 expected.
+  planned:
+    - /shape       # decide what to build
+    - /spec        # aggregate artifacts; advance Pitch -> Scope
+    - /verify      # confirm AC in deployed env
+    - /is-ready    # pre-build readiness gate
+    - /gh-issue    # create GitHub issue in contract format
+    - /elon        # critical build review
+    - /owit        # scenario spec
+    - /decompose   # atomic scope decomposition
+    - /flow        # T1d edge-table contract
+    - /wireframe   # T1 mid-fi visual
+    - /mockup      # T3 hi-fi static HTML
+    - /sketch      # T0 napkin
+    - /prototype   # T4 interactive HTML
+    - /investigate # systematic debugging
+    - /simplify    # refactoring
+    - /sarge       # dispatch PM scoping
+
+# ─── Cloud deployment paths ────────────────────────────────────────────
+cloud:
+  primary:
+    provider: railway
+    template: cloud/railway/
+    docs: docs/cloud-railway.md          # populated in M5
+    required_env:
+      - GITHUB_TOKEN
+      - ANTHROPIC_API_KEY
+      - GITHUB_ORG
+      - PROJECT_NUMBER
+    optional_env:
+      - SLACK_WEBHOOK_URL
+      - CODE_REVIEW_MERGE_ALLOWLIST
+  fallback:
+    provider: github-actions
+    docs: docs/cloud-fallback.md         # populated in M5
+  laptop:
+    macos: cloud/laptop/macos-launchd.md
+    linux: cloud/laptop/linux-cron.md
+
+# ─── Guardrails ────────────────────────────────────────────────────────
+guardrails:
+  issue_conventions: guardrails/issue-conventions.md
+  spec_commits: guardrails/spec-commits.md
+  agent_behavior: guardrails/agent.md
+  engineering: guardrails/engineering.md
+  audit_playbook: guardrails/AUDIT.md
+  mcp_scoping: mcp/scopes.md
+
+# ─── Memory pattern ────────────────────────────────────────────────────
+memory:
+  pattern_doc: memory/README.md
+  templates: memory/template/
+  per_agent_adapters: memory/adapters/
+  cli: memory/bin/memory
+  privacy:
+    default_excluded: true              # .gitignore blocks all .md by default
+    exceptions:
+      - memory/README.md
+      - memory/MEMORY.md.example
+      - memory/template/**
+      - memory/adapters/**
+      - memory/bin/**
+
+# ─── LLM agent support ─────────────────────────────────────────────────
+llm_support:
+  default: claude-code
+  v1_tested:
+    - claude-code           # primary; everything works
+    - codex-cli             # secondary; structured output may need parse tolerance
+  community_welcome:
+    - aider
+    - opencode
+    - cursor
+    - gemini-cli
+  abstraction_layer: lib/agent.sh     # populated in M3
+  config: config/agent.sh             # populated in M3
+
+# ─── Process discipline ────────────────────────────────────────────────
+process:
+  behavior_changes:
+    pattern: worktree-branch-pr
+    enforcement: pre-commit-hook
+    naming: "<code><issue>-<slug> or exploratory <code>-<slug>"
+  specs:
+    pattern: direct-to-main
+    doc: guardrails/spec-commits.md
+  bypasses:
+    no_verify_allowed: false

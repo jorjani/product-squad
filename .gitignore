@@ -1,0 +1,39 @@
+# Memory — never commit actual memories (privacy guardrail)
+memory/*.md
+!memory/README.md
+!memory/MEMORY.md.example
+!memory/template/
+!memory/adapters/
+!memory/bin/
+
+# Secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+.doppler/
+
+# Local config / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+
+# Build artifacts / logs
+*.log
+*.tmp
+dist/
+build/
+
+# Worktrees
+.claude/worktrees/
+
+# Editor session state
+*.swp
+*.swo
