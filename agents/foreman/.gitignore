@@ -1,0 +1,24 @@
+results/*.log
+results/.sarge-digest-ran-*
+results/.pipeline-digest-ran-*
+results/.cleanup-ran-*
+results/.inspect-ran-*
+results/inspector.log
+results/.stall-state
+results/*.meta
+
+metrics/self-improve-*.txt
+metrics/self-improve-*.log
+metrics/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].json
+metrics/failure-tracker.json
+metrics/experiments.json
+
+.claude/
+
+# Foreman build cruft (draft PR body written per build, never committed).
+# Listed so cleanup gate treats merged worktrees as clean and prunes them.
+.pr-body.md
+
+# Slack-questions state (lib/questions.sh). Durable across fires but
+# machine-local — every Foreman host has its own posted-thread tracker.
+state/questions.json
