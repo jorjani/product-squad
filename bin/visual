@@ -174,7 +174,7 @@ EOF
   # crashed mid-write — either way downstream tiers shouldn't inherit it.
   if [ "$claude_ok" -eq 1 ] && [ -s "$out_path" ]; then
     echo "  ✓ Wrote: $out_path"
-  elif [ -s "$out_path" ] && grep -qE "hit your limit|You've hit your limit|usage limit" "$claude_log"; then
+  elif [ -s "$out_path" ] && grep -qE "hit your limit|You've hit your limit|[Uu]sage limit" "$claude_log"; then
     # Subscription rate-limit fired but the file landed on disk before the
     # quota hit. Treat as success so Gabriel doesn't think the bundle is broken.
     # Anchored to the literal Claude Code quota strings (not the generic phrase
