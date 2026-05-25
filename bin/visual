@@ -169,11 +169,16 @@ EOF
     claude_ok=0
   fi
 
-  if [ "$claude_ok" -eq 1 ] && [ -f "$out_path" ]; then
+  # Success requires both: claude exited 0 AND wrote a non-empty file. An empty
+  # file most often means claude printed to stdout instead of writing, or
+  # crashed mid-write — either way downstream tiers shouldn't inherit it.
+  if [ "$claude_ok" -eq 1 ] && [ -s "$out_path" ]; then
     echo "  ✓ Wrote: $out_path"
-  elif [ -f "$out_path" ] && grep -qiE "hit your limit|you've hit your limit|rate limit" "$claude_log"; then
-    # Rate-limit fired but the file landed on disk before the quota hit.
-    # Treat as success so Gabriel doesn't think the bundle is broken.
+  elif [ -s "$out_path" ] && grep -qE "hit your limit|You've hit your limit|usage limit" "$claude_log"; then
+    # Subscription rate-limit fired but the file landed on disk before the
+    # quota hit. Treat as success so Gabriel doesn't think the bundle is broken.
+    # Anchored to the literal Claude Code quota strings (not the generic phrase
+    # "rate limit") so model-generated content can't false-positive.
     echo "  ✓ Wrote: $out_path"
     echo "  (rate-limited; file appears to have saved before quota fired)"
   else
@@ -197,25 +202,37 @@ EOF
 }
 
 # Predecessor chaining: each tier builds on the prior tier's output rather
-# than the raw idea — sketch seeds wireframe, wireframe seeds mockup, both
-# seed prototype. Persisting sketch to disk (vs terminal-only) is what lets
-# the chain span all four tiers instead of dropping continuity at T0→T1.
-run_tier "sketch"    0 "txt"  ""                                                                || true
-run_tier "wireframe" 1 "html" "$OUT_DIR/sketch.txt"                                              || true
-run_tier "mockup"    3 "html" "$OUT_DIR/wireframe.html"                                          || true
-run_tier "prototype" 4 "html" "$OUT_DIR/wireframe.html,$OUT_DIR/mockup.html"                     || true
+# than the raw idea. We only pass a predecessor path if it actually exists on
+# disk — `|| true` swallows run_tier's return 1, so we must guard at the call
+# site or downstream tiers would inherit a dead path with no warning.
+run_tier "sketch" 0 "txt" "" || true
+
+WIREFRAME_PRED=""
+[ -s "$OUT_DIR/sketch.txt" ] && WIREFRAME_PRED="$OUT_DIR/sketch.txt"
+run_tier "wireframe" 1 "html" "$WIREFRAME_PRED" || true
+
+MOCKUP_PRED=""
+[ -s "$OUT_DIR/wireframe.html" ] && MOCKUP_PRED="$OUT_DIR/wireframe.html"
+run_tier "mockup" 3 "html" "$MOCKUP_PRED" || true
+
+PROTOTYPE_PRED=""
+for f in "$OUT_DIR/wireframe.html" "$OUT_DIR/mockup.html"; do
+  [ -s "$f" ] && PROTOTYPE_PRED="${PROTOTYPE_PRED:+$PROTOTYPE_PRED,}$f"
+done
+run_tier "prototype" 4 "html" "$PROTOTYPE_PRED" || true
 
 echo "═══════════════════════════════════════════════════════════════════"
 echo "  Done. T0 sketch → T1 wireframe → T3 mockup → T4 prototype"
-echo "  All artifacts: $OUT_DIR"
+printf '  All artifacts: %s\n' "$OUT_DIR"
 echo ""
 echo "  Try the same idea with a different flavor:"
-echo "    FLAVOR=industrial ./bin/visual \"$IDEA\""
-echo "    FLAVOR=playful    ./bin/visual \"$IDEA\""
-echo "    FLAVOR=brutalist  ./bin/visual \"$IDEA\""
+printf '    FLAVOR=industrial ./bin/visual %q\n' "$IDEA"
+printf '    FLAVOR=playful    ./bin/visual %q\n' "$IDEA"
+printf '    FLAVOR=brutalist  ./bin/visual %q\n' "$IDEA"
 echo ""
 echo "  Or shape the product around the idea (5-stage scoping cluster):"
-echo "    ./bin/scope \"$IDEA\""
+printf '    ./bin/scope %q\n' "$IDEA"
 echo ""
 echo "  Cost: ~\$0.30-0.50 in Claude Code subscription usage"
+echo "  (each tier is one LLM call; total ~60-120 sec)"
 echo "═══════════════════════════════════════════════════════════════════"
