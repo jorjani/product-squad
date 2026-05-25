@@ -143,9 +143,9 @@ Apply the above instructions to this idea:
 - Skip multi-turn clarifying questions. Make sensible defaults and proceed.
 - For HTML outputs (wireframe, mockup, prototype): write the COMPLETE self-contained HTML file (with all CSS inline) to this exact path: $out_path
 - For ASCII / Mermaid outputs (sketch): print directly to stdout. Do not write a file.
-- Design flavor: read $FLAVOR_PATH. This file is the FULL aesthetic vocabulary: palette, type, radii, surface treatment, and a Dos and Donts section. Apply both the tokens AND the negative constraints verbatim. The flavor is the brand; the Donts are non-negotiable.
+- Design flavor: read $FLAVOR_PATH. This file is the FULL aesthetic vocabulary: palette, type, radii, surface treatment, and a Do's and Don'ts section. Apply both the tokens AND the negative constraints in the Do's and Don'ts verbatim. The flavor is the brand; the Don'ts are non-negotiable.
 - Component primitives: read $REPO_ROOT/.studio/components.md. These are SEMANTIC primitives. The flavor file overlays styling opinions onto them.${predecessor_block}
-- Brand chrome (page titles, breadcrumbs, course codes, company names, product names): use exactly this placeholder string verbatim: $BRAND. DO NOT invent specific real-world identifiers like CSC301 or Acme Corp. Operator-provided brand is the only allowed brand string.
+- Brand chrome (page titles, breadcrumbs, course codes, company names, product names): use exactly this placeholder string verbatim: $BRAND. DO NOT invent specific real-world identifiers like CSC301 or Acme Corp — the operator-provided value above is the only allowed brand string.
 - Self-explanatory rule: state labels and section headings must be plain-English sentences of 5 to 10 words that a first-time viewer can grasp in one glance. No abbreviations, no single-word state codes like S1 or S2, no jargon.
 - For wireframe: produce multi-state HTML with state-toggle navigation. STATE COUNT CAP: 3 to 5 states maximum. Pick one happy-path plus 2 most-instructive edges. Breathable layout, generous whitespace between states. Wireframe is for IA exploration, not exhaustive state coverage.
 - For mockup: SINGLE state HTML, brand-applied. Pick the most representative state from the wireframe and polish it. Inherit the wireframe layout for that one state. Do not re-decide structure.

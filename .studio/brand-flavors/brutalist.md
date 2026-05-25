@@ -58,6 +58,7 @@ Indie hacker, research tool, anti-design honesty. The interface refuses to charm
 - **Primary** (`#000000`): the page itself is the brand. CTAs use black fill with white text.
 - **Accent** (`#39ff14`): neon green. Used SPARINGLY for the *one* thing that demands attention — an active row's left-border, a status badge, the cursor on a focused input.
 - **Accent-2** (`#ff00aa`): hot pink. Reserved for destructive confirmations and "this is irreversible" warnings. Never decorative.
+- **Semantic states** (`success` / `warning` / `danger`): all resolve to `#000000`. This flavor does not use color to encode state — that's the design choice, not a bug. Use the `accent` neon green to mark active/live items, `accent-2` hot pink for destructive/irreversible. Status badges differentiate via UPPERCASE text labels and border treatment, not fill color. A "warning" badge looks identical to a "success" badge except for its label and an `accent` border if it requires attention.
 - **Borders**: `#000000` everywhere. 2px is the default border-width — thicker than other flavors deliberately.
 
 ## Typography

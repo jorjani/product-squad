@@ -19,16 +19,18 @@ This file is the **flavor selector** for the visual ladder. The actual design to
 
 ## How to select
 
-`bin/visual` reads the `FLAVOR` environment variable. Default is `editorial`.
+`bin/visual` reads two environment variables: `FLAVOR` (aesthetic vocabulary) and `BRAND` (brand chrome placeholder used in titles, breadcrumbs, course codes, etc).
 
 ```bash
-./bin/visual "your idea"                       # uses editorial (default)
-FLAVOR=industrial ./bin/visual "your idea"     # uses industrial
-FLAVOR=playful    ./bin/visual "your idea"     # uses playful
-FLAVOR=brutalist  ./bin/visual "your idea"     # uses brutalist
+./bin/visual "your idea"                                # FLAVOR=editorial (default), BRAND=AcmeU 101 · ReviewLab
+FLAVOR=industrial ./bin/visual "your idea"              # switch flavor only
+BRAND="YourProduct" ./bin/visual "your idea"            # set brand chrome only
+FLAVOR=playful BRAND="HappyApp" ./bin/visual "your idea"
 ```
 
-Unknown flavor names fall back to `editorial` with a warning.
+Unknown flavor names fall back to `editorial` with a warning. `BRAND` has no validation — whatever you provide gets pasted into chrome verbatim.
+
+**Why `BRAND` exists:** without it, the model invents specific real-world identifiers from the idea text (e.g., `CSC301` for an EDU-themed idea). Operator-supplied brand strings stop the fabrication and let the demo feel like a real product context.
 
 ## Why flavors
 

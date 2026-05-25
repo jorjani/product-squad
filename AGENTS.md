@@ -16,7 +16,7 @@ Five named agents exist in snapshot form under `agents/`, but full runtime + For
 1. **Parse [`manifest.yaml`](manifest.yaml).** Machine-readable index of every agent, command, demo, and roadmap item. Status per-agent: `runnable_v0_5: true | false | partial`.
 2. **Read this file.** You're already here. Mental model + contribution rules.
 3. **Try the demos:**
-   - `./bin/visual "your feature idea"` — renders 4-tier visual ladder; opens HTML in browser on macOS, prints file paths on Linux. Set `FLAVOR=editorial|industrial|playful|brutalist` to switch the aesthetic vocabulary (default `editorial`; see [`.studio/design.md`](.studio/design.md)).
+   - `./bin/visual "your feature idea"` — renders 4-tier visual ladder; opens HTML in browser on macOS, prints file paths on Linux. Set `FLAVOR=editorial|industrial|playful|brutalist` to switch the aesthetic vocabulary (default `editorial`). Set `BRAND="YourProduct"` to override the brand placeholder used in chrome (default `AcmeU 101 · ReviewLab`). See [`.studio/design.md`](.studio/design.md).
    - `./bin/scope "your feature idea"` — writes 5 scoping prompts for sequential paste into Claude Code
 4. **Open `agents/<name>/README.md`** for the agent you're acting as (snapshot context — full `CONTRACT.md` per-agent arrives V1).
 

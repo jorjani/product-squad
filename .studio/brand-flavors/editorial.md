@@ -8,6 +8,7 @@ colors:
   accent: "#c9742d"
   surface: "#ffffff"
   surface-2: "#f8f6f2"
+  surface-3: "#f0ece4"
   canvas: "#f5f2ec"
   on-surface: "#1c1c24"
   on-surface-2: "#525561"
@@ -51,6 +52,7 @@ Calm, focused, content-first. Long-form text deserves room to breathe. The inter
 - **Canvas** (`#f5f2ec`): warm paper. The page background. Distinct from card surface.
 - **Surface** (`#ffffff`): cards, modals, panels that elevate above canvas — by *border*, not shadow.
 - **Surface-2** (`#f8f6f2`): subtle nested surface; sidebars, footers.
+- **Surface-3** (`#f0ece4`): row-hover, active selections, small interactive zones.
 - **On-surface** (`#1c1c24`): primary text. Near-black with a slight cool cast. **Never pure black.**
 - **Borders**: `#e4dfd6` default; `#cfc8b9` for emphasized dividers (table-of-contents rules, section separators).
 
