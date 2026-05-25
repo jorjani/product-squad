@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.jorjani.foreman</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/jorjani/Projects/foreman/orchestrator.sh</string>
+    </array>
+
+    <!-- 5x/day, anchored at 20:00 (David's wrap-up) and stepping ~5h.
+         Off-hours bias: 3 fires fall outside 08:00-20:00 active window. -->
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict>
+            <key>Hour</key>
+            <integer>20</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>1</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>6</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>11</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>16</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/jorjani/Projects</string>
+
+    <!-- PATH below is bootstrap-only (enough to reach orchestrator.sh).
+         Runtime PATH for bun, nvm-managed node, etc. is set by config/env.sh,
+         which orchestrator.sh sources and exports to all phase scripts.
+         Add new runtimes there, not here. -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/Users/jorjani/.claude/local:/Users/jorjani/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <key>HOME</key>
+        <string>/Users/jorjani</string>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/Users/jorjani/Projects/foreman/results/launchd-stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/jorjani/Projects/foreman/results/launchd-stderr.log</string>
+
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>
