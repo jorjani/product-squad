@@ -1,0 +1,144 @@
+#!/bin/bash
+# Block direct commits to main. Use a feature branch + PR instead.
+# Exception: specs/ and artifacts/ per Projects/CLAUDE.md § Spec File Commits
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if [ "$BRANCH" = "main" ]; then
+  STAGED=$(git diff --cached --name-only)
+  if [ -n "$STAGED" ] && ! echo "$STAGED" | grep -qvE '^(specs/|artifacts/)'; then
+    : # all staged paths are specs/ or artifacts/, allow
+  else
+    echo "ERROR: Direct commits to main are not allowed."
+    echo "Create a branch first: git checkout -b fix/your-change"
+    exit 1
+  fi
+fi
+
+# State-machine drift check: every move_to_<status> call site under phases/*.sh
+# must be backed by a Transition Table row in _shared/board-state-machine.md
+# whose To column matches and which names the source phase file. Fires only
+# when the diff touches phases/*.sh or config/board-ids.sh. See issue #284.
+STAGED=$(git diff --cached --name-only)
+if echo "$STAGED" | grep -qE '^(phases/.+\.sh|config/board-ids\.sh)$'; then
+  DOC="$HOME/Projects/_shared/board-state-machine.md"
+  if [ ! -f "$DOC" ]; then
+    echo "[state-machine drift check] WARNING: $DOC not found, skipping check"
+    exit 0
+  fi
+
+  REPO_ROOT=$(git rev-parse --show-toplevel)
+  python3 - "$DOC" "$REPO_ROOT" <<'PYEOF'
+import os
+import re
+import sys
+from pathlib import Path
+
+doc_path = sys.argv[1]
+repo_root = Path(sys.argv[2])
+
+STATUS_MAP = {
+    "done": "Done",
+    "verify": "Verify",
+    "scope": "Scope",
+    "in_progress": "InProgress",
+    "in_review": "InReview",
+    "ready": "Ready",
+    "blocked": "Blocked",
+    "parking": "Parking",
+}
+
+# Parse Transition Table rows: capture (To, Trigger, Mover, full_line) tuples.
+doc_rows = []
+in_table = False
+with open(doc_path) as f:
+    for line in f:
+        stripped = line.rstrip("\n")
+        s = stripped.strip()
+        if s.startswith("## Transition Table"):
+            in_table = True
+            continue
+        if not in_table:
+            continue
+        if s.startswith("## "):
+            break
+        if not s.startswith("|"):
+            continue
+        if "---" in s:
+            continue
+        cells = [c.strip() for c in s.strip("|").split("|")]
+        if len(cells) < 4:
+            continue
+        if cells[0].lower() == "from":
+            continue
+        from_cell, to_cell, trigger_cell, mover_cell = cells[0], cells[1], cells[2], cells[3]
+        doc_rows.append({
+            "from": from_cell,
+            "to": to_cell,
+            "trigger": trigger_cell,
+            "mover": mover_cell,
+            "line": stripped,
+        })
+
+# Scan phases/*.sh for move_to_<status> call sites.
+status_re = re.compile(r"\bmove_to_(done|verify|scope|in_progress|in_review|ready|blocked|parking)\b")
+phase_dir = repo_root / "phases"
+call_sites = []
+if phase_dir.is_dir():
+    for path in sorted(phase_dir.glob("*.sh")):
+        rel = path.relative_to(repo_root).as_posix()
+        with open(path) as f:
+            for i, line in enumerate(f, start=1):
+                if line.lstrip().startswith("#"):
+                    continue
+                m = status_re.search(line)
+                if not m:
+                    continue
+                status_key = m.group(1)
+                call_sites.append((rel, i, status_key, STATUS_MAP[status_key]))
+
+def row_names_phase(row, phase_basename, phase_stem):
+    """A row 'names' the phase if its Trigger or Mover cell references it.
+    Match path form (phases/<file>.sh, backticked file.sh) or bare stem as a token."""
+    haystacks = (row["trigger"], row["mover"])
+    path_form = f"phases/{phase_basename}"
+    stem_re = re.compile(rf"(?<![A-Za-z0-9_-]){re.escape(phase_stem)}(?![A-Za-z0-9_])")
+    for h in haystacks:
+        if path_form in h or f"`{phase_basename}`" in h:
+            return True
+        if stem_re.search(h):
+            return True
+    return False
+
+# Validate each (file, destination) tuple, dedup-by-tuple for output.
+uncovered = []
+seen = set()
+for rel, lineno, status_key, dest in call_sites:
+    key = (rel, status_key)
+    if key in seen:
+        continue
+    phase_basename = os.path.basename(rel)
+    phase_stem = phase_basename[:-3] if phase_basename.endswith(".sh") else phase_basename
+    matched = any(
+        row["to"] == dest and row_names_phase(row, phase_basename, phase_stem)
+        for row in doc_rows
+    )
+    if not matched:
+        uncovered.append((rel, lineno, status_key, dest, phase_stem, phase_basename))
+        seen.add(key)
+    else:
+        seen.add(key)
+
+if uncovered:
+    print("[state-machine drift check] FAIL")
+    for rel, lineno, status_key, dest, stem, basename in uncovered:
+        print(f"  {rel}:{lineno} → move_to_{status_key}")
+        print(f"    no doc row references {basename} in Trigger column")
+        print(f"    suggested: (From) → {dest} | {stem}: ... | Foreman (`{rel}`) | ...")
+    print("Commit blocked. Update _shared/board-state-machine.md or use --no-verify.")
+    sys.exit(1)
+
+sys.exit(0)
+PYEOF
+  exit $?
+fi
+
+exit 0

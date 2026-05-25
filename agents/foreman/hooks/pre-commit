@@ -1,0 +1,8 @@
+#!/bin/bash
+# Block direct commits to main. Use a feature branch + PR instead.
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if [ "$BRANCH" = "main" ]; then
+  echo "ERROR: Direct commits to main are not allowed."
+  echo "Create a branch first: git checkout -b fix/your-change"
+  exit 1
+fi
