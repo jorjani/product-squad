@@ -142,7 +142,7 @@ Apply the above instructions to this idea:
 - Skip the GitHub issue lookup. Treat the issue number as "$SLUG" and the repo as the product-squad bundle.
 - Skip multi-turn clarifying questions. Make sensible defaults and proceed.
 - For HTML outputs (wireframe, mockup, prototype): write the COMPLETE self-contained HTML file (with all CSS inline) to this exact path: $out_path
-- For ASCII / Mermaid outputs (sketch): print directly to stdout. Do not write a file.
+- For ASCII / Mermaid outputs (sketch): write the COMPLETE sketch (ASCII layout or Mermaid diagram) to this exact path: $out_path. The wrapper script will print it back to the terminal after you finish, so downstream tiers can read it as a predecessor.
 - Design flavor: read $FLAVOR_PATH. This file is the FULL aesthetic vocabulary: palette, type, radii, surface treatment, and a Do's and Don'ts section. Apply both the tokens AND the negative constraints in the Do's and Don'ts verbatim. The flavor is the brand; the Don'ts are non-negotiable.
 - Component primitives: read $REPO_ROOT/.studio/components.md. These are SEMANTIC primitives. The flavor file overlays styling opinions onto them.${predecessor_block}
 - Brand chrome (page titles, breadcrumbs, course codes, company names, product names): use exactly this placeholder string verbatim: $BRAND. DO NOT invent specific real-world identifiers like CSC301 or Acme Corp — the operator-provided value above is the only allowed brand string.
@@ -159,34 +159,63 @@ EOF
   # to answer. acceptEdits whitelists Write/Edit (Bash stays gated). --add-dir
   # is needed because OUT_DIR is a sibling of CWD, not a child, and mockup +
   # prototype tiers read the predecessor HTML files from there.
-  if claude --permission-mode acceptEdits --add-dir "$OUT_DIR" -p < "$prompt_file" 2>&1 | sed 's/^/    /'; then
-    if [ -f "$out_path" ]; then
-      echo "  ✓ Wrote: $out_path"
-      if command -v open >/dev/null 2>&1; then
-        open "$out_path"
-        echo "  ✓ Opened in browser"
-      else
-        echo "  → Open manually: file://$out_path"
-      fi
-    else
-      echo "  (no HTML file expected for $tier; output above)"
-    fi
+  #
+  # Tee the claude output to a per-tier log so we can both (a) stream it to the
+  # terminal indented and (b) post-hoc grep for the subscription rate-limit
+  # message, which sometimes fires AFTER the file has already been written.
+  local claude_log="$OUT_DIR/.${tier}-claude.log"
+  local claude_ok=1
+  if ! claude --permission-mode acceptEdits --add-dir "$OUT_DIR" -p < "$prompt_file" 2>&1 | tee "$claude_log" | sed 's/^/    /'; then
+    claude_ok=0
+  fi
+
+  if [ "$claude_ok" -eq 1 ] && [ -f "$out_path" ]; then
+    echo "  ✓ Wrote: $out_path"
+  elif [ -f "$out_path" ] && grep -qiE "hit your limit|you've hit your limit|rate limit" "$claude_log"; then
+    # Rate-limit fired but the file landed on disk before the quota hit.
+    # Treat as success so Gabriel doesn't think the bundle is broken.
+    echo "  ✓ Wrote: $out_path"
+    echo "  (rate-limited; file appears to have saved before quota fired)"
   else
     echo "  ✗ $tier failed. Check 'claude /login' and try again."
     return 1
   fi
+
+  # For sketch (the only non-HTML tier), echo the saved file back to terminal
+  # so the user still sees the layout inline — preserves the prior UX while
+  # persisting the artifact for downstream tiers to read as a predecessor.
+  if [ "$out_ext" = "txt" ]; then
+    echo "  ── Sketch ──"
+    sed 's/^/    /' "$out_path"
+  elif command -v open >/dev/null 2>&1; then
+    open "$out_path"
+    echo "  ✓ Opened in browser"
+  else
+    echo "  → Open manually: file://$out_path"
+  fi
   echo ""
 }
 
-# Predecessor chaining: mockup reads wireframe; prototype reads both,
-# so each tier builds on the prior tier's output rather than the raw idea.
-run_tier "sketch"    0 "txt"  ""                                              || true
-run_tier "wireframe" 1 "html" ""                                              || true
-run_tier "mockup"    3 "html" "$OUT_DIR/wireframe.html"                       || true
-run_tier "prototype" 4 "html" "$OUT_DIR/wireframe.html,$OUT_DIR/mockup.html"  || true
+# Predecessor chaining: each tier builds on the prior tier's output rather
+# than the raw idea — sketch seeds wireframe, wireframe seeds mockup, both
+# seed prototype. Persisting sketch to disk (vs terminal-only) is what lets
+# the chain span all four tiers instead of dropping continuity at T0→T1.
+run_tier "sketch"    0 "txt"  ""                                                                || true
+run_tier "wireframe" 1 "html" "$OUT_DIR/sketch.txt"                                              || true
+run_tier "mockup"    3 "html" "$OUT_DIR/wireframe.html"                                          || true
+run_tier "prototype" 4 "html" "$OUT_DIR/wireframe.html,$OUT_DIR/mockup.html"                     || true
 
 echo "═══════════════════════════════════════════════════════════════════"
-echo "  Done. All outputs in: $OUT_DIR"
+echo "  Done. T0 sketch → T1 wireframe → T3 mockup → T4 prototype"
+echo "  All artifacts: $OUT_DIR"
+echo ""
+echo "  Try the same idea with a different flavor:"
+echo "    FLAVOR=industrial ./bin/visual \"$IDEA\""
+echo "    FLAVOR=playful    ./bin/visual \"$IDEA\""
+echo "    FLAVOR=brutalist  ./bin/visual \"$IDEA\""
+echo ""
+echo "  Or shape the product around the idea (5-stage scoping cluster):"
+echo "    ./bin/scope \"$IDEA\""
+echo ""
 echo "  Cost: ~\$0.30-0.50 in Claude Code subscription usage"
-echo "  (each tier is one LLM call; total ~60-120 sec)"
 echo "═══════════════════════════════════════════════════════════════════"
