@@ -51,6 +51,27 @@ Total: ~2 minutes, ~$0.30-0.50 in Claude Code subscription usage.
 
 See [`examples/idea-fixture.md`](examples/idea-fixture.md) for phrasing guidance (who + what + where + why pattern).
 
+### Switch the brand flavor
+
+The visual ladder ships with 4 aesthetic vocabularies. Each is a complete brand opinion — tokens + Do/Don'ts that stop the model from defaulting to vanilla Tailwind output.
+
+```bash
+FLAVOR=editorial  ./bin/visual "your idea"   # default; calm, content-first, Inter
+FLAVOR=industrial ./bin/visual "your idea"   # dark, dev-tool, IBM Plex Sans + Mono
+FLAVOR=playful    ./bin/visual "your idea"   # warm, consumer-app, Manrope + shadows
+FLAVOR=brutalist  ./bin/visual "your idea"   # stark, monospace, 0 radius, neon accent
+```
+
+Running the same idea through two flavors back-to-back is the fastest way to feel how design tokens shape output. See [`.studio/design.md`](.studio/design.md) for the full flavor catalog + how to author your own.
+
+### Override the demo brand string
+
+By default the visual ladder uses a placeholder brand (`AcmeU 101 · ReviewLab`) instead of inventing real-world identifiers in chrome (page titles, breadcrumbs, course codes). To pin a specific brand:
+
+```bash
+BRAND="JobberHQ.com" FLAVOR=industrial ./bin/visual "candidates submit applications for review"
+```
+
 ## Demo 2 — Commander's intent + scoping (SECONDARY)
 
 ```bash

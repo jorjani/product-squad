@@ -1,85 +1,62 @@
 ---
 name: design.md
-description: Generic design tokens for product-squad bundle (system fonts + grayscale + sensible defaults)
+description: Flavor selector for product-squad visual ladder — points at one of the brand-flavors files
 type: design-system
-last_updated: 2026-05-24
 ---
 
-# Design tokens
+# Design
 
-Generic, system-default design tokens. Override with your own `.studio/design.md` when you have a real brand. These are good enough for wireframes, mockups, and prototypes that need to feel "intentional" without looking like Bootstrap.
+This file is the **flavor selector** for the visual ladder. The actual design tokens, type ramps, component opinions, and Do/Don't rules live in `.studio/brand-flavors/<name>.md`.
 
-## Palette
+## Available flavors
 
-| Token | Value | Use |
+| Flavor | Identity | Signature |
 |---|---|---|
-| `surface` | `#ffffff` | Main background |
-| `surface-2` | `#f8fafc` | Subtle card / sidebar background |
-| `surface-3` | `#f1f5f9` | Stronger card / hover state |
-| `on-surface` | `#0f172a` | Body text |
-| `on-surface-2` | `#475569` | Secondary text |
-| `on-surface-3` | `#94a3b8` | Tertiary / placeholder text |
-| `border` | `#e2e8f0` | Default border |
-| `border-strong` | `#cbd5e1` | Emphasized border |
-| `primary` | `#2563eb` | Primary action (CTA button, links) |
-| `primary-hover` | `#1d4ed8` | Primary action hover |
-| `primary-text` | `#ffffff` | Text on primary |
-| `success` | `#16a34a` | Positive feedback |
-| `warning` | `#eab308` | Caution feedback |
-| `danger` | `#dc2626` | Destructive / error |
+| [`editorial`](brand-flavors/editorial.md) | Thoughtful, considered, content-first | Warm canvas, muted green, Inter, flat surfaces |
+| [`industrial`](brand-flavors/industrial.md) | Dev tool, ops dashboard, agent OS | Dark canvas, electric blue, IBM Plex Sans + Mono, sharp 4px radii |
+| [`playful`](brand-flavors/playful.md) | Consumer SaaS, onboarding, friendly tool | Warm cream canvas, coral primary, Manrope, soft shadows, 14-20px radii |
+| [`brutalist`](brand-flavors/brutalist.md) | Indie hacker, research tool, anti-design | Stark white, JetBrains Mono everywhere, 0 radius, 2px black borders, neon green accent |
 
-## Typography
+## How to select
 
-| Token | Value |
-|---|---|
-| `font-sans` | `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif` |
-| `font-mono` | `ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace` |
-| `text-xs` | `0.75rem` (12px) |
-| `text-sm` | `0.875rem` (14px) |
-| `text-base` | `1rem` (16px) |
-| `text-lg` | `1.125rem` (18px) |
-| `text-xl` | `1.25rem` (20px) |
-| `text-2xl` | `1.5rem` (24px) |
-| `text-3xl` | `1.875rem` (30px) |
-| `text-4xl` | `2.25rem` (36px) |
+`bin/visual` reads the `FLAVOR` environment variable. Default is `editorial`.
 
-Default body text: `text-base` `font-sans` `on-surface`, line-height 1.5.
+```bash
+./bin/visual "your idea"                       # uses editorial (default)
+FLAVOR=industrial ./bin/visual "your idea"     # uses industrial
+FLAVOR=playful    ./bin/visual "your idea"     # uses playful
+FLAVOR=brutalist  ./bin/visual "your idea"     # uses brutalist
+```
 
-## Spacing scale
+Unknown flavor names fall back to `editorial` with a warning.
 
-| Token | Value |
-|---|---|
-| `space-1` | `0.25rem` (4px) |
-| `space-2` | `0.5rem` (8px) |
-| `space-3` | `0.75rem` (12px) |
-| `space-4` | `1rem` (16px) |
-| `space-6` | `1.5rem` (24px) |
-| `space-8` | `2rem` (32px) |
-| `space-12` | `3rem` (48px) |
-| `space-16` | `4rem` (64px) |
+## Why flavors
 
-## Borders + radii
+Tokens alone (just a color palette and font names) produce vanilla output — the model reads neutral tokens and produces neutral-looking HTML. Each flavor pairs tokens with a **theory of taste** (Overview paragraph) and **negative constraints** (Do/Don't section). The negative constraints stop the model from silently defaulting to its training-data-popular patterns (Tailwind shadows, blue-600 CTAs, rounded-md cards).
 
-| Token | Value |
-|---|---|
-| `radius-sm` | `0.25rem` (4px) |
-| `radius-md` | `0.5rem` (8px) |
-| `radius-lg` | `0.75rem` (12px) |
-| `radius-full` | `9999px` |
-| `border-width` | `1px` |
+Each flavor teaches a different aesthetic vocabulary. Switching flavors on the same wireframe is the fastest way to feel how design tokens shape output.
 
-## Shadows
+## Authoring your own flavor
 
-| Token | Value |
-|---|---|
-| `shadow-sm` | `0 1px 2px 0 rgba(0, 0, 0, 0.05)` |
-| `shadow-md` | `0 4px 6px -1px rgba(0, 0, 0, 0.1)` |
-| `shadow-lg` | `0 10px 15px -3px rgba(0, 0, 0, 0.1)` |
+Drop a new file at `.studio/brand-flavors/<your-flavor-name>.md` using the existing flavors as templates. Required structure:
 
-## Notes
+1. **YAML frontmatter** with `name`, `identity` (one-line), `colors`, `typography`, `radii`, `spacing`, `surface-treatment`, `shadows`.
+2. **Overview paragraph** — the theory of the aesthetic. What does this flavor *teach*?
+3. **Colors section** — every hex value annotated with what it's for and what it's NOT for.
+4. **Typography section** — fonts, sizes, weights, numeral style, capitalization rules.
+5. **Components section** — opinions on buttons, inputs, cards, tabs, tables, status badges. Specific.
+6. **Do's and Don'ts** — at least 5 of each. Negative constraints carry as much weight as positive ones.
 
-- Token names follow `[role]-[modifier]` (e.g., `surface-2`, `text-xs`).
-- Override any single token in a project-specific `.studio/design.md` by re-declaring it; the bundled template is the fallback.
-- System fonts deliberately — looks at-home on macOS, Windows, Linux without web font loading.
-- Blue primary (`#2563eb`) is neutral enough to read as "any product"; replace with your brand color for real projects.
-- All shadows use rgba black — they layer over any background.
+The Do/Don't section is the differentiator. Tokens are necessary but not sufficient.
+
+## Replacing a flavor for your own project
+
+When you fork this bundle for a real product, replace one flavor with your brand:
+
+```bash
+# Option 1: overwrite the file
+cp my-brand-tokens.md .studio/brand-flavors/editorial.md
+
+# Option 2: add your brand as a new flavor and set it as default
+echo 'export FLAVOR=mybrand' >> ~/.zshrc
+```

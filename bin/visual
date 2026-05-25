@@ -44,6 +44,26 @@ fi
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
+# Resolve FLAVOR env var. Default editorial. Unknown name falls back with a
+# warning so a typo doesn't silently apply the wrong tokens. .studio/design.md
+# is the authoritative list; this script duplicates the names for the fallback
+# check so cold-start runs don't need to parse markdown.
+FLAVOR="${FLAVOR:-editorial}"
+FLAVOR_PATH="$REPO_ROOT/.studio/brand-flavors/$FLAVOR.md"
+if [ ! -f "$FLAVOR_PATH" ]; then
+  echo "⚠ FLAVOR='$FLAVOR' not found at $FLAVOR_PATH — falling back to editorial."
+  echo "  Available flavors: editorial, industrial, playful, brutalist"
+  echo "  See .studio/design.md for the full list."
+  echo ""
+  FLAVOR="editorial"
+  FLAVOR_PATH="$REPO_ROOT/.studio/brand-flavors/editorial.md"
+fi
+
+# Brand placeholder. The model otherwise invents specific real-world identifiers
+# (e.g., CSC301 for an EDU idea) which read as wrong outside the operator's
+# geography. Operator can override with their own brand string.
+BRAND="${BRAND:-AcmeU 101 · ReviewLab}"
+
 OUT_DIR="/tmp/product-squad-demo-$(date +%s)"
 mkdir -p "$OUT_DIR"
 
@@ -54,6 +74,8 @@ echo "════════════════════════�
 echo "  Product Squad — Visual Fidelity Ladder Demo (V0.5)"
 echo "═══════════════════════════════════════════════════════════════════"
 echo "  Idea:       $IDEA"
+echo "  Flavor:     $FLAVOR  ($FLAVOR_PATH)"
+echo "  Brand:      $BRAND"
 echo "  Output dir: $OUT_DIR"
 echo "  Slug:       $SLUG"
 echo "═══════════════════════════════════════════════════════════════════"
@@ -98,10 +120,14 @@ run_tier() {
     predecessor_block=$'\n- **Predecessor artifacts — READ THESE FIRST** so this tier builds on the prior tier\'s output, not from scratch: '"$predecessors"
   fi
 
-  # Compose meta-prompt: original command + idea + demo-mode override
-  local prompt
-  prompt=$(cat <<EOF
-$(cat "$cmd_path")
+  # Compose meta-prompt into a temp file. Earlier the prompt was built via
+  # prompt=$(cat <<EOF ... EOF), but bash's $() parser is fragile when the
+  # heredoc body contains quote-pair patterns (e.g. apostrophes inside parens).
+  # Writing to a file then piping via stdin sidesteps that parser entirely.
+  local prompt_file="$OUT_DIR/.${tier}-prompt.tmp"
+  {
+    cat "$cmd_path"
+    cat <<EOF
 
 ---
 
@@ -114,24 +140,26 @@ Apply the above instructions to this idea:
 **Demo-mode adjustments** (these override the workflow above where they conflict):
 
 - Skip the GitHub issue lookup. Treat the issue number as "$SLUG" and the repo as the product-squad bundle.
-- Skip multi-turn clarifying questions — make sensible defaults and proceed.
+- Skip multi-turn clarifying questions. Make sensible defaults and proceed.
 - For HTML outputs (wireframe, mockup, prototype): write the COMPLETE self-contained HTML file (with all CSS inline) to this exact path: $out_path
 - For ASCII / Mermaid outputs (sketch): print directly to stdout. Do not write a file.
-- Design tokens: read $REPO_ROOT/.studio/design.md (generic system grays + sans-serif). Use these tokens in the output.
-- Component primitives: read $REPO_ROOT/.studio/components.md (button, input, card, modal, nav, table, badge, empty-state).${predecessor_block}
-- For wireframe: produce multi-state HTML with state-toggle navigation (inline JS or anchored sections).
-- For mockup: single-state HTML, brand-applied. INHERIT the wireframe's layout + state coverage — don't re-decide structure.
-- For prototype: single-file interactive HTML with vanilla JS for state transitions. INHERIT both wireframe (layout) and mockup (aesthetics).
+- Design flavor: read $FLAVOR_PATH. This file is the FULL aesthetic vocabulary: palette, type, radii, surface treatment, and a Dos and Donts section. Apply both the tokens AND the negative constraints verbatim. The flavor is the brand; the Donts are non-negotiable.
+- Component primitives: read $REPO_ROOT/.studio/components.md. These are SEMANTIC primitives. The flavor file overlays styling opinions onto them.${predecessor_block}
+- Brand chrome (page titles, breadcrumbs, course codes, company names, product names): use exactly this placeholder string verbatim: $BRAND. DO NOT invent specific real-world identifiers like CSC301 or Acme Corp. Operator-provided brand is the only allowed brand string.
+- Self-explanatory rule: state labels and section headings must be plain-English sentences of 5 to 10 words that a first-time viewer can grasp in one glance. No abbreviations, no single-word state codes like S1 or S2, no jargon.
+- For wireframe: produce multi-state HTML with state-toggle navigation. STATE COUNT CAP: 3 to 5 states maximum. Pick one happy-path plus 2 most-instructive edges. Breathable layout, generous whitespace between states. Wireframe is for IA exploration, not exhaustive state coverage.
+- For mockup: SINGLE state HTML, brand-applied. Pick the most representative state from the wireframe and polish it. Inherit the wireframe layout for that one state. Do not re-decide structure.
+- For prototype: single-file interactive HTML with vanilla JS for state transitions. STATE COUNT: 6 to 10 states. This is where exhaustive state coverage belongs. Inherit both wireframe layout and mockup aesthetics. Initial landing state must be the EMPTY or FIRST-USE state, not the populated dashboard, so the demo viewer can see the progression by clicking forward.
 
 Begin the work. Do not ask questions. Write the file. Return a one-line confirmation when done.
 EOF
-)
+  } > "$prompt_file"
 
   # Headless `claude -p` defaults to prompting on every tool use, with no human
   # to answer. acceptEdits whitelists Write/Edit (Bash stays gated). --add-dir
   # is needed because OUT_DIR is a sibling of CWD, not a child, and mockup +
   # prototype tiers read the predecessor HTML files from there.
-  if claude --permission-mode acceptEdits --add-dir "$OUT_DIR" -p "$prompt" 2>&1 | sed 's/^/    /'; then
+  if claude --permission-mode acceptEdits --add-dir "$OUT_DIR" -p < "$prompt_file" 2>&1 | sed 's/^/    /'; then
     if [ -f "$out_path" ]; then
       echo "  ✓ Wrote: $out_path"
       if command -v open >/dev/null 2>&1; then
