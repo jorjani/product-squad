@@ -2,45 +2,80 @@
 
 An opinionated agentic operating system for one-person dev teams.
 
-> 🚧 **V1 in development.** Public launch planned. This repo is currently private during scaffolding.
+> 🚧 **V0.5 — first playable cut.** Private during validation. Public at V1 (3-4 weeks).
+
+## The 30-second demos
+
+Two wedges, both single-command. Pick either or run both.
+
+### 🎨 Visual ladder (PRIMARY)
+
+```bash
+git clone git@github.com:jorjani/product-squad.git
+cd product-squad
+./bin/visual "students upload resume to course project for peer review"
+# → sketch (ASCII in terminal) + wireframe.html + mockup.html + prototype.html
+# → each HTML auto-opens in your browser
+```
+
+Time: ~60-120 seconds. Cost: ~$0.30-0.50 in Claude Code subscription usage.
+
+### 🧠 Product cluster (SECONDARY)
+
+```bash
+./bin/scope "students upload resume to course project for peer review"
+# → writes 5 pre-filled prompts to /tmp/product-squad-scope-<ts>/
+# → paste each into Claude Code in sequence (why → shape → experience → owit → elon)
+```
+
+Each stage teaches a transferable product-craft pattern. Time: ~15-30 min of paste-and-think.
+
+### Requirements
+
+- **Claude Code installed** and signed in (`claude /login` once with your subscription account)
+- **No API key required** — uses subscription OAuth
+- ⚠️ If `ANTHROPIC_API_KEY` is set in your env, it *shadows* subscription auth and may fail with org-mismatch errors. Run `unset ANTHROPIC_API_KEY` first.
+
+Full setup in [`QUICKSTART.md`](QUICKSTART.md).
 
 ## What this is
 
-A named crew of AI agents that owns the full software dev pipeline — scope, build, review, verify — while you set direction. Runs on your laptop or in the cloud. Works with Claude Code (default) or Codex CLI (tested adapter). Apache-2.0... wait, MIT. The repo design is **agent-first**: an LLM agent can clone this, read `AGENTS.md` + `manifest.yaml`, and know how to contribute in seconds.
+A named crew of AI agents that owns the software dev pipeline — scope, build, review, verify — while you set direction. The repo is **agent-first**: an LLM agent can clone this, read [`AGENTS.md`](AGENTS.md) + [`manifest.yaml`](manifest.yaml), and orient in 60 seconds.
 
 ## The crew
 
-- **Foreman** — orchestrator: builds, reviews, verifies, triages, cleans up
-- **Sarge** — PM agent: turns vague ideas into buildable specs (Claude Code only in V1)
-- **Inspector** — verifier: gates Verify → Done with deterministic classes + LLM judge
-- **Code-Reviewer** — PR review with severity-ranked findings
-- **Build-Fixer** — minimal-diff repair for failing builds and tests
+| Agent | Role | V0.5 status |
+|---|---|---|
+| **Foreman** | Orchestrator | snapshot only — readable, not runnable |
+| **Sarge** | PM scoping (idea → brief) | scoping prompts runnable via `bin/scope`; full runtime in V1 |
+| **Inspector** | Verifier (Verify → Done gate) | snapshot only — lives inside Foreman |
+| **Code-Reviewer** | PR review with severity-ranked findings | runnable as a Claude Code subagent |
+| **Build-Fixer** | Minimal-diff repair for failing builds | runnable as a Claude Code subagent |
+
+V1 (3-4 weeks): full runtime for all five, agent abstraction (Claude default + Codex tested), Railway one-click deploy, memory pattern, public launch.
 
 ## Quick orientation
 
 | Audience | Start here |
 |---|---|
-| 🤖 You're an LLM agent | [`AGENTS.md`](AGENTS.md) → [`manifest.yaml`](manifest.yaml) |
-| 👤 You're a human evaluating | This README → [`docs/tool-choices.md`](docs/) (coming in M5) |
-| 🛠 You want to deploy | [`QUICKSTART.md`](QUICKSTART.md) (coming in M5: Railway smooth path + laptop hacker path) |
+| 🤖 LLM agent | [`AGENTS.md`](AGENTS.md) → [`manifest.yaml`](manifest.yaml) |
+| 👤 Human | [`QUICKSTART.md`](QUICKSTART.md) → run a demo |
+| 🛠 Forker | Visual ladder: [`sketch`](commands/sketch.md) → [`wireframe`](commands/wireframe.md) → [`mockup`](commands/mockup.md) → [`prototype`](commands/prototype.md) · Product cluster: [`why`](commands/why.md) → [`shape`](commands/shape.md) → [`experience`](commands/experience.md) → [`owit`](commands/owit.md) → [`elon`](commands/elon.md) |
 
 ## Layout
 
 ```
-agents/        # The crew (Foreman, Sarge, Inspector, Code-Reviewer, Build-Fixer)
-commands/      # Curated dev-workflow slash commands
-cloud/         # Deploy paths (Railway smooth + laptop hacker)
-guardrails/    # Opinionated rules + audit playbook
-memory/        # Agent-agnostic persistent memory pattern
-config/        # Hooks, settings, env-var bootstrap
-mcp/           # MCP scoping conventions
-lib/           # Shared utilities (agent abstraction layer)
-docs/          # Tool choices, customization, glossary
+bin/
+  visual         # PRIMARY demo — visual fidelity ladder
+  scope          # SECONDARY demo — commander's intent + scoping
+commands/        # 10 prompts (5 visual + 5 product)
+.studio/         # Bundled generic design tokens + component primitives
+examples/        # Idea fixtures + phrasing guidance
+agents/          # Snapshots: foreman, sarge, code-reviewer, build-fixer
+docs/            # MIGRATION.md (source SHAs + scrub log) + roadmap
 ```
 
-## Status
-
-V1 milestone plan tracked in `~/.claude/plans/what-would-it-take-golden-rivest.md` (private during scaffolding). Each milestone ships via the worktree + branch + PR pattern.
+See [`manifest.yaml`](manifest.yaml) → `v1_roadmap` for what lands in V1.
 
 ## License
 
