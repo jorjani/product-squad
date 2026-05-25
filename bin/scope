@@ -1,0 +1,135 @@
+#!/bin/bash
+# bin/scope — V0.5 product cluster wrapper
+#
+# Writes 5 pre-filled prompts (the commander's intent + scoping ladder)
+# to a temp dir. Paste each into Claude Code in sequence — each stage's
+# output feeds the next.
+#
+# Usage: bin/scope "your feature idea in one sentence"
+#
+# The 5 stages teach a transferable product-craft pattern:
+#   1. /why         frame the outcome (job-to-be-done)
+#   2. /shape       decide what to build (options menu + cuts)
+#   3. /experience  articulate the user delta
+#   4. /owit        map scenarios (On/When/If/Then) + choices
+#   5. /elon        ruthless cut (question, delete, simplify)
+#
+# REQUIREMENTS:
+#   - Claude Code installed (https://claude.com/claude-code)
+#   - Signed in via subscription: run `claude /login` once
+#   - NO Anthropic API key required (but unset ANTHROPIC_API_KEY if set —
+#     it shadows subscription auth)
+
+set -euo pipefail
+
+IDEA="${1:-}"
+if [ -z "$IDEA" ]; then
+  cat <<'USAGE'
+Usage: bin/scope "your feature idea in one sentence"
+
+Example:
+  bin/scope "students upload resume to course project for peer review"
+
+Writes 5 pre-filled prompts to a temp dir. Each prompt has your idea
+inserted at the end. Paste each into Claude Code in sequence.
+
+See examples/idea-fixture.md for more sample ideas + phrasing guidance.
+USAGE
+  exit 1
+fi
+
+# Locate repo root regardless of where the script is invoked from
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+OUT_DIR="/tmp/product-squad-scope-$(date +%s)"
+mkdir -p "$OUT_DIR"
+
+cat <<EOF
+═══════════════════════════════════════════════════════════════════
+  Product Squad — Commander's Intent + Scoping Ladder (V0.5)
+═══════════════════════════════════════════════════════════════════
+  Idea:        $IDEA
+  Output dir:  $OUT_DIR
+
+  5 pre-filled prompts written below. Each teaches a transferable
+  product-craft pattern. Paste each into Claude Code in sequence —
+  each stage's output feeds the next.
+
+EOF
+
+# Column width for aligning the "→ $out" arrow across stages (longest cmd is "experience" = 10).
+CMD_COL_WIDTH=14
+
+write_stage() {
+  local num="$1"
+  local cmd="$2"
+  local teaches="$3"
+  local cmd_path="$REPO_ROOT/commands/$cmd.md"
+  local out="$OUT_DIR/$num-$cmd.md"
+
+  if [ ! -f "$cmd_path" ]; then
+    echo "  ✗ Stage $num — /$cmd: source missing at $cmd_path"
+    return 1
+  fi
+
+  cat > "$out" <<HEADER
+# Stage $num/5 — /$cmd
+# Teaches: $teaches
+#
+# COPY EVERYTHING FROM THE HORIZONTAL RULE BELOW TO THE END OF
+# THIS FILE INTO CLAUDE CODE. Claude will respond with the scoped output.
+
+---
+
+HEADER
+  # Strip $ARGUMENTS literal token (Claude Code slash-command interpolation
+  # placeholder) — bin/scope doesn't run as a slash command, so the token
+  # would leak as raw text into the prompt and confuse the reader.
+  sed 's/\$ARGUMENTS//g' "$cmd_path" >> "$out"
+  cat >> "$out" <<FOOTER
+
+---
+
+Apply the above to this idea:
+
+> $IDEA
+FOOTER
+
+  local pad
+  pad=$(printf '%*s' $((CMD_COL_WIDTH - ${#cmd})) '')
+  echo "  ✓ Stage $num — /$cmd $pad → $out"
+}
+
+write_stage 1 "why"        "Frame the outcome (job-to-be-done)"
+write_stage 2 "shape"      "Decide what to build (options menu + cuts)"
+write_stage 3 "experience" "Articulate the felt user delta"
+write_stage 4 "owit"       "Map scenarios (On/When/If/Then) + choices"
+write_stage 5 "elon"       "Ruthless cut (question, delete, simplify)"
+
+cat <<EOF
+
+═══════════════════════════════════════════════════════════════════
+  Done. All 5 prompt files in: $OUT_DIR
+
+  Suggested flow (copy each stage's file to your clipboard, paste into
+  Claude Code, read response, then proceed to the next stage):
+
+    # macOS:    cat $OUT_DIR/1-why.md | pbcopy
+    # Linux:    cat $OUT_DIR/1-why.md | xclip -selection clipboard
+    # Wayland:  cat $OUT_DIR/1-why.md | wl-copy
+
+    # Then in Claude Code: paste, read the response, move to stage 2.
+    # Repeat through stage 5.
+
+  Or open the dir to view all 5 stage files:
+    open $OUT_DIR        # macOS
+    xdg-open $OUT_DIR    # Linux
+
+  Cost: ~\$0.30-0.50 total in Claude Code subscription usage if you
+  work through all 5 stages with deep responses.
+
+  TIP: /why and /experience are one-shot. /shape, /owit, /elon are
+  multi-turn — they'll ask you to pick options or review choices.
+═══════════════════════════════════════════════════════════════════
+EOF
