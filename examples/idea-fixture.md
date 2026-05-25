@@ -4,7 +4,7 @@ Realistic feature ideas to try with `bin/visual` (V0.5 PRIMARY wedge — visual 
 
 ## Quick run — Visual ladder
 
-`bin/visual "idea"` runs sketch → wireframe → mockup → prototype, auto-opens each rendered HTML in your browser. ~60-120 sec, ~$0.30-0.50 in Claude Code subscription usage.
+`bin/visual "idea"` runs sketch → wireframe → mockup → prototype, auto-opens each rendered HTML in your browser (macOS); on Linux the file paths are printed instead. ~60-120 sec, ~$0.30-0.50 in Claude Code subscription usage.
 
 ```bash
 ./bin/visual "students upload resume to course project for peer review"
@@ -73,7 +73,7 @@ The "Just right" shape: **who** does **what** **where** **why** — in one sente
 
 *(T2 `/schematic` — annotation overlay tier — is documented in the ladder as optional and not included in V0.5; that's why the numbering jumps from T1 to T3.)*
 
-Each HTML auto-opens in your default browser as it's generated.
+Each HTML auto-opens in your default browser as it's generated (macOS); on Linux the file paths are printed for manual open.
 
 ### `bin/scope` output (in `/tmp/product-squad-scope-<ts>/`)
 
