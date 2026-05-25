@@ -55,9 +55,22 @@ v0_5:
         purpose: The Algorithm — question, delete, simplify
   templates:
     - path: .studio/design.md
-      purpose: Generic design tokens (system grays + sans-serif + sensible scale)
+      purpose: Flavor selector — points at one of the brand-flavors files
     - path: .studio/components.md
-      purpose: Generic component primitives (button, input, card, modal, nav, table, badge, empty-state)
+      purpose: Semantic component primitives (button, input, card, modal, nav, table, badge, empty-state) — flavor file overlays styling opinions
+    - path: .studio/brand-flavors/editorial.md
+      purpose: Default flavor — thoughtful, content-first, Inter, warm canvas, muted green
+    - path: .studio/brand-flavors/industrial.md
+      purpose: Dev tool / agent-OS aesthetic — dark canvas, electric blue, IBM Plex Sans+Mono, sharp 4px radii
+    - path: .studio/brand-flavors/playful.md
+      purpose: Consumer SaaS — warm cream, coral primary, Manrope, soft shadows, generous radii
+    - path: .studio/brand-flavors/brutalist.md
+      purpose: Anti-design honesty — stark white, JetBrains Mono everywhere, 0 radius, 2px black borders, neon accent
+  flavor_selection:
+    mechanism: FLAVOR env var read by bin/visual
+    default: editorial
+    fallback: unknown flavor name → editorial + warning
+    docs: .studio/design.md
   docs:
     - README.md
     - AGENTS.md
