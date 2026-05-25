@@ -124,4 +124,4 @@ Try these in order — each builds on the last:
 
 1. **Re-run with a different flavor on your own idea** — `FLAVOR=industrial ./bin/visual "your idea"`. Same ladder, different aesthetic. The four flavors aren't cosmetic; each teaches a distinct theory of taste (see [`.studio/brand-flavors/`](.studio/brand-flavors/)).
 2. **Run `bin/scope` on the same idea** — `./bin/scope "your idea"`. The visual ladder shows *what*; the scoping cluster shows *why* and *what to build first*.
-3. **Then read the system docs** — [`AGENTS.md`](AGENTS.md) for the mental model, [`commands/shape.md`](commands/shape.md) for the options-menu + capability-delta pattern, [`manifest.yaml`](manifest.yaml) for the V1 roadmap (Foreman + Inspector runtime, Codex adapter, Railway one-click deploy — landing in 3-4 weeks).
+3. **Then read the system docs** — [`AGENTS.md`](AGENTS.md) for the mental model, [`commands/shape.md`](commands/shape.md) for the options-menu + capability-delta pattern, [`manifest.yaml`](manifest.yaml) for the V1 roadmap (Foreman + Inspector runtime, Codex adapter, Railway one-click deploy).
