@@ -6,7 +6,7 @@
 
 1. **Install Claude Code** — [https://claude.com/claude-code](https://claude.com/claude-code)
 2. **Sign in via subscription** — run `claude /login` once. Saves OAuth to `~/.claude/.credentials.json`.
-3. **(macOS only)** `xdg-open` not installed by default — `bin/visual` uses `open` to auto-launch HTML in your browser. On Linux: outputs print paths; open manually.
+3. **Auto-open in browser:** `bin/visual` uses `open` on macOS (built-in) to auto-launch HTML. On Linux it falls back to printing the file path — open manually, or alias `open=xdg-open` first.
 
 ### ⚠️ ANTHROPIC_API_KEY gotcha
 

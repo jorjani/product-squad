@@ -127,7 +127,11 @@ Begin the work. Do not ask questions. Write the file. Return a one-line confirma
 EOF
 )
 
-  if claude -p "$prompt" 2>&1 | sed 's/^/    /'; then
+  # Headless `claude -p` defaults to prompting on every tool use, with no human
+  # to answer. acceptEdits whitelists Write/Edit (Bash stays gated). --add-dir
+  # is needed because OUT_DIR is a sibling of CWD, not a child, and mockup +
+  # prototype tiers read the predecessor HTML files from there.
+  if claude --permission-mode acceptEdits --add-dir "$OUT_DIR" -p "$prompt" 2>&1 | sed 's/^/    /'; then
     if [ -f "$out_path" ]; then
       echo "  ✓ Wrote: $out_path"
       if command -v open >/dev/null 2>&1; then

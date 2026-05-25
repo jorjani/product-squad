@@ -15,7 +15,7 @@ git clone git@github.com:jorjani/product-squad.git
 cd product-squad
 ./bin/visual "students upload resume to course project for peer review"
 # → sketch (ASCII in terminal) + wireframe.html + mockup.html + prototype.html
-# → each HTML auto-opens in your browser
+# → each HTML auto-opens in your browser (macOS); Linux prints the file path
 ```
 
 Time: ~60-120 seconds. Cost: ~$0.30-0.50 in Claude Code subscription usage.
