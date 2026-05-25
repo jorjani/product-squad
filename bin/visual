@@ -1,0 +1,160 @@
+#!/bin/bash
+# bin/visual — V0.5 demo wrapper for the visual fidelity ladder
+#
+# Usage: bin/visual "your feature idea in one sentence"
+#
+# Runs sketch + wireframe + mockup + prototype against the idea, writes
+# outputs to /tmp/product-squad-demo-<timestamp>/, opens each HTML in
+# your default browser.
+#
+# REQUIREMENTS:
+#   - Claude Code installed (https://claude.com/claude-code)
+#   - Signed in via subscription: run `claude /login` once
+#   - NO Anthropic API key required
+#
+# GOTCHA: If ANTHROPIC_API_KEY is set in your environment, unset it first.
+# It shadows subscription auth and may fail with org-mismatch errors:
+#   unset ANTHROPIC_API_KEY
+
+set -euo pipefail
+
+IDEA="${1:-}"
+if [ -z "$IDEA" ]; then
+  cat <<'USAGE'
+Usage: bin/visual "your feature idea in one sentence"
+
+Example:
+  bin/visual "students upload resume to course project for peer review"
+
+The wrapper runs 4 visual tiers in sequence:
+  T0  sketch     — ASCII layout, printed to terminal
+  T1  wireframe  — multi-state HTML, opens in browser
+  T3  mockup     — hi-fi HTML with bundled design tokens, opens in browser
+  T4  prototype  — interactive HTML, opens in browser
+
+  (T2 /schematic — annotation overlay — is documented as optional in
+   the ladder and not included in V0.5.)
+
+See examples/idea-fixture.md for more sample ideas.
+USAGE
+  exit 1
+fi
+
+# Locate repo root regardless of where the script is invoked from
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+OUT_DIR="/tmp/product-squad-demo-$(date +%s)"
+mkdir -p "$OUT_DIR"
+
+# Slug for the issue-number stand-in (prevents path collisions)
+SLUG=$(echo "$IDEA" | tr '[:upper:]' '[:lower:]' | sed -e 's/[^a-z0-9]/-/g' -e 's/--*/-/g' -e 's/^-//' -e 's/-$//' | head -c 40)
+
+echo "═══════════════════════════════════════════════════════════════════"
+echo "  Product Squad — Visual Fidelity Ladder Demo (V0.5)"
+echo "═══════════════════════════════════════════════════════════════════"
+echo "  Idea:       $IDEA"
+echo "  Output dir: $OUT_DIR"
+echo "  Slug:       $SLUG"
+echo "═══════════════════════════════════════════════════════════════════"
+echo ""
+
+# Verify claude CLI is available
+if ! command -v claude >/dev/null 2>&1; then
+  echo "✗ 'claude' CLI not found. Install Claude Code: https://claude.com/claude-code"
+  exit 1
+fi
+
+# Warn about ANTHROPIC_API_KEY shadowing
+if [ -n "${ANTHROPIC_API_KEY:-}" ]; then
+  echo "⚠ ANTHROPIC_API_KEY is set in your environment."
+  echo "  It will shadow subscription auth. If you see org-mismatch errors,"
+  echo "  unset it: unset ANTHROPIC_API_KEY"
+  echo ""
+fi
+
+run_tier() {
+  local tier="$1"
+  local tier_num="$2"
+  local out_ext="$3"
+  local predecessors="${4:-}"   # comma-separated predecessor file paths (optional)
+  local cmd_path="$REPO_ROOT/commands/$tier.md"
+  local out_path="$OUT_DIR/$tier.$out_ext"
+
+  if [ ! -f "$cmd_path" ]; then
+    echo "✗ $tier: command file not found at $cmd_path — skipping"
+    return 1
+  fi
+
+  echo "── T$tier_num: $tier ──"
+  echo "  Generating..."
+
+  # Build predecessor block — critical for the ladder to actually chain
+  # (mockup must read wireframe; prototype must read both). Without this
+  # each tier generates independently from the raw idea, breaking the
+  # "progressively higher fidelity of the SAME design" promise.
+  local predecessor_block=""
+  if [ -n "$predecessors" ]; then
+    predecessor_block=$'\n- **Predecessor artifacts — READ THESE FIRST** so this tier builds on the prior tier\'s output, not from scratch: '"$predecessors"
+  fi
+
+  # Compose meta-prompt: original command + idea + demo-mode override
+  local prompt
+  prompt=$(cat <<EOF
+$(cat "$cmd_path")
+
+---
+
+# DEMO MODE OVERRIDE (V0.5)
+
+Apply the above instructions to this idea:
+
+> $IDEA
+
+**Demo-mode adjustments** (these override the workflow above where they conflict):
+
+- Skip the GitHub issue lookup. Treat the issue number as "$SLUG" and the repo as the product-squad bundle.
+- Skip multi-turn clarifying questions — make sensible defaults and proceed.
+- For HTML outputs (wireframe, mockup, prototype): write the COMPLETE self-contained HTML file (with all CSS inline) to this exact path: $out_path
+- For ASCII / Mermaid outputs (sketch): print directly to stdout. Do not write a file.
+- Design tokens: read $REPO_ROOT/.studio/design.md (generic system grays + sans-serif). Use these tokens in the output.
+- Component primitives: read $REPO_ROOT/.studio/components.md (button, input, card, modal, nav, table, badge, empty-state).${predecessor_block}
+- For wireframe: produce multi-state HTML with state-toggle navigation (inline JS or anchored sections).
+- For mockup: single-state HTML, brand-applied. INHERIT the wireframe's layout + state coverage — don't re-decide structure.
+- For prototype: single-file interactive HTML with vanilla JS for state transitions. INHERIT both wireframe (layout) and mockup (aesthetics).
+
+Begin the work. Do not ask questions. Write the file. Return a one-line confirmation when done.
+EOF
+)
+
+  if claude -p "$prompt" 2>&1 | sed 's/^/    /'; then
+    if [ -f "$out_path" ]; then
+      echo "  ✓ Wrote: $out_path"
+      if command -v open >/dev/null 2>&1; then
+        open "$out_path"
+        echo "  ✓ Opened in browser"
+      else
+        echo "  → Open manually: file://$out_path"
+      fi
+    else
+      echo "  (no HTML file expected for $tier; output above)"
+    fi
+  else
+    echo "  ✗ $tier failed. Check 'claude /login' and try again."
+    return 1
+  fi
+  echo ""
+}
+
+# Predecessor chaining: mockup reads wireframe; prototype reads both,
+# so each tier builds on the prior tier's output rather than the raw idea.
+run_tier "sketch"    0 "txt"  ""                                              || true
+run_tier "wireframe" 1 "html" ""                                              || true
+run_tier "mockup"    3 "html" "$OUT_DIR/wireframe.html"                       || true
+run_tier "prototype" 4 "html" "$OUT_DIR/wireframe.html,$OUT_DIR/mockup.html"  || true
+
+echo "═══════════════════════════════════════════════════════════════════"
+echo "  Done. All outputs in: $OUT_DIR"
+echo "  Cost: ~\$0.30-0.50 in Claude Code subscription usage"
+echo "  (each tier is one LLM call; total ~60-120 sec)"
+echo "═══════════════════════════════════════════════════════════════════"
