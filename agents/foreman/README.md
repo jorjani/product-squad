@@ -1,236 +1,80 @@
-# Foreman Pipeline
+# agents/foreman/
 
-The autonomous development pipeline for Qatalyst projects.
+Snapshot of the **Foreman** orchestrator — the autonomous daily pipeline that ships PRs, reviews them, verifies merged code, and triages incoming work.
 
-## How It Works
+**V0.5 status: readable, not runnable.** This snapshot exists for context (so you can read the system, learn from it, and adopt patterns). Full runtime portability ships in V1.
 
-Three layers:
-- **David** — sets direction, approves scope, makes decisions
-- **Sarge** — PM layer. Shapes work from Pitch → Ready. Runs daily digest at 10am via Cowork.
-- **Foreman** — Builder layer. Ships work from Ready → Done. Runs 5x/day via launchd.
+## What Foreman does
 
----
+Foreman is a bash-orchestrated 18-phase daily pipeline. Each cron tick (5×/day):
 
-## The Board
+1. **Verify** — check merged PRs actually deployed
+2. **Inspect + Code-Review** (parallel) — gate Verify→Done; review open PRs
+3. **Review** — auto-merge clean `auto/*` PRs; queue human PRs for code review
+4. **Build** — pick up Ready issues, create worktree, run Claude, ship PR
+5. **Triage** — promote Scope items to Ready if they pass contract gates
+6. **Sarge-Review + Sarge-Pitch** — dispatch Sarge subagent on Scope + Pitch items
+7. **Auto-enrich** — mechanically fill `NEEDS-SPEC` gaps
+8. **Cleanup + Ghost-sweep + Orphan-rescue + Stranded-sweep + Janitor** — repo hygiene
+9. **Self-improve** (alternate days) — analyze metrics, propose prompt changes
 
-Shape Up flow on GitHub Projects board #5:
+Each phase has a dedicated script in `phases/`. Shared utilities in `lib/`. Prompts in `prompts/`. Schedule in `config/schedule.plist` (macOS launchd; V1 ships Linux cron + Railway).
 
-```
-Parking → Pitch → Scope → Ready → In Progress → In Review → Verify → Done
-```
+## How to read this snapshot
 
-| Column | Owner | What happens here |
-|--------|-------|-------------------|
-| Parking | David | Graveyard. Nothing moves out without David requesting it. |
-| Pitch | Sarge + David | Raw idea captured. Just goal + why. |
-| Scope | Sarge | Recon done, acceptance criteria written, "done" defined. |
-| Ready | Triage → Foreman | Foreman's inbox. Triage checks deps + spec, promotes when clear. |
-| In Progress | Foreman | Foreman is building (auto/ branch, Claude Code). |
-| In Review | Foreman | PR open, CI running, code review. |
-| Verify | Foreman | Post-merge verification against acceptance criteria. |
-| Done | Foreman | Shipped and verified. |
+| File | What it tells you |
+|---|---|
+| [`CLAUDE.md`](CLAUDE.md) | Foreman's full operational model (board flow, phases, escalation, design system awareness, lessons) |
+| [`orchestrator.sh`](orchestrator.sh) | Entry point — the loop that runs phases in order with bounded execution |
+| [`phases/build-ticket.sh`](phases/build-ticket.sh) | Per-ticket build executor — worktree creation, Claude dispatch, PR creation, retry logic |
+| [`phases/inspect.sh`](phases/inspect.sh) | Inspector v1 — Verify→Done gate via refactor-allowlist + LLM classify+judge |
+| [`phases/code-review.sh`](phases/code-review.sh) | Code-reviewer dispatch + auto-merge gate |
+| [`prompts/build.md`](prompts/build.md) | The autonomous build prompt |
+| [`config/board-ids.sh`](config/board-ids.sh) | GitHub Project board IDs (currently hardcoded to `getqatalyst` board #5; V1 parameterizes) |
 
----
+## V0.5 ≠ V1 (what won't run for you)
 
-## Gateway Checks
+Reading the bundle as documentation is the right V0.5 framing. Trying to run `./orchestrator.sh` will hit:
 
-Nothing moves right without meeting its gate.
+- Hardcoded `FOREMAN_HOST=MacBook-Pro-2.local` in `config/env.sh:47` (V1 removes default)
+- `~/Projects/.index.json` lookup at `lib/repos.sh:16` (V1 makes optional + adds existence check)
+- `PROJECT_ORG=getqatalyst` + `PROJECT_NUMBER=5` in `config/board-ids.sh` (V1 parameterizes via env)
+- `stat -f %m` macOS-only call at `orchestrator.sh:97` (V1 adds Linux portability)
+- `date +%-d` BSD-only at `orchestrator.sh:582` (V1 fixes)
+- Personal user references (`jorjani` in code-review allowlist; V1 strips ~173 `getqatalyst` refs + ~9 `jorjani` refs)
 
-**G1 Parking → Pitch:** Problem statement exists, not duplicate, aligns with priorities.
+The V1 hidden-coupling fix list lives in top-level `manifest.yaml` → `v1_roadmap.portability_fixes`.
 
-**G2 Pitch → Scope:** Interview done, recon report with findings and options. Algorithm pass: what was questioned, deleted, simplified.
+## Inspector lives inside
 
-**G3 Scope → Ready:** Triage checks two gates: (1) Dependency gate -- if "Depends on #N" exists and any dep is still open, the issue stays in Scope (not a spec problem, just waiting). (2) Spec gate -- issue contract complete (Goal/AC/Context/OOS/Size), AC testable, size estimated. Ready checklist passes (see `config/ready-templates.md`).
+There's no `agents/inspector/` — Inspector is a Foreman *phase*, not a freestanding agent. The implementation is split across:
 
-**G4 Ready → In Progress:** Foreman posts plan before coding. Appetite set (XS=1hr, S=1day, M=3days, L=5days).
+- [`phases/inspect.sh`](phases/inspect.sh) — the phase script (deterministic auto-promote allowlist + LLM fallback)
+- [`lib/inspect.sh`](lib/inspect.sh) — shared helpers
+- [`prompts/inspect-classify.md`](prompts/inspect-classify.md) — Haiku-tier file-extension classifier
+- [`prompts/inspect-judge.md`](prompts/inspect-judge.md) — Sonnet-tier evidence judge
 
-**G5 In Progress → In Review:** PR exists. CI passes. Diff within scope bounds.
+Promoting Inspector to a freestanding agent in `agents/inspector/` was considered + rejected — Inspector has zero standalone runtime and is tightly coupled to Foreman's column model + log streams. Documented in [`../README.md`](../README.md).
 
-**G6 In Review → Verify:** Merged to main. Deployed (if applicable).
+## What to take away even without running it
 
-**G7 Verify → Done:** Verified against AC. If failed → issue reopened, moved back to Scope.
+Read [`CLAUDE.md`](CLAUDE.md)'s "Lessons" section. It captures hard-won operational discoveries:
+- Bash 3.2 (macOS default) doesn't support `declare -A`
+- Foreman writes two log streams; grep both when investigating
+- Comment-prefix dedup via `comment_dedup_or_escalate` prevents noise loops
+- `repo_to_path` derived from `.index.json` beats per-file case-statement drift
+- Project status (`archived|parked|inactive`) is the strongest build-eligibility signal
+- `gh project item-list --format json` silently truncates at `--limit N`
 
----
+These are transferable lessons even if you build your own orchestrator in a different language.
 
-## Ready Checklist
+## V1 promises
 
-Full checklist in `config/ready-templates.md`. Summary:
+- Linux portability (drop launchd → cron/systemd/Railway)
+- `lib/agent.sh` abstraction so `$AGENT=codex` swaps the backend
+- Full scrub of personal identifiers + private project refs
+- Railway one-click Deploy button + Dockerfile
+- Sarge `headless` one-shot mode for non-Claude-Code agents
+- Memory pattern adapters per agent
 
-**Base (every item):**
-- [ ] Goal is one sentence
-- [ ] Acceptance criteria numbered and testable
-- [ ] "Done" defined — what does a human verify?
-- [ ] Size estimated (XS/S/M/L)
-- [ ] Files affected listed
-
-**Add for UI changes:** Current screenshot or description of what exists. Expected behavior described.
-
-**Add for Data Model:** Schema change, migration strategy, existing data impact.
-
-**Add for Integration:** External API docs, auth identified, failure mode described.
-
----
-
-## Sarge (PM Layer)
-
-Sarge lives in `getqatalyst/sarge`. It owns all PM work: interviewing David, codebase recon, writing scope briefs, curating the board from Pitch → Ready.
-
-**Foreman's role in the PM flow** is limited to two mechanical phases:
-- `phases/auto-enrich.sh` — fills spec gaps (file paths, schema refs, size) when Triage posts `NEEDS-SPEC:`. No product judgment. Escalates to David after 2 failed round-trips.
-- `phases/pipeline-digest.sh` — daily board digest: stuck items, Ready feed, auto-actions (close stale, promote shipped). Posts as GitHub issue (label: `pipeline-digest`).
-
----
-
-## Foreman (Builder Layer)
-
-**Runs via launchd** 5x/day at 00:15, 05:00, 10:00, 14:45, 19:30.
-
-**Phase order per run (loops until no work, max 3 cycles):**
-1. Verify — check merged PRs against AC
-2. Review — review open PRs, merge clean auto/ branches
-3. CI-Alert — flag CI failures
-4. Build — pick up Ready tickets, create worktrees, run Claude Code
-5. Triage — check Scope items, promote to Ready if checklist passes
-
-**Post-loop (once per run):**
-6. Auto-Enrich — mechanically fill NEEDS-SPEC gaps with codebase context (15 min timeout)
-7. Collect-Metrics
-8. Self-Improve (odd days only)
-
-**Circuit breakers:**
-- 3 consecutive build failures → back to Scope with log
-- Scope gap detected → back to Scope immediately
-- 2 round-trips between Foreman and Sarge → escalate to David
-- Daily build cap: 10 builds max per full run
-
-### Running
-
-```bash
-# Full daily run
-./orchestrator.sh
-
-# Single phase
-./orchestrator.sh verify
-./orchestrator.sh review
-./orchestrator.sh build
-./orchestrator.sh triage
-./orchestrator.sh auto-enrich
-./orchestrator.sh self-improve
-
-# Intake: idea -> spec'd issue
-./orchestrator.sh intake getqatalyst/Jobber "add duplicate detection before importing jobs"
-./orchestrator.sh intake getqatalyst/Sage "show token usage per conversation in the UI"
-
-# Board snapshot
-./orchestrator.sh status
-```
-
-### Managing launchd
-
-```bash
-# Check if loaded
-launchctl list | grep foreman
-
-# Reload after editing plist
-launchctl unload ~/Library/LaunchAgents/com.jorjani.foreman.plist
-launchctl load ~/Library/LaunchAgents/com.jorjani.foreman.plist
-
-# Manual trigger
-launchctl start com.jorjani.foreman
-```
-
----
-
-## Comment Prefix Bus
-
-Phases communicate via GitHub issue comments with these prefixes.
-
-| Prefix | Posted by | Read by |
-|--------|-----------|---------|
-| `NEEDS-SPEC:` | triage | triage, auto-enrich |
-| `SPEC-UPDATED:` | auto-enrich | triage, auto-enrich |
-| `ESCALATION:` | auto-enrich | auto-enrich |
-| `Automated triage:` | triage | triage |
-| `Automated review:` | review | review |
-| `Automated repair:` | repair | review |
-| `Automated verification:` | verify | verify |
-
-> Before changing a prefix: `grep -rn 'PREFIX' phases/` and update all hits in one PR. See `metrics/incidents.md` for what has broken in the past.
-
----
-
-## The Algorithm
-
-Applied at every scoping stage:
-1. Question every requirement — why does this need to exist?
-2. Delete anything you can — if you're not adding things back, you're not deleting enough
-3. Simplify what remains
-4. Accelerate cycle time
-5. Automate last — never automate a broken process
-
----
-
-## Agent Task Sizing
-
-Tasks follow a phased model: **Recon → Plan → Execute → Verify**. Each phase is its own task.
-
-| Size | Turns | Scope |
-|------|-------|-------|
-| XS | 1-5 | One command, one file read |
-| S | 5-20 | One file under 1,000 lines |
-| M | 20-50 | Multi-file, under 1,000 lines total |
-| L | Phase it | Break into Recon → Plan → Execute → Verify |
-
-Hard rule: never send a single file over 2,000 lines to one task.
-
----
-
-## Board Column IDs
-
-Defined in `config/board-ids.sh`. These IDs change whenever the board schema is modified — always update all downstream consumers (this config, Sarge task prompt, memory files) after any field change.
-
----
-
-## Repos
-
-| Repo | Priority | Description |
-|------|----------|-------------|
-| getqatalyst/Sage | P1 | LinkedIn content tool |
-| getqatalyst/coaches | P2 | Coaching platform |
-| getqatalyst/Jobber | P3 | Curated job board |
-| getqatalyst/product-studio | P4 | Product Studio |
-| getqatalyst/foreman | — | This repo (pipeline orchestrator) |
-
----
-
-## Structure
-
-```
-foreman/
-  orchestrator.sh             # Entry point
-  phases/
-    intake.sh                 # Phase 0: idea -> spec'd issue (interactive)
-    verify.sh                 # Phase 1: verify merged PRs against AC
-    review.sh                 # Phase 2: review + merge open PRs
-    build.sh                  # Phase 3: pick up Ready tickets
-    build-ticket.sh           # Per-ticket build executor (uses worktrees)
-    triage.sh                 # Phase 4: triage Scope tickets (dep gate + spec check)
-    auto-enrich.sh            # Phase 5: mechanically fill NEEDS-SPEC gaps (see getqatalyst/sarge for full PM scoping)
-    ci-alert.sh               # Post-review: detect CI pile-ups
-    collect-metrics.sh        # Parse daily logs into metrics/YYYY-MM-DD.json
-    self-improve.sh           # Phase 6: analyze metrics, propose prompt changes
-    status.sh                 # Board snapshot
-  prompts/
-    intake.md
-    build.md
-    review.md
-    triage.md
-    auto-enrich.md
-    self-improve.md
-  config/
-    board-ids.sh              # GitHub project board constants
-    ready-templates.md        # Ready checklist by item type
-    schedule.plist            # launchd schedule
-  metrics/                    # Structured JSON metrics + experiment tracker
-  results/                    # Debug logs (7-day retention)
-```
+Track in top-level `manifest.yaml` → `v1_roadmap`.
