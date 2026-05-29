@@ -53,7 +53,7 @@ Visible-but-acceptable for V0.5; full scrub lands in V1:
 - Slack channel naming conventions tied to David's workspaces
 - References to David by name in foreman/sarge agent context (beyond sarge-subagent.md which IS scrubbed)
 
-**Honest framing:** read `agents/foreman/` and `agents/sarge/` as **documentation of an opinionated system that runs on David's box**, not as portable code you can `./orchestrator.sh` against your own GitHub org. The V0.5 demo path (`bin/scope` + `commands/` + `examples/`, shipping in PR #3) IS scrubbed and IS runnable.
+**Honest framing:** read `agents/foreman/` and `agents/sarge/` as **documentation of an opinionated system that runs on David's box**, not as portable code you can `./orchestrator.sh` against your own GitHub org. The V0.5 demo path (`scope` + `commands/` + `examples/`, shipping in PR #3) IS scrubbed and IS runnable.
 
 V1 (3-4 weeks) does the full scrub. See top-level `manifest.yaml` → `v1_roadmap`.
 
@@ -75,7 +75,7 @@ git -C /path/to/foreman rev-parse HEAD
 # rsync excludes didn't catch. Run this before committing the rebase:
 grep -rE 'sntryu_|sk_live_|ghp_|ghs_|github_pat_|xoxb-(?!test)|xoxp-(?!test)' agents/
 
-# Re-apply demo-path scrubs (commands/, bin/scope, examples/)
+# Re-apply demo-path scrubs (commands/, scope, examples/)
 # These don't auto-flow from upstream; they're V0.5-specific layers.
 
 # Re-apply scrubs from the inventory above (BUILD-BRIEF.md, plans/,

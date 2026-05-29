@@ -23,13 +23,13 @@ See [`examples/flavor-comparison.html`](../examples/flavor-comparison.html) to v
 
 ## How to select
 
-`bin/visual` reads two environment variables: `FLAVOR` (aesthetic vocabulary) and `BRAND` (brand chrome placeholder used in titles, breadcrumbs, course codes, etc).
+`draw` reads two environment variables: `FLAVOR` (aesthetic vocabulary) and `BRAND` (brand chrome placeholder used in titles, breadcrumbs, course codes, etc).
 
 ```bash
-./bin/visual "your idea"                                # FLAVOR=linear (default), BRAND=AcmeU 101 · ReviewLab
-FLAVOR=apple ./bin/visual "your idea"                   # switch flavor only
-BRAND="YourProduct" ./bin/visual "your idea"            # set brand chrome only
-FLAVOR=airbnb BRAND="StayCo" ./bin/visual "your idea"
+./draw "your idea"                                # FLAVOR=linear (default), BRAND=AcmeU 101 · ReviewLab
+FLAVOR=apple ./draw "your idea"                   # switch flavor only
+BRAND="YourProduct" ./draw "your idea"            # set brand chrome only
+FLAVOR=airbnb BRAND="StayCo" ./draw "your idea"
 ```
 
 Unknown flavor names fall back to `linear` with a warning. `BRAND` has no validation — whatever you provide gets pasted into chrome verbatim.

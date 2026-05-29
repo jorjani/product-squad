@@ -4,6 +4,10 @@
 
 **Usage:** `/experience [feature description or work-in-progress]`
 
+**Consumes:** A feature description OR `/shape`'s output. When given `/shape` output, lift the selected option and the audience hint — don't re-litigate what to build. This stage's only job is the felt change.
+
+**Delivers:** A 4-block artifact — Experience / Audience / [Lens] / Delta. The Audience line seeds `/owit`'s scenario actor; the Delta is what `/owit` scenarios test as the success condition; the Lens vocabulary phrases `/owit`'s On/When/If/Then clauses.
+
 ---
 
 ## What this command produces

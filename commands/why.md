@@ -2,6 +2,10 @@
 
 Before diving in, go one level up. The user said what they want to do. Your job is to articulate **why it matters** -- what does this enable one level above?
 
+**Consumes:** A raw feature idea or one-line ask.
+
+**Delivers:** A 1-2 sentence outcome statement — what this enables one level up. Feeds `/shape`'s "Why it matters" in Step 2.
+
 ## Process
 
 1. **Restate the task** in one line (what the user asked for)

@@ -6,8 +6,10 @@ You are an LLM agent encountering Product Squad. Read this file first.
 
 Product Squad is an opinionated agentic dev OS. **V0.5 ships two wedges:**
 
-- **Primary — visual fidelity ladder** (sketch → wireframe → mockup → prototype) via `bin/visual`
-- **Secondary — product/scoping cluster** (why → shape → experience → owit → elon) via `bin/scope`
+- **Primary — visual fidelity ladder** (sketch → wireframe → mockup → prototype) via `./draw`
+- **Secondary — product/scoping cluster** (why → shape → experience → owit → elon) via `./scope`
+
+**How the two clusters connect.** The product cluster decides *what* to build and *for whom*; the visual cluster decides *how it looks*. They meet twice: `/shape`'s selected option is the idea you hand to `./draw`; `/owit`'s scenarios become the state coverage `/prototype` exhausts. Each command in the product cluster names what it Consumes from the prior stage and what it Delivers to the next — the chain is explicit, not inferred.
 
 Five named agents exist in snapshot form under `agents/`, but full runtime + Foreman portability lands in V1.
 
@@ -16,8 +18,8 @@ Five named agents exist in snapshot form under `agents/`, but full runtime + For
 1. **Parse [`manifest.yaml`](manifest.yaml).** Machine-readable index of every agent, command, demo, and roadmap item. Status per-agent: `runnable_v0_5: true | false | partial`.
 2. **Read this file.** You're already here. Mental model + contribution rules.
 3. **Try the demos:**
-   - `./bin/visual "your feature idea"` — renders 4-tier visual ladder; opens HTML in browser on macOS, prints file paths on Linux. Set `FLAVOR=linear|apple|airbnb|uber` to switch the aesthetic vocabulary (default `linear`). Set `BRAND="YourProduct"` to override the brand placeholder used in chrome (default `AcmeU 101 · ReviewLab`). See [`.studio/design.md`](.studio/design.md) and [`examples/flavor-comparison.html`](examples/flavor-comparison.html).
-   - `./bin/scope "your feature idea"` — writes 5 scoping prompts for sequential paste into Claude Code
+   - `./draw "your feature idea"` — renders 4-tier visual ladder; opens HTML in browser on macOS, prints file paths on Linux. Set `FLAVOR=linear|apple|airbnb|uber` to switch the aesthetic vocabulary (default `linear`). Set `BRAND="YourProduct"` to override the brand placeholder used in chrome (default `AcmeU 101 · ReviewLab`). See [`.studio/design.md`](.studio/design.md) and [`examples/flavor-comparison.html`](examples/flavor-comparison.html).
+   - `./scope "your feature idea"` — writes 5 scoping prompts for sequential paste into Claude Code
 4. **Open `agents/<name>/README.md`** for the agent you're acting as (snapshot context — full `CONTRACT.md` per-agent arrives V1).
 
 ## The crew (V0.5 status)
@@ -25,7 +27,7 @@ Five named agents exist in snapshot form under `agents/`, but full runtime + For
 | Agent | Role | V0.5 runnable | Where it lives |
 |---|---|---|---|
 | **Foreman** | Orchestrator | ❌ snapshot | `agents/foreman/` |
-| **Sarge** | PM scoping (idea → brief) | ✅ partial (via `bin/scope`) | `agents/sarge/` + `commands/{why,shape,experience,owit,elon}.md` |
+| **Sarge** | PM scoping (idea → brief) | ✅ partial (via `scope`) | `agents/sarge/` + `commands/{why,shape,experience,owit,elon}.md` |
 | **Inspector** | Verifier (Verify → Done gate) | ❌ lives in Foreman | `agents/foreman/phases/inspect.sh` |
 | **Code-Reviewer** | PR review (severity-ranked) | ✅ Claude Code subagent | `agents/code-reviewer.md` |
 | **Build-Fixer** | Minimal-diff build repair | ✅ Claude Code subagent | `agents/build-fixer.md` |

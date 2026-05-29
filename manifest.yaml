@@ -17,14 +17,14 @@ v0_5:
     key required (uses Claude Code subscription OAuth).
   demos:
     visual:
-      entry: bin/visual
+      entry: draw
       fixture: examples/idea-fixture.md
       output: /tmp/product-squad-demo-<ts>/
       time: ~60-120 sec
       cost: ~$0.30-0.50
       requires: [claude-code-subscription]
     scope:
-      entry: bin/scope
+      entry: scope
       fixture: examples/idea-fixture.md
       output: /tmp/product-squad-scope-<ts>/
       time: ~15-30 min (paste-and-think)
@@ -67,7 +67,7 @@ v0_5:
     - path: .studio/brand-flavors/uber.md
       purpose: Mobility platform / operational console — pure black on white, heavy display type, sharp utility radii, semantic-only color
   flavor_selection:
-    mechanism: FLAVOR env var read by bin/visual
+    mechanism: FLAVOR env var read by draw
     default: linear
     fallback: unknown flavor name → linear + warning
     docs: .studio/design.md
@@ -103,7 +103,7 @@ agents:
     runnable_v0_5: partial
     notes: |
       The scoping ladder (commands/why, shape, experience, owit, elon)
-      ships as runnable in V0.5 via bin/scope. Full interactive Sarge
+      ships as runnable in V0.5 via scope. Full interactive Sarge
       subagent (C0-C5) arrives V1 — see v1_roadmap.sarge_headless.
   inspector:
     role: verifier

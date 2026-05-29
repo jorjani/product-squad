@@ -1,11 +1,11 @@
 #!/bin/bash
-# bin/scope — V0.5 product cluster wrapper
+# scope — V0.5 product cluster wrapper
 #
 # Writes 5 pre-filled prompts (the commander's intent + scoping ladder)
 # to a temp dir. Paste each into Claude Code in sequence — each stage's
 # output feeds the next.
 #
-# Usage: bin/scope "your feature idea in one sentence"
+# Usage: scope "your feature idea in one sentence"
 #
 # The 5 stages teach a transferable product-craft pattern:
 #   1. /why         frame the outcome (job-to-be-done)
@@ -25,10 +25,10 @@ set -euo pipefail
 IDEA="${1:-}"
 if [ -z "$IDEA" ]; then
   cat <<'USAGE'
-Usage: bin/scope "your feature idea in one sentence"
+Usage: scope "your feature idea in one sentence"
 
 Example:
-  bin/scope "students upload resume to course project for peer review"
+  scope "students upload resume to course project for peer review"
 
 Writes 5 pre-filled prompts to a temp dir. Each prompt has your idea
 inserted at the end. Paste each into Claude Code in sequence.
@@ -84,7 +84,7 @@ write_stage() {
 
 HEADER
   # Strip $ARGUMENTS literal token (Claude Code slash-command interpolation
-  # placeholder) — bin/scope doesn't run as a slash command, so the token
+  # placeholder) — scope doesn't run as a slash command, so the token
   # would leak as raw text into the prompt and confuse the reader.
   sed 's/\$ARGUMENTS//g' "$cmd_path" >> "$out"
   cat >> "$out" <<FOOTER

@@ -13,7 +13,7 @@ Two wedges, both single-command. Pick either or run both.
 ```bash
 git clone git@github.com:jorjani/product-squad.git
 cd product-squad
-./bin/visual "students upload resume to course project for peer review"
+./draw "students upload resume to course project for peer review"
 # → sketch (ASCII in terminal) + wireframe.html + mockup.html + prototype.html
 # → each HTML auto-opens in your browser (macOS); Linux prints the file path
 ```
@@ -23,7 +23,7 @@ Time: ~60-120 seconds. Cost: ~$0.30-0.50 in Claude Code subscription usage.
 **Switch brand flavor** to see the same idea rendered in a different aesthetic vocabulary:
 
 ```bash
-FLAVOR=apple ./bin/visual "students upload resume to course project for peer review"
+FLAVOR=apple ./draw "students upload resume to course project for peer review"
 # Other flavors: linear (default) · airbnb · uber
 # See .studio/design.md for the full set + how to author your own.
 ```
@@ -31,7 +31,7 @@ FLAVOR=apple ./bin/visual "students upload resume to course project for peer rev
 ### 🧠 Product cluster (SECONDARY)
 
 ```bash
-./bin/scope "students upload resume to course project for peer review"
+./scope "students upload resume to course project for peer review"
 # → writes 5 pre-filled prompts to /tmp/product-squad-scope-<ts>/
 # → paste each into Claude Code in sequence (why → shape → experience → owit → elon)
 ```
@@ -55,7 +55,7 @@ A named crew of AI agents that owns the software dev pipeline — scope, build, 
 | Agent | Role | V0.5 status |
 |---|---|---|
 | **Foreman** | Orchestrator | snapshot only — readable, not runnable |
-| **Sarge** | PM scoping (idea → brief) | scoping prompts runnable via `bin/scope`; full runtime in V1 |
+| **Sarge** | PM scoping (idea → brief) | scoping prompts runnable via `scope`; full runtime in V1 |
 | **Inspector** | Verifier (Verify → Done gate) | snapshot only — lives inside Foreman |
 | **Code-Reviewer** | PR review with severity-ranked findings | runnable as a Claude Code subagent |
 | **Build-Fixer** | Minimal-diff repair for failing builds | runnable as a Claude Code subagent |
