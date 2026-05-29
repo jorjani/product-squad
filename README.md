@@ -13,7 +13,7 @@ Two wedges, both single-command. Pick either or run both.
 ```bash
 git clone git@github.com:jorjani/product-squad.git
 cd product-squad
-./draw "students upload resume to course project for peer review"
+./draw "users configure notification preferences across email, push, and in-app channels"
 # → sketch (ASCII in terminal) + wireframe.html + mockup.html + prototype.html
 # → each HTML auto-opens in your browser (macOS); Linux prints the file path
 ```
@@ -23,7 +23,7 @@ Time: ~60-120 seconds. Cost: ~$0.30-0.50 in Claude Code subscription usage.
 **Switch brand flavor** to see the same idea rendered in a different aesthetic vocabulary:
 
 ```bash
-FLAVOR=apple ./draw "students upload resume to course project for peer review"
+FLAVOR=apple ./draw "users configure notification preferences across email, push, and in-app channels"
 # Other flavors: linear (default) · airbnb · uber
 # See .studio/design.md for the full set + how to author your own.
 ```
@@ -31,7 +31,7 @@ FLAVOR=apple ./draw "students upload resume to course project for peer review"
 ### 🧠 Product cluster (SECONDARY)
 
 ```bash
-./scope "students upload resume to course project for peer review"
+./scope "users configure notification preferences across email, push, and in-app channels"
 # → writes 5 pre-filled prompts to /tmp/product-squad-scope-<ts>/
 # → paste each into Claude Code in sequence (why → shape → experience → owit → elon)
 ```

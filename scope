@@ -28,7 +28,7 @@ if [ -z "$IDEA" ]; then
 Usage: scope "your feature idea in one sentence"
 
 Example:
-  scope "students upload resume to course project for peer review"
+  scope "users configure notification preferences across email, push, and in-app channels"
 
 Writes 5 pre-filled prompts to a temp dir. Each prompt has your idea
 inserted at the end. Paste each into Claude Code in sequence.

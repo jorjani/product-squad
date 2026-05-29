@@ -7,7 +7,7 @@ Realistic feature ideas to try with `draw` (V0.5 PRIMARY wedge — visual fideli
 `draw "idea"` runs sketch → wireframe → mockup → prototype, auto-opens each rendered HTML in your browser (macOS); on Linux the file paths are printed instead. ~60-120 sec, ~$0.30-0.50 in Claude Code subscription usage.
 
 ```bash
-./draw "students upload resume to course project for peer review"
+./draw "users configure notification preferences across email, push, and in-app channels"
 ./draw "dark mode toggle for the dashboard sidebar"
 ./draw "scheduling form for booking 30-minute coffee chats with a mentor"
 ./draw "feed of recent commits across all repos a user follows"
@@ -20,7 +20,7 @@ Realistic feature ideas to try with `draw` (V0.5 PRIMARY wedge — visual fideli
 `scope "idea"` writes 5 pre-filled prompts (why → shape → experience → owit → elon) to `/tmp/product-squad-scope-<ts>/`. You paste each into Claude Code in sequence — each stage's output feeds the next.
 
 ```bash
-./scope "students upload resume to course project for peer review"
+./scope "users configure notification preferences across email, push, and in-app channels"
 ```
 
 The 5 stages teach a transferable product-craft pattern:

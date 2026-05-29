@@ -24,7 +24,7 @@ if [ -z "$IDEA" ]; then
 Usage: draw "your feature idea in one sentence"
 
 Example:
-  draw "students upload resume to course project for peer review"
+  draw "users configure notification preferences across email, push, and in-app channels"
 
 The wrapper runs 4 visual tiers in sequence:
   T0  sketch     — ASCII layout, printed to terminal

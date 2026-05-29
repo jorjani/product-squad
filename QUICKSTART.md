@@ -27,7 +27,7 @@ cd product-squad
 ## Demo 1 — Visual fidelity ladder (PRIMARY)
 
 ```bash
-./draw "students upload resume to course project for peer review"
+./draw "users configure notification preferences across email, push, and in-app channels"
 ```
 
 What happens:
@@ -77,7 +77,7 @@ BRAND="Acme Talent" FLAVOR=linear ./draw "candidates submit applications for rev
 ## Demo 2 — Commander's intent + scoping (SECONDARY)
 
 ```bash
-./scope "students upload resume to course project for peer review"
+./scope "users configure notification preferences across email, push, and in-app channels"
 ```
 
 What happens:
