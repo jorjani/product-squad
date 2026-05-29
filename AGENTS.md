@@ -9,7 +9,7 @@ Product Squad is an opinionated agentic dev OS. **V0.5 ships two wedges:**
 - **Primary — visual fidelity ladder** (sketch → wireframe → mockup → prototype) via `./draw`
 - **Secondary — product/scoping cluster** (why → shape → experience → owit → elon) via `./scope`
 
-**How the two clusters connect.** The product cluster decides *what* to build and *for whom*; the visual cluster decides *how it looks*. They meet twice: `/shape`'s selected option is the idea you hand to `./draw`; `/owit`'s scenarios become the state coverage `/prototype` exhausts. Each command in the product cluster names what it Consumes from the prior stage and what it Delivers to the next — the chain is explicit, not inferred.
+**How the two clusters connect.** The product cluster decides *what* to build and *for whom*; the visual cluster decides *how it looks*. They meet twice: `/shape`'s selected option is the idea you hand to `./draw`; `/owit`'s scenarios become the state coverage `/wireframe` maps (and `/prototype` then makes interactive). Each command in the product cluster names what it Consumes from the prior stage and what it Delivers to the next — the chain is explicit, not inferred.
 
 Five named agents exist in snapshot form under `agents/`, but full runtime + Foreman portability lands in V1.
 
