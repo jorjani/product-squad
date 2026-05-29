@@ -44,19 +44,20 @@ fi
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-# Resolve FLAVOR env var. Default editorial. Unknown name falls back with a
-# warning so a typo doesn't silently apply the wrong tokens. .studio/design.md
-# is the authoritative list; this script duplicates the names for the fallback
-# check so cold-start runs don't need to parse markdown.
-FLAVOR="${FLAVOR:-editorial}"
+# Resolve FLAVOR env var. Default linear (matches bundle's agent-OS identity).
+# Unknown name falls back with a warning so a typo doesn't silently apply the
+# wrong tokens. .studio/design.md is the authoritative list; this script
+# duplicates the names for the fallback check so cold-start runs don't need to
+# parse markdown.
+FLAVOR="${FLAVOR:-linear}"
 FLAVOR_PATH="$REPO_ROOT/.studio/brand-flavors/$FLAVOR.md"
 if [ ! -f "$FLAVOR_PATH" ]; then
-  echo "⚠ FLAVOR='$FLAVOR' not found at $FLAVOR_PATH — falling back to editorial."
-  echo "  Available flavors: editorial, industrial, playful, brutalist"
+  echo "⚠ FLAVOR='$FLAVOR' not found at $FLAVOR_PATH — falling back to linear."
+  echo "  Available flavors: linear, apple, airbnb, uber"
   echo "  See .studio/design.md for the full list."
   echo ""
-  FLAVOR="editorial"
-  FLAVOR_PATH="$REPO_ROOT/.studio/brand-flavors/editorial.md"
+  FLAVOR="linear"
+  FLAVOR_PATH="$REPO_ROOT/.studio/brand-flavors/linear.md"
 fi
 
 # Brand placeholder. The model otherwise invents specific real-world identifiers
@@ -226,9 +227,9 @@ echo "  Done. T0 sketch → T1 wireframe → T3 mockup → T4 prototype"
 printf '  All artifacts: %s\n' "$OUT_DIR"
 echo ""
 echo "  Try the same idea with a different flavor:"
-printf '    FLAVOR=industrial ./bin/visual %q\n' "$IDEA"
-printf '    FLAVOR=playful    ./bin/visual %q\n' "$IDEA"
-printf '    FLAVOR=brutalist  ./bin/visual %q\n' "$IDEA"
+printf '    FLAVOR=apple   ./bin/visual %q\n' "$IDEA"
+printf '    FLAVOR=airbnb  ./bin/visual %q\n' "$IDEA"
+printf '    FLAVOR=uber    ./bin/visual %q\n' "$IDEA"
 echo ""
 echo "  Or shape the product around the idea (5-stage scoping cluster):"
 printf '    ./bin/scope %q\n' "$IDEA"

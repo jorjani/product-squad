@@ -56,11 +56,13 @@ See [`examples/idea-fixture.md`](examples/idea-fixture.md) for phrasing guidance
 The visual ladder ships with 4 aesthetic vocabularies. Each is a complete brand opinion — tokens + Do/Don'ts that stop the model from defaulting to vanilla Tailwind output.
 
 ```bash
-FLAVOR=editorial  ./bin/visual "your idea"   # default; calm, content-first, Inter
-FLAVOR=industrial ./bin/visual "your idea"   # dark, dev-tool, IBM Plex Sans + Mono
-FLAVOR=playful    ./bin/visual "your idea"   # warm, consumer-app, Manrope + shadows
-FLAVOR=brutalist  ./bin/visual "your idea"   # stark, monospace, 0 radius, neon accent
+FLAVOR=linear  ./bin/visual "your idea"   # default; dark, agent-OS, Inter, monospace identifiers
+FLAVOR=apple   ./bin/visual "your idea"   # premium consumer marketing, white, near-monochrome, generous whitespace
+FLAVOR=airbnb  ./bin/visual "your idea"   # marketplace, white, coral primary, Plus Jakarta Sans, soft-shadow cards
+FLAVOR=uber    ./bin/visual "your idea"   # operational console, pure black on white, heavy display type
 ```
+
+Open [`examples/flavor-comparison.html`](examples/flavor-comparison.html) in your browser to see all four rendered on the same UI side-by-side.
 
 Running the same idea through two flavors back-to-back is the fastest way to feel how design tokens shape output. See [`.studio/design.md`](.studio/design.md) for the full flavor catalog + how to author your own.
 
@@ -69,7 +71,7 @@ Running the same idea through two flavors back-to-back is the fastest way to fee
 By default the visual ladder uses a placeholder brand (`AcmeU 101 · ReviewLab`) instead of inventing real-world identifiers in chrome (page titles, breadcrumbs, course codes). To pin a specific brand:
 
 ```bash
-BRAND="JobberHQ.com" FLAVOR=industrial ./bin/visual "candidates submit applications for review"
+BRAND="Acme Talent" FLAVOR=linear ./bin/visual "candidates submit applications for review"
 ```
 
 ## Demo 2 — Commander's intent + scoping (SECONDARY)
@@ -122,6 +124,6 @@ Total: ~15-30 min of paste-and-think. Cost: ~$0.30-0.50 if you go deep on all 5 
 
 Try these in order — each builds on the last:
 
-1. **Re-run with a different flavor on your own idea** — `FLAVOR=industrial ./bin/visual "your idea"`. Same ladder, different aesthetic. The four flavors aren't cosmetic; each teaches a distinct theory of taste (see [`.studio/brand-flavors/`](.studio/brand-flavors/)).
+1. **Re-run with a different flavor on your own idea** — `FLAVOR=apple ./bin/visual "your idea"`. Same ladder, different aesthetic. The four flavors aren't cosmetic; each teaches a distinct theory of taste (see [`.studio/brand-flavors/`](.studio/brand-flavors/)).
 2. **Run `bin/scope` on the same idea** — `./bin/scope "your idea"`. The visual ladder shows *what*; the scoping cluster shows *why* and *what to build first*.
 3. **Then read the system docs** — [`AGENTS.md`](AGENTS.md) for the mental model, [`commands/shape.md`](commands/shape.md) for the options-menu + capability-delta pattern, [`manifest.yaml`](manifest.yaml) for the V1 roadmap (Foreman + Inspector runtime, Codex adapter, Railway one-click deploy).

@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Flavor comparison — product-squad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;510;600;700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* =================================================================
+     Page chrome — neutral wrapper around the 4 flavor panes
+     ================================================================= */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #0e0e12;
+    color: #e8e9ee;
+    padding: 32px 24px;
+    line-height: 1.5;
+  }
+  .page-header {
+    max-width: 1640px;
+    margin: 0 auto 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #26262f;
+  }
+  .page-header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .page-header p {
+    font-size: 13px;
+    color: #9098a8;
+    margin-top: 6px;
+    max-width: 760px;
+  }
+  .page-header code {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 12px;
+    color: #7dd3fc;
+    background: #1a1a22;
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+  .grid {
+    max-width: 1640px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 1100px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+  .pane {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #2a2a32;
+    background: #15151b;
+  }
+  .pane-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    background: #0f0f13;
+    color: #9098a8;
+    font-size: 11px;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    border-bottom: 1px solid #2a2a32;
+  }
+  .pane-label .name { color: #e8e9ee; }
+  .pane-label .id   { color: #6e6e73; text-transform: none; font-size: 10px; }
+
+  /* =================================================================
+     Shared pane shell — pure flavor-token CSS variables follow
+     ================================================================= */
+  .flavor {
+    padding: 28px 28px 32px;
+    min-height: 540px;
+  }
+  .flavor h2          { font-size: var(--h2-size); font-weight: var(--h2-weight); letter-spacing: var(--h2-track, normal); color: var(--on-surface); }
+  .flavor .subtitle   { color: var(--on-surface-2); margin-bottom: 24px; font-size: var(--body-size); }
+  .flavor .eyebrow    { font-size: var(--eyebrow-size); color: var(--on-surface-2); text-transform: var(--eyebrow-case, none); letter-spacing: var(--eyebrow-track, normal); margin-bottom: 8px; }
+  .flavor .stats      { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--stat-gap); margin-bottom: 24px; }
+  .flavor .stat       { background: var(--surface); border: 1px solid var(--border); border-radius: var(--stat-radius); padding: var(--stat-pad); box-shadow: var(--card-shadow, none); }
+  .flavor .stat-label { font-size: var(--stat-label-size); color: var(--on-surface-2); text-transform: var(--stat-label-case, none); letter-spacing: var(--stat-label-track, normal); margin-bottom: 8px; }
+  .flavor .stat-value { font-family: var(--stat-value-font); font-size: var(--stat-value-size); font-weight: var(--stat-value-weight); font-variant-numeric: tabular-nums; color: var(--on-surface); }
+  .flavor .stat-meta  { font-family: var(--stat-meta-font, inherit); font-size: var(--stat-meta-size); color: var(--on-surface-3); margin-top: 4px; }
+  .flavor .callout    { background: var(--callout-bg); border-left: 2px solid var(--callout-accent); padding: 12px 16px; border-radius: var(--callout-radius, 0 4px 4px 0); margin-bottom: 20px; color: var(--on-surface-2); font-size: var(--body-size); }
+  .flavor .callout strong { color: var(--callout-accent); font-weight: 600; }
+  .flavor .callout code   { font-family: "JetBrains Mono", ui-monospace, monospace; color: var(--identifier, var(--callout-accent)); }
+  .flavor .panel      { background: var(--surface); border: 1px solid var(--border); border-radius: var(--panel-radius); overflow: hidden; margin-bottom: 24px; box-shadow: var(--card-shadow, none); }
+  .flavor .panel-head { padding: var(--panel-head-pad); background: var(--panel-head-bg, transparent); border-bottom: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: space-between; }
+  .flavor .panel-head h3 { font-size: var(--panel-head-size); font-weight: var(--panel-head-weight); text-transform: var(--panel-head-case, none); letter-spacing: var(--panel-head-track, normal); color: var(--panel-head-color, var(--on-surface)); }
+  .flavor .panel-head .count { font-family: var(--panel-head-meta-font, inherit); font-size: var(--panel-head-size); color: var(--on-surface-2); }
+  .flavor table       { width: 100%; border-collapse: collapse; font-size: var(--body-size); }
+  .flavor th          { text-align: left; padding: var(--th-pad); color: var(--on-surface-2); font-weight: var(--th-weight); font-size: var(--th-size); text-transform: var(--th-case, none); letter-spacing: var(--th-track, normal); border-bottom: 1px solid var(--border-strong); background: var(--th-bg, transparent); }
+  .flavor td          { padding: var(--td-pad); border-bottom: 1px solid var(--border); color: var(--on-surface); }
+  .flavor tr:last-child td { border-bottom: none; }
+  .flavor code, .flavor .mono { font-family: var(--font-mono); color: var(--identifier, var(--on-surface)); font-size: var(--body-size); }
+  .flavor .badge { display: inline-block; padding: var(--badge-pad); border-radius: var(--badge-radius); font-family: var(--badge-font, inherit); font-size: var(--badge-size); font-weight: var(--badge-weight); border: var(--badge-border-width, 0) solid; text-transform: var(--badge-case, none); }
+  .flavor .badge.ok   { background: var(--ok-bg);   color: var(--success); border-color: var(--success); }
+  .flavor .badge.warn { background: var(--warn-bg); color: var(--warning); border-color: var(--warning); }
+  .flavor .actions    { display: flex; gap: 12px; justify-content: flex-end; align-items: center; }
+  .flavor .btn { padding: var(--btn-pad); border-radius: var(--btn-radius); font-size: var(--btn-size); font-weight: var(--btn-weight); border: 1px solid transparent; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 8px; }
+  .flavor .btn.primary   { background: var(--primary); color: var(--primary-text, #fff); }
+  .flavor .btn.primary:hover { background: var(--primary-hover); }
+  .flavor .btn.secondary { background: transparent; color: var(--on-surface); border-color: var(--border-strong); }
+  .flavor .btn .kbd { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; color: var(--kbd-color, rgba(255,255,255,0.55)); }
+
+  /* =================================================================
+     FLAVOR: linear — .studio/brand-flavors/linear.md
+     ================================================================= */
+  .linear {
+    --primary: #5e6ad2;
+    --primary-hover: #6e7ae0;
+    --primary-text: #ffffff;
+    --canvas: #08090a;
+    --surface: #101113;
+    --surface-2: #161719;
+    --surface-3: #1f2023;
+    --on-surface: #f7f8f8;
+    --on-surface-2: #8a8f98;
+    --on-surface-3: #62666d;
+    --border: #23252a;
+    --border-strong: #34373c;
+    --success: #4cb782;
+    --warning: #f2994a;
+    --identifier: #7dd3fc;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+    background: var(--canvas);
+    font-family: Inter, "Inter Display", -apple-system, sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--on-surface);
+
+    --body-size: 13px;
+    --eyebrow-size: 11px; --eyebrow-case: uppercase; --eyebrow-track: 0.05em;
+    --h2-size: 20px; --h2-weight: 510; --h2-track: -0.01em;
+    --stat-gap: 12px; --stat-radius: 6px; --stat-pad: 14px;
+    --stat-label-size: 11px; --stat-label-case: uppercase; --stat-label-track: 0.05em;
+    --stat-value-font: var(--font-mono); --stat-value-size: 22px; --stat-value-weight: 510;
+    --stat-meta-font: var(--font-mono); --stat-meta-size: 11px;
+    --callout-bg: var(--surface-2); --callout-accent: var(--warning); --callout-radius: 0 4px 4px 0;
+    --panel-radius: 6px; --panel-head-pad: 10px 14px; --panel-head-bg: var(--surface-2);
+    --panel-head-size: 11px; --panel-head-weight: 510; --panel-head-case: uppercase; --panel-head-track: 0.06em; --panel-head-color: var(--on-surface-2); --panel-head-meta-font: var(--font-mono);
+    --th-pad: 8px 14px; --th-size: 11px; --th-weight: 510; --th-case: uppercase; --th-track: 0.05em; --th-bg: var(--surface-2);
+    --td-pad: 9px 14px;
+    --badge-pad: 1px 6px; --badge-radius: 4px; --badge-font: var(--font-mono); --badge-size: 11px; --badge-weight: 500; --badge-border-width: 1px;
+    --ok-bg: rgba(76,183,130,0.14); --warn-bg: rgba(242,153,74,0.14);
+    --btn-pad: 5px 10px; --btn-radius: 6px; --btn-size: 13px; --btn-weight: 500;
+  }
+
+  /* =================================================================
+     FLAVOR: apple — .studio/brand-flavors/apple.md
+     ================================================================= */
+  .apple {
+    --primary: #0071E3;
+    --primary-hover: #0077ED;
+    --primary-text: #ffffff;
+    --canvas: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #FBFBFD;
+    --surface-3: #F5F5F7;
+    --on-surface: #1D1D1F;
+    --on-surface-2: #6E6E73;
+    --on-surface-3: #86868B;
+    --border: #D2D2D7;
+    --border-strong: #86868B;
+    --success: #29A745;
+    --warning: #F56300;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+    background: var(--canvas);
+    font-family: "Inter Display", Inter, -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.47;
+    color: var(--on-surface);
+
+    --body-size: 17px;
+    --eyebrow-size: 14px;
+    --h2-size: 32px; --h2-weight: 600; --h2-track: -0.02em;
+    --stat-gap: 16px; --stat-radius: 18px; --stat-pad: 24px;
+    --stat-label-size: 14px;
+    --stat-value-font: "Inter Display", Inter, sans-serif; --stat-value-size: 36px; --stat-value-weight: 600;
+    --stat-meta-size: 13px;
+    --callout-bg: var(--surface-3); --callout-accent: var(--warning); --callout-radius: 12px;
+    --panel-radius: 18px; --panel-head-pad: 18px 24px;
+    --panel-head-size: 17px; --panel-head-weight: 600;
+    --th-pad: 12px 24px; --th-size: 13px; --th-weight: 600;
+    --td-pad: 14px 24px;
+    --badge-pad: 4px 12px; --badge-radius: 9999px; --badge-size: 13px; --badge-weight: 500;
+    --ok-bg: rgba(41,167,69,0.10); --warn-bg: rgba(245,99,0,0.10);
+    --btn-pad: 12px 22px; --btn-radius: 9999px; --btn-size: 17px; --btn-weight: 500;
+  }
+  .apple .callout { border-left: none; padding: 16px 20px; }
+  .apple .callout::before { content: ""; }
+
+  /* =================================================================
+     FLAVOR: airbnb — .studio/brand-flavors/airbnb.md
+     ================================================================= */
+  .airbnb {
+    --primary: #FF5A5F;
+    --primary-hover: #E5484D;
+    --primary-text: #ffffff;
+    --canvas: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #F7F7F7;
+    --surface-3: #EBEBEB;
+    --on-surface: #222222;
+    --on-surface-2: #717171;
+    --on-surface-3: #B0B0B0;
+    --border: #DDDDDD;
+    --border-strong: #B0B0B0;
+    --success: #008A05;
+    --warning: #FC642D;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    --card-shadow: 0 0 0 1px rgba(0,0,0,0.02), 0 2px 6px rgba(0,0,0,0.04);
+
+    background: var(--canvas);
+    font-family: "Plus Jakarta Sans", Inter, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--on-surface);
+
+    --body-size: 16px;
+    --eyebrow-size: 13px;
+    --h2-size: 26px; --h2-weight: 600; --h2-track: -0.01em;
+    --stat-gap: 16px; --stat-radius: 12px; --stat-pad: 20px;
+    --stat-label-size: 13px;
+    --stat-value-font: "Plus Jakarta Sans", sans-serif; --stat-value-size: 30px; --stat-value-weight: 700;
+    --stat-meta-size: 13px;
+    --callout-bg: #FFF8F4; --callout-accent: var(--warning); --callout-radius: 12px;
+    --panel-radius: 16px; --panel-head-pad: 16px 20px;
+    --panel-head-size: 16px; --panel-head-weight: 600;
+    --th-pad: 12px 20px; --th-size: 13px; --th-weight: 600;
+    --td-pad: 14px 20px;
+    --badge-pad: 4px 10px; --badge-radius: 9999px; --badge-size: 12px; --badge-weight: 600;
+    --ok-bg: rgba(0,138,5,0.10); --warn-bg: rgba(252,100,45,0.12);
+    --btn-pad: 10px 22px; --btn-radius: 8px; --btn-size: 15px; --btn-weight: 600;
+  }
+  .airbnb .panel { border: none; }
+
+  /* =================================================================
+     FLAVOR: uber — .studio/brand-flavors/uber.md
+     ================================================================= */
+  .uber {
+    --primary: #000000;
+    --primary-hover: #1a1a1a;
+    --primary-text: #ffffff;
+    --canvas: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #F6F6F6;
+    --surface-3: #EEEEEE;
+    --on-surface: #000000;
+    --on-surface-2: #545454;
+    --on-surface-3: #AFAFAF;
+    --border: #EEEEEE;
+    --border-strong: #CBCBCB;
+    --success: #06C167;
+    --warning: #FFC043;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+    background: var(--canvas);
+    font-family: "Inter Display", Inter, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--on-surface);
+
+    --body-size: 16px;
+    --eyebrow-size: 13px;
+    --h2-size: 32px; --h2-weight: 700; --h2-track: -0.02em;
+    --stat-gap: 12px; --stat-radius: 0px; --stat-pad: 20px;
+    --stat-label-size: 13px;
+    --stat-value-font: "Inter Display", Inter, sans-serif; --stat-value-size: 32px; --stat-value-weight: 700;
+    --stat-meta-size: 13px; --stat-meta-font: var(--font-mono);
+    --callout-bg: var(--surface-2); --callout-accent: var(--warning); --callout-radius: 0;
+    --panel-radius: 0px; --panel-head-pad: 14px 20px; --panel-head-bg: var(--surface-2);
+    --panel-head-size: 14px; --panel-head-weight: 700;
+    --th-pad: 12px 20px; --th-size: 13px; --th-weight: 700; --th-bg: var(--surface-2);
+    --td-pad: 14px 20px;
+    --badge-pad: 3px 8px; --badge-radius: 4px; --badge-size: 12px; --badge-weight: 700; --badge-border-width: 1px;
+    --ok-bg: rgba(6,193,103,0.10); --warn-bg: rgba(255,192,67,0.18);
+    --btn-pad: 12px 22px; --btn-radius: 8px; --btn-size: 16px; --btn-weight: 700;
+    --kbd-color: rgba(255,255,255,0.7);
+  }
+  .uber .stat { border: 1px solid var(--border-strong); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Flavor comparison · product-squad</h1>
+  <p>
+    Same UI, same data, same brand placeholder — four flavors. Pick one and run
+    <code>FLAVOR=&lt;name&gt; ./bin/visual "your idea"</code>. Tokens lifted from
+    <code>.studio/brand-flavors/&lt;name&gt;.md</code>. These are <em>visual lineages</em>, not endorsements;
+    proprietary fonts (SF Pro, Cereal, Uber Move) are substituted with free equivalents.
+  </p>
+</div>
+
+<div class="grid">
+
+  <!-- ================ LINEAR ================ -->
+  <div class="pane">
+    <div class="pane-label">
+      <span><span class="name">linear</span> · default</span>
+      <span class="id">agent OS · issue tracker · keyboard-native</span>
+    </div>
+    <div class="flavor linear">
+      <div class="eyebrow">workspace · acme</div>
+      <h2>Recent visual runs</h2>
+      <p class="subtitle">Your last few <code>./bin/visual</code> outputs across this workspace.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Runs · 7d</div>
+          <div class="stat-value">12</div>
+          <div class="stat-meta">+3 vs prev</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Tier coverage</div>
+          <div class="stat-value">3.2<span style="font-size:13px;color:var(--on-surface-3)">/4</span></div>
+          <div class="stat-meta">avg per run</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Rate-limited</div>
+          <div class="stat-value">1</div>
+          <div class="stat-meta">on-disk recovered</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>RATE_LIMIT</strong> — quota fired during run <code>14:02</code>;
+        <code>sketch.txt</code> + <code>wireframe.html</code> landed pre-limit. Resume after reset.
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Runs <span class="count">(4)</span></h3>
+          <span class="count">last 24h</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Idea</th>
+              <th>Flavor</th>
+              <th>Brand</th>
+              <th>Status</th>
+              <th style="text-align:right">When</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Range picker for job preferences</td>
+              <td><code>apple</code></td>
+              <td><code>acme</code></td>
+              <td><span class="badge ok">4/4 OK</span></td>
+              <td style="text-align:right" class="mono">14:32:08</td>
+            </tr>
+            <tr>
+              <td>Saved-search inbox</td>
+              <td><code>linear</code></td>
+              <td><code>northwind</code></td>
+              <td><span class="badge ok">4/4 OK</span></td>
+              <td style="text-align:right" class="mono">14:18:41</td>
+            </tr>
+            <tr>
+              <td>Inspector panel for shape clusters</td>
+              <td><code>linear</code></td>
+              <td><code>acme</code></td>
+              <td><span class="badge warn">2/4 RATE_LIMIT</span></td>
+              <td style="text-align:right" class="mono">14:02:17</td>
+            </tr>
+            <tr>
+              <td>Onboarding hero for first-run agents</td>
+              <td><code>airbnb</code></td>
+              <td><code>contoso</code></td>
+              <td><span class="badge ok">4/4 OK</span></td>
+              <td style="text-align:right" class="mono">11:47:03</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="actions">
+        <button class="btn secondary">View all <span class="kbd">⌘L</span></button>
+        <button class="btn primary">New run <span class="kbd">⌘N</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================ APPLE ================ -->
+  <div class="pane">
+    <div class="pane-label">
+      <span><span class="name">apple</span></span>
+      <span class="id">premium consumer marketing · hero product pages</span>
+    </div>
+    <div class="flavor apple">
+      <div class="eyebrow">Workspace · Acme</div>
+      <h2>Recent visual runs</h2>
+      <p class="subtitle">Your last few <code>./bin/visual</code> outputs across this workspace.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Runs this week</div>
+          <div class="stat-value">12</div>
+          <div class="stat-meta">+3 vs. last week</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Tier coverage</div>
+          <div class="stat-value">3.2</div>
+          <div class="stat-meta">of 4 tiers, on average</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Rate-limited</div>
+          <div class="stat-value">1</div>
+          <div class="stat-meta">recovered on disk</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Heads up.</strong> The quota fired during your 14:02 run — the sketch and wireframe landed before the limit hit. Re-run after reset to fill mockup and prototype.
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Runs</h3>
+          <span class="count" style="font-size:14px;color:var(--on-surface-3)">last 24 hours</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Idea</th>
+              <th>Flavor</th>
+              <th>Brand</th>
+              <th>Status</th>
+              <th style="text-align:right">When</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Range picker for job preferences</td>
+              <td><code>apple</code></td>
+              <td>Acme</td>
+              <td><span class="badge ok">4 of 4 tiers</span></td>
+              <td style="text-align:right" class="mono">14:32</td>
+            </tr>
+            <tr>
+              <td>Saved-search inbox</td>
+              <td><code>linear</code></td>
+              <td>Northwind</td>
+              <td><span class="badge ok">4 of 4 tiers</span></td>
+              <td style="text-align:right" class="mono">14:18</td>
+            </tr>
+            <tr>
+              <td>Inspector panel for shape clusters</td>
+              <td><code>linear</code></td>
+              <td>Acme</td>
+              <td><span class="badge warn">rate-limited</span></td>
+              <td style="text-align:right" class="mono">14:02</td>
+            </tr>
+            <tr>
+              <td>Onboarding hero for first-run agents</td>
+              <td><code>airbnb</code></td>
+              <td>Contoso</td>
+              <td><span class="badge ok">4 of 4 tiers</span></td>
+              <td style="text-align:right" class="mono">11:47</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="actions">
+        <button class="btn secondary">View all</button>
+        <button class="btn primary">New run</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================ AIRBNB ================ -->
+  <div class="pane">
+    <div class="pane-label">
+      <span><span class="name">airbnb</span></span>
+      <span class="id">marketplace · photography-forward catalog</span>
+    </div>
+    <div class="flavor airbnb">
+      <div class="eyebrow">Workspace · Acme</div>
+      <h2>Recent visual runs</h2>
+      <p class="subtitle">Your last few <code>./bin/visual</code> outputs across this workspace.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Runs this week</div>
+          <div class="stat-value">12</div>
+          <div class="stat-meta">+3 vs. last week</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Tier coverage</div>
+          <div class="stat-value">3.2</div>
+          <div class="stat-meta">of 4 tiers</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Rate-limited</div>
+          <div class="stat-value">1</div>
+          <div class="stat-meta">recovered on disk</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Heads up.</strong> The quota fired during your 14:02 run — the sketch and wireframe landed before the limit hit. Re-run after reset to fill mockup and prototype.
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Runs</h3>
+          <span class="count" style="font-size:13px;color:var(--on-surface-3)">last 24 hours</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Idea</th>
+              <th>Flavor</th>
+              <th>Brand</th>
+              <th>Status</th>
+              <th style="text-align:right">When</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Range picker for job preferences</td>
+              <td><code>apple</code></td>
+              <td>Acme</td>
+              <td><span class="badge ok">4 of 4 tiers</span></td>
+              <td style="text-align:right" class="mono">14:32</td>
+            </tr>
+            <tr>
+              <td>Saved-search inbox</td>
+              <td><code>linear</code></td>
+              <td>Northwind</td>
+              <td><span class="badge ok">4 of 4 tiers</span></td>
+              <td style="text-align:right" class="mono">14:18</td>
+            </tr>
+            <tr>
+              <td>Inspector panel for shape clusters</td>
+              <td><code>linear</code></td>
+              <td>Acme</td>
+              <td><span class="badge warn">rate-limited</span></td>
+              <td style="text-align:right" class="mono">14:02</td>
+            </tr>
+            <tr>
+              <td>Onboarding hero for first-run agents</td>
+              <td><code>airbnb</code></td>
+              <td>Contoso</td>
+              <td><span class="badge ok">4 of 4 tiers</span></td>
+              <td style="text-align:right" class="mono">11:47</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="actions">
+        <button class="btn secondary">View all</button>
+        <button class="btn primary">New run</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================ UBER ================ -->
+  <div class="pane">
+    <div class="pane-label">
+      <span><span class="name">uber</span></span>
+      <span class="id">mobility platform · operational console</span>
+    </div>
+    <div class="flavor uber">
+      <div class="eyebrow">Workspace · Acme</div>
+      <h2>Recent visual runs</h2>
+      <p class="subtitle">Your last few <code>./bin/visual</code> outputs across this workspace.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Runs this week</div>
+          <div class="stat-value">12</div>
+          <div class="stat-meta">+3 vs. last week</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Tier coverage</div>
+          <div class="stat-value">3.2</div>
+          <div class="stat-meta">of 4 tiers</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Rate-limited</div>
+          <div class="stat-value">1</div>
+          <div class="stat-meta">recovered on disk</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Heads up.</strong> The quota fired during your 14:02 run — the sketch and wireframe landed before the limit hit. Re-run after reset to fill mockup and prototype.
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Runs (4)</h3>
+          <span class="count" style="font-size:13px;color:var(--on-surface-2)">Last 24 hours</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Idea</th>
+              <th>Flavor</th>
+              <th>Brand</th>
+              <th>Status</th>
+              <th style="text-align:right">When</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Range picker for job preferences</td>
+              <td><code>apple</code></td>
+              <td>Acme</td>
+              <td><span class="badge ok">4/4</span></td>
+              <td style="text-align:right" class="mono">14:32</td>
+            </tr>
+            <tr>
+              <td>Saved-search inbox</td>
+              <td><code>linear</code></td>
+              <td>Northwind</td>
+              <td><span class="badge ok">4/4</span></td>
+              <td style="text-align:right" class="mono">14:18</td>
+            </tr>
+            <tr>
+              <td>Inspector panel for shape clusters</td>
+              <td><code>linear</code></td>
+              <td>Acme</td>
+              <td><span class="badge warn">2/4</span></td>
+              <td style="text-align:right" class="mono">14:02</td>
+            </tr>
+            <tr>
+              <td>Onboarding hero for first-run agents</td>
+              <td><code>airbnb</code></td>
+              <td>Contoso</td>
+              <td><span class="badge ok">4/4</span></td>
+              <td style="text-align:right" class="mono">11:47</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="actions">
+        <button class="btn secondary">View all</button>
+        <button class="btn primary">New run</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

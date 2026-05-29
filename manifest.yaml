@@ -58,18 +58,18 @@ v0_5:
       purpose: Flavor selector — points at one of the brand-flavors files
     - path: .studio/components.md
       purpose: Semantic component primitives (button, input, card, modal, nav, table, badge, empty-state) — flavor file overlays styling opinions
-    - path: .studio/brand-flavors/editorial.md
-      purpose: Default flavor — thoughtful, content-first, Inter, warm canvas, muted green
-    - path: .studio/brand-flavors/industrial.md
-      purpose: Dev tool / agent-OS aesthetic — dark canvas, electric blue, IBM Plex Sans+Mono, sharp 4px radii
-    - path: .studio/brand-flavors/playful.md
-      purpose: Consumer SaaS — warm cream, coral primary, Manrope, soft shadows, generous radii
-    - path: .studio/brand-flavors/brutalist.md
-      purpose: Anti-design honesty — stark white, JetBrains Mono everywhere, 0 radius, 2px black borders, neon accent
+    - path: .studio/brand-flavors/linear.md
+      purpose: Default flavor — agent OS / issue tracker / keyboard-native dev tool — dark canvas, indigo primary, Inter, hairline borders, monospace identifiers
+    - path: .studio/brand-flavors/apple.md
+      purpose: Premium consumer marketing — white canvas, near-monochrome, single product blue accent, large display type, generous whitespace
+    - path: .studio/brand-flavors/airbnb.md
+      purpose: Marketplace / photography-forward catalog — white canvas, coral primary, Plus Jakarta Sans, rounded soft-shadow cards
+    - path: .studio/brand-flavors/uber.md
+      purpose: Mobility platform / operational console — pure black on white, heavy display type, sharp utility radii, semantic-only color
   flavor_selection:
     mechanism: FLAVOR env var read by bin/visual
-    default: editorial
-    fallback: unknown flavor name → editorial + warning
+    default: linear
+    fallback: unknown flavor name → linear + warning
     docs: .studio/design.md
   docs:
     - README.md

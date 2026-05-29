@@ -23,8 +23,8 @@ Time: ~60-120 seconds. Cost: ~$0.30-0.50 in Claude Code subscription usage.
 **Switch brand flavor** to see the same idea rendered in a different aesthetic vocabulary:
 
 ```bash
-FLAVOR=industrial ./bin/visual "students upload resume to course project for peer review"
-# Other flavors: editorial (default) · playful · brutalist
+FLAVOR=apple ./bin/visual "students upload resume to course project for peer review"
+# Other flavors: linear (default) · airbnb · uber
 # See .studio/design.md for the full set + how to author your own.
 ```
 
