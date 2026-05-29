@@ -11,7 +11,7 @@ Realistic feature ideas to try with `draw` (V0.5 PRIMARY wedge — visual fideli
 ./draw "dark mode toggle for the dashboard sidebar"
 ./draw "scheduling form for booking 30-minute coffee chats with a mentor"
 ./draw "feed of recent commits across all repos a user follows"
-./draw "settings page where users can configure notification preferences per channel"
+./draw "comment thread with reply, like, and report actions on each post"
 ./draw "table view of pending invoices with filter by status and overdue badge"
 ```
 

@@ -19,8 +19,10 @@ Five named agents exist in snapshot form under `agents/`, but full runtime + For
 2. **Read this file.** You're already here. Mental model + contribution rules.
 3. **Try the demos:**
    - `./draw "your feature idea"` — renders 4-tier visual ladder; opens HTML in browser on macOS, prints file paths on Linux. Set `FLAVOR=linear|apple|airbnb|uber` to switch the aesthetic vocabulary (default `linear`). Set `BRAND="YourProduct"` to override the brand placeholder used in chrome (default `AcmeU 101 · ReviewLab`). See [`.studio/design.md`](.studio/design.md) and [`examples/flavor-comparison.html`](examples/flavor-comparison.html).
-   - `./scope "your feature idea"` — writes 5 scoping prompts for sequential paste into Claude Code
-4. **Open `agents/<name>/README.md`** for the agent you're acting as (snapshot context — full `CONTRACT.md` per-agent arrives V1).
+   - `./scope "your feature idea"` — writes 5 scoping prompts for sequential paste into Claude Code.
+   - **`./onboard "your product idea"` (optional)** — writes an intake interview prompt. Paste into Claude Code; Claude interviews the operator across 5 questions and writes `.studio/project.json`. Subsequent `./draw` + `./scope` invocations honor the saved defaults (`default_flavor`, `brand`). Skip if you just want to demo the fixture; use it when you want the bundle to render IN YOUR BRAND instead of the placeholder.
+4. **Inside Claude Code in this directory**, all three demos are also discoverable as slash commands: `/visualize`, `/scope`, `/onboard` (auto-loaded from `.claude/commands/`).
+5. **Open `agents/<name>/README.md`** for the agent you're acting as (snapshot context — full `CONTRACT.md` per-agent arrives V1).
 
 ## The crew (V0.5 status)
 

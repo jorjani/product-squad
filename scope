@@ -38,9 +38,10 @@ USAGE
   exit 1
 fi
 
-# Locate repo root regardless of where the script is invoked from
+# Locate repo root. After the bin/ flatten, the script lives at the repo
+# root itself — SCRIPT_DIR is the repo root, no `..` traversal needed.
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+REPO_ROOT="$SCRIPT_DIR"
 
 OUT_DIR="/tmp/product-squad-scope-$(date +%s)"
 mkdir -p "$OUT_DIR"

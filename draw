@@ -40,16 +40,28 @@ USAGE
   exit 1
 fi
 
-# Locate repo root regardless of where the script is invoked from
+# Locate repo root. After the bin/ flatten, the script lives at the repo
+# root itself — SCRIPT_DIR is the repo root, no `..` traversal needed.
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+REPO_ROOT="$SCRIPT_DIR"
 
-# Resolve FLAVOR env var. Default linear (matches bundle's agent-OS identity).
+# Load project context from .studio/project.json if it exists (written by
+# ./onboard). Provides per-operator defaults for FLAVOR and BRAND. CLI env
+# vars take precedence; project.json takes precedence over hardcoded defaults.
+PROJECT_FILE="$REPO_ROOT/.studio/project.json"
+PROJECT_FLAVOR=""
+PROJECT_BRAND=""
+if [ -f "$PROJECT_FILE" ] && command -v python3 >/dev/null 2>&1; then
+  PROJECT_FLAVOR=$(python3 -c "import json; print(json.load(open('$PROJECT_FILE')).get('default_flavor',''))" 2>/dev/null || echo "")
+  PROJECT_BRAND=$(python3 -c "import json; print(json.load(open('$PROJECT_FILE')).get('brand',''))" 2>/dev/null || echo "")
+fi
+
+# Resolve FLAVOR. Precedence: env var > project.json > hardcoded `linear`.
 # Unknown name falls back with a warning so a typo doesn't silently apply the
 # wrong tokens. .studio/design.md is the authoritative list; this script
 # duplicates the names for the fallback check so cold-start runs don't need to
 # parse markdown.
-FLAVOR="${FLAVOR:-linear}"
+FLAVOR="${FLAVOR:-${PROJECT_FLAVOR:-linear}}"
 FLAVOR_PATH="$REPO_ROOT/.studio/brand-flavors/$FLAVOR.md"
 if [ ! -f "$FLAVOR_PATH" ]; then
   echo "⚠ FLAVOR='$FLAVOR' not found at $FLAVOR_PATH — falling back to linear."
@@ -62,8 +74,8 @@ fi
 
 # Brand placeholder. The model otherwise invents specific real-world identifiers
 # (e.g., CSC301 for an EDU idea) which read as wrong outside the operator's
-# geography. Operator can override with their own brand string.
-BRAND="${BRAND:-AcmeU 101 · ReviewLab}"
+# geography. Precedence: env var > project.json > hardcoded `AcmeU 101 · ReviewLab`.
+BRAND="${BRAND:-${PROJECT_BRAND:-AcmeU 101 · ReviewLab}}"
 
 OUT_DIR="/tmp/product-squad-demo-$(date +%s)"
 mkdir -p "$OUT_DIR"

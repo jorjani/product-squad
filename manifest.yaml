@@ -30,6 +30,20 @@ v0_5:
       time: ~15-30 min (paste-and-think)
       cost: ~$0.30-0.50
       requires: [claude-code-subscription]
+    onboard:
+      entry: onboard
+      output: /tmp/product-squad-intake-<ts>/
+      writes: .studio/project.json
+      optional: true   # bundle works without it; fixture defaults apply
+      time: ~5-10 min (5-question interview)
+      cost: ~$0.05-0.10
+      requires: [claude-code-subscription]
+      purpose: |
+        Optional onboarding interview. Writes a 5-question intake prompt
+        the operator pastes into Claude Code. Claude interviews them about
+        their product (name, audience, surface, default_flavor, brand) and
+        writes .studio/project.json. Subsequent draw + scope invocations
+        honor those defaults.
   commands:
     visual_ladder:
       - path: commands/sketch.md
