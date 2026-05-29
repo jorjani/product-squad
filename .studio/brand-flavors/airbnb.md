@@ -70,7 +70,7 @@ Font substitution: **Plus Jakarta Sans substitutes for the proprietary Cereal ty
 
 ## Typography
 
-- **Body**: Plus Jakarta Sans, 16px base, 1.5 line-height. Larger than utility flavors — the marketplace reads as editorial.
+- **Body**: Plus Jakarta Sans, 16px base, 1.5 line-height. Larger than utility flavors — the marketplace reads as long-form.
 - **Body weight**: 400 baseline. Plus Jakarta Sans has enough optical weight at 400 that 500 reads as emphasis.
 - **Headings**: Plus Jakarta Sans 600. Section titles 22px, page titles 26-32px. Headings stay restrained; the photography does the loud talking.
 - **Mono**: JetBrains Mono only for code samples, booking confirmation numbers, and API-adjacent UIs. Not for prices — prices are sans.

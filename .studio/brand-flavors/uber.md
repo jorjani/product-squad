@@ -30,7 +30,7 @@ typography:
 radii:
   sm: 4px
   md: 8px
-  lg: 8px
+  lg: 8px   # intentionally equal to md — this flavor doesn't soften at larger scales
   full: 9999px
 spacing:
   base: 4px
