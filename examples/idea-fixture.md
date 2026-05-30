@@ -1,26 +1,26 @@
 # Idea fixtures for V0.5 demos
 
-Realistic feature ideas to try with `bin/visual` (V0.5 PRIMARY wedge — visual fidelity ladder) and `bin/scope` (V0.5 SECONDARY wedge — commander's intent + scoping).
+Realistic feature ideas to try with `draw` (V0.5 PRIMARY wedge — visual fidelity ladder) and `scope` (V0.5 SECONDARY wedge — commander's intent + scoping).
 
 ## Quick run — Visual ladder
 
-`bin/visual "idea"` runs sketch → wireframe → mockup → prototype, auto-opens each rendered HTML in your browser (macOS); on Linux the file paths are printed instead. ~60-120 sec, ~$0.30-0.50 in Claude Code subscription usage.
+`draw "idea"` runs sketch → wireframe → mockup → prototype, auto-opens each rendered HTML in your browser (macOS); on Linux the file paths are printed instead. ~60-120 sec, ~$0.30-0.50 in Claude Code subscription usage.
 
 ```bash
-./bin/visual "students upload resume to course project for peer review"
-./bin/visual "dark mode toggle for the dashboard sidebar"
-./bin/visual "scheduling form for booking 30-minute coffee chats with a mentor"
-./bin/visual "feed of recent commits across all repos a user follows"
-./bin/visual "settings page where users can configure notification preferences per channel"
-./bin/visual "table view of pending invoices with filter by status and overdue badge"
+./draw "users configure notification preferences across email, push, and in-app channels"
+./draw "dark mode toggle for the dashboard sidebar"
+./draw "scheduling form for booking 30-minute coffee chats with a mentor"
+./draw "feed of recent commits across all repos a user follows"
+./draw "comment thread with reply, like, and report actions on each post"
+./draw "table view of pending invoices with filter by status and overdue badge"
 ```
 
 ## Quick run — Product cluster
 
-`bin/scope "idea"` writes 5 pre-filled prompts (why → shape → experience → owit → elon) to `/tmp/product-squad-scope-<ts>/`. You paste each into Claude Code in sequence — each stage's output feeds the next.
+`scope "idea"` writes 5 pre-filled prompts (why → shape → experience → owit → elon) to `/tmp/product-squad-scope-<ts>/`. You paste each into Claude Code in sequence — each stage's output feeds the next.
 
 ```bash
-./bin/scope "students upload resume to course project for peer review"
+./scope "users configure notification preferences across email, push, and in-app channels"
 ```
 
 The 5 stages teach a transferable product-craft pattern:
@@ -42,27 +42,27 @@ Both demos produce sharper output when the idea is:
 ### Too vague (returns shallow output)
 
 ```bash
-./bin/visual "matchmaking"
-./bin/scope "ai assistant"
+./draw "matchmaking"
+./scope "ai assistant"
 ```
 
 ### Too detailed (tries to do too much; output confused)
 
 ```bash
-./bin/visual "A comprehensive resume review platform with peer matching, rubric-based scoring, anonymous feedback, gamification, badges, and integration with Canvas LMS for grading..."
+./draw "A comprehensive resume review platform with peer matching, rubric-based scoring, anonymous feedback, gamification, badges, and integration with Canvas LMS for grading..."
 ```
 
 ### Just right
 
 ```bash
-./bin/scope "Students upload a resume to a course project page so peers can review it before the deadline"
+./scope "Students upload a resume to a course project page so peers can review it before the deadline"
 ```
 
 The "Just right" shape: **who** does **what** **where** **why** — in one sentence.
 
 ## What you'll see per tier
 
-### `bin/visual` output (in `/tmp/product-squad-demo-<ts>/`)
+### `draw` output (in `/tmp/product-squad-demo-<ts>/`)
 
 | Tier | File | Content |
 |---|---|---|
@@ -75,7 +75,7 @@ The "Just right" shape: **who** does **what** **where** **why** — in one sente
 
 Each HTML auto-opens in your default browser as it's generated (macOS); on Linux the file paths are printed for manual open.
 
-### `bin/scope` output (in `/tmp/product-squad-scope-<ts>/`)
+### `scope` output (in `/tmp/product-squad-scope-<ts>/`)
 
 | Stage | File | Content |
 |---|---|---|

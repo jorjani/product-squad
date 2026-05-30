@@ -16,7 +16,9 @@
         → Implement
 ```
 
-**Input:** Accepts either a feature description OR (preferred) a `/shape` output. When given `/shape` output, use the selected options, capability delta, and principles as the foundation -- don't re-explore intent.
+**Consumes:** A feature description, a `/shape` output, OR a `/shape` + `/experience` pair. When given `/shape` output, use the selected options, capability delta, and principles as the foundation -- don't re-explore intent. When given `/experience`, lift the Audience line as the scenario actor and the Delta as the success condition the scenarios test.
+
+**Delivers:** Flow diagram + numbered scenarios + numbered Choices (C1, C2…) + a collapsed "Obvious" list. Feeds `/elon` (scenarios + Choices to cut against) and downstream `/spec` (V1) or implementation directly.
 
 ---
 

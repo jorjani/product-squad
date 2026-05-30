@@ -1,0 +1,123 @@
+#!/bin/bash
+# onboard — V0.5 product-squad intake interview wrapper
+#
+# Writes a single intake prompt file to a temp dir. Paste it into a fresh
+# Claude Code conversation in this directory; Claude interviews you across
+# 5 questions and writes .studio/project.json with your product context.
+# Subsequent ./draw and ./scope invocations honor those defaults
+# (default_flavor + brand string).
+#
+# Optional. The bundle works without project context — running ./draw or
+# ./scope without an .studio/project.json uses the fixture defaults
+# (FLAVOR=linear, BRAND="AcmeU 101 · ReviewLab"). Use ./onboard when you
+# want the bundle to render IN YOUR BRAND instead of the placeholder.
+#
+# Usage: onboard "your product idea in one sentence"
+#        onboard                                  # interview asks you to describe
+#
+# REQUIREMENTS:
+#   - Claude Code installed (https://claude.com/claude-code)
+#   - Signed in via subscription: claude /login
+
+set -euo pipefail
+
+IDEA="${1:-}"
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$SCRIPT_DIR"
+
+OUT_DIR="/tmp/product-squad-intake-$(date +%s)"
+mkdir -p "$OUT_DIR"
+
+INTAKE_FILE="$OUT_DIR/intake.md"
+
+cat > "$INTAKE_FILE" <<'HEADER'
+# product-squad onboarding interview
+
+# COPY EVERYTHING FROM THE HORIZONTAL RULE BELOW TO THE END OF
+# THIS FILE INTO A FRESH CLAUDE CODE CONVERSATION INSIDE THE
+# product-squad DIRECTORY. Claude will interview you across 5 questions
+# and write .studio/project.json with your answers.
+
+---
+
+You are conducting a 5-question onboarding interview with the operator of a product-squad bundle. The goal is to capture their product context so subsequent `./draw` and `./scope` invocations are personalized.
+
+Ask these 5 questions one at a time. Use AskUserQuestion for each — never batch. For each question, propose a sensible default based on what you've already learned, and let the operator confirm or override. Lead with your recommendation.
+
+1. **Product name.** "What is your product called?" — short, 1-3 words (e.g., "Sage", "Trackrec", "Acme Tasks").
+
+2. **Audience.** "Who exactly uses this product? What are they doing when they encounter it?" — specific role + context (e.g., "founders writing newsletters in Claude Code", "candidates browsing AI sales roles", "operators reviewing pending support tickets"). The audience description should be at least 8 words. If the operator gives a vague answer, push back: "Be more specific — who exactly, doing what, where?"
+
+3. **Surface.** "What's the primary surface?" — pick one or describe: web app · CLI · API · browser extension · native mobile · desktop · multiple.
+
+4. **Default flavor.** Propose ONE of:
+   - `linear` — agent OS, issue tracker, keyboard-native dev tool (best for: dashboards, dev tools, operator consoles, agent-facing UIs)
+   - `apple` — premium consumer marketing, hero product pages (best for: landing pages, prestige consumer apps, feature reveals)
+   - `airbnb` — marketplace, photography-forward catalog (best for: marketplaces, lifestyle apps, two-sided platforms with rich imagery)
+   - `uber` — mobility platform, operational console (best for: task-driven apps, mobility, in-motion utility)
+
+   Base your recommendation on the audience + surface answers. Let the operator confirm or override.
+
+5. **Brand string.** "What brand string should `./draw` use as the chrome placeholder in titles, breadcrumbs, eyebrows, etc?" — propose `<Product> · <Surface>` (e.g., "Sage · ContentOS" or "Acme · Tasks"). Operator confirms or overrides.
+
+After all 5 are confirmed, write `.studio/project.json` at the bundle's repo root with this exact shape:
+
+```json
+{
+  "name": "<product-name>",
+  "code": "<product-name-lowercased-no-spaces>",
+  "audience": "<one-sentence audience>",
+  "surface": "<surface>",
+  "primary_action": "<the one verb the audience does>",
+  "default_flavor": "<linear|apple|airbnb|uber>",
+  "brand": "<brand string>",
+  "created_at": "<ISO 8601 timestamp for today>"
+}
+```
+
+Confirm to the operator with one line:
+
+> ".studio/project.json saved. Your defaults are now: FLAVOR=<flavor>, BRAND='<brand>'. Try `./draw '<a specific feature idea for your product>'` next."
+
+HEADER
+
+if [ -n "$IDEA" ]; then
+  cat >> "$INTAKE_FILE" <<EOF
+
+---
+
+The operator seeded the interview with this one-sentence idea:
+
+> $IDEA
+
+Acknowledge it. Use it to inform your proposed defaults for product name, audience, surface, and flavor as you walk through the 5 questions.
+EOF
+fi
+
+echo "═══════════════════════════════════════════════════════════════════"
+echo "  product-squad — Onboarding Interview (V0.5)"
+echo "═══════════════════════════════════════════════════════════════════"
+if [ -n "$IDEA" ]; then
+  echo "  Seed idea:    $IDEA"
+fi
+echo "  Intake file:  $INTAKE_FILE"
+echo ""
+echo "  Next step — copy the intake file to your clipboard, then paste"
+echo "  into a fresh Claude Code conversation in this directory:"
+echo ""
+echo "    cat $INTAKE_FILE | pbcopy        # macOS"
+echo "    cat $INTAKE_FILE | xclip -selection clipboard  # Linux X11"
+echo "    cat $INTAKE_FILE | wl-copy       # Linux Wayland"
+echo ""
+echo "  Claude will interview you (5 questions) and write"
+echo "  .studio/project.json when done."
+echo ""
+echo "  After project.json lands, your defaults are live:"
+echo "    ./draw  \"<a specific feature idea for your product>\""
+echo "    ./scope \"<your feature>\""
+echo ""
+echo "  Note: ./onboard is optional. The bundle works without it — the"
+echo "  fixture defaults (FLAVOR=linear, BRAND='AcmeU 101 · ReviewLab')"
+echo "  apply if .studio/project.json doesn't exist."
+echo "═══════════════════════════════════════════════════════════════════"

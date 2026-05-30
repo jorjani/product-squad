@@ -1,7 +1,7 @@
 #!/bin/bash
-# bin/visual — V0.5 demo wrapper for the visual fidelity ladder
+# draw — V0.5 demo wrapper for the visual fidelity ladder
 #
-# Usage: bin/visual "your feature idea in one sentence"
+# Usage: draw "your feature idea in one sentence"
 #
 # Runs sketch + wireframe + mockup + prototype against the idea, writes
 # outputs to /tmp/product-squad-demo-<timestamp>/, opens each HTML in
@@ -21,10 +21,10 @@ set -euo pipefail
 IDEA="${1:-}"
 if [ -z "$IDEA" ]; then
   cat <<'USAGE'
-Usage: bin/visual "your feature idea in one sentence"
+Usage: draw "your feature idea in one sentence"
 
 Example:
-  bin/visual "students upload resume to course project for peer review"
+  draw "users configure notification preferences across email, push, and in-app channels"
 
 The wrapper runs 4 visual tiers in sequence:
   T0  sketch     — ASCII layout, printed to terminal
@@ -40,29 +40,42 @@ USAGE
   exit 1
 fi
 
-# Locate repo root regardless of where the script is invoked from
+# Locate repo root. After the bin/ flatten, the script lives at the repo
+# root itself — SCRIPT_DIR is the repo root, no `..` traversal needed.
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+REPO_ROOT="$SCRIPT_DIR"
 
-# Resolve FLAVOR env var. Default editorial. Unknown name falls back with a
-# warning so a typo doesn't silently apply the wrong tokens. .studio/design.md
-# is the authoritative list; this script duplicates the names for the fallback
-# check so cold-start runs don't need to parse markdown.
-FLAVOR="${FLAVOR:-editorial}"
+# Load project context from .studio/project.json if it exists (written by
+# ./onboard). Provides per-operator defaults for FLAVOR and BRAND. CLI env
+# vars take precedence; project.json takes precedence over hardcoded defaults.
+PROJECT_FILE="$REPO_ROOT/.studio/project.json"
+PROJECT_FLAVOR=""
+PROJECT_BRAND=""
+if [ -f "$PROJECT_FILE" ] && command -v python3 >/dev/null 2>&1; then
+  PROJECT_FLAVOR=$(python3 -c "import json; print(json.load(open('$PROJECT_FILE')).get('default_flavor',''))" 2>/dev/null || echo "")
+  PROJECT_BRAND=$(python3 -c "import json; print(json.load(open('$PROJECT_FILE')).get('brand',''))" 2>/dev/null || echo "")
+fi
+
+# Resolve FLAVOR. Precedence: env var > project.json > hardcoded `linear`.
+# Unknown name falls back with a warning so a typo doesn't silently apply the
+# wrong tokens. .studio/design.md is the authoritative list; this script
+# duplicates the names for the fallback check so cold-start runs don't need to
+# parse markdown.
+FLAVOR="${FLAVOR:-${PROJECT_FLAVOR:-linear}}"
 FLAVOR_PATH="$REPO_ROOT/.studio/brand-flavors/$FLAVOR.md"
 if [ ! -f "$FLAVOR_PATH" ]; then
-  echo "⚠ FLAVOR='$FLAVOR' not found at $FLAVOR_PATH — falling back to editorial."
-  echo "  Available flavors: editorial, industrial, playful, brutalist"
+  echo "⚠ FLAVOR='$FLAVOR' not found at $FLAVOR_PATH — falling back to linear."
+  echo "  Available flavors: linear, apple, airbnb, uber"
   echo "  See .studio/design.md for the full list."
   echo ""
-  FLAVOR="editorial"
-  FLAVOR_PATH="$REPO_ROOT/.studio/brand-flavors/editorial.md"
+  FLAVOR="linear"
+  FLAVOR_PATH="$REPO_ROOT/.studio/brand-flavors/linear.md"
 fi
 
 # Brand placeholder. The model otherwise invents specific real-world identifiers
 # (e.g., CSC301 for an EDU idea) which read as wrong outside the operator's
-# geography. Operator can override with their own brand string.
-BRAND="${BRAND:-AcmeU 101 · ReviewLab}"
+# geography. Precedence: env var > project.json > hardcoded `AcmeU 101 · ReviewLab`.
+BRAND="${BRAND:-${PROJECT_BRAND:-AcmeU 101 · ReviewLab}}"
 
 OUT_DIR="/tmp/product-squad-demo-$(date +%s)"
 mkdir -p "$OUT_DIR"
@@ -226,12 +239,13 @@ echo "  Done. T0 sketch → T1 wireframe → T3 mockup → T4 prototype"
 printf '  All artifacts: %s\n' "$OUT_DIR"
 echo ""
 echo "  Try the same idea with a different flavor:"
-printf '    FLAVOR=industrial ./bin/visual %q\n' "$IDEA"
-printf '    FLAVOR=playful    ./bin/visual %q\n' "$IDEA"
-printf '    FLAVOR=brutalist  ./bin/visual %q\n' "$IDEA"
+for ALT in linear apple airbnb uber; do
+  [ "$ALT" = "$FLAVOR" ] && continue
+  printf '    FLAVOR=%-7s ./draw %q\n' "$ALT" "$IDEA"
+done
 echo ""
 echo "  Or shape the product around the idea (5-stage scoping cluster):"
-printf '    ./bin/scope %q\n' "$IDEA"
+printf '    ./scope %q\n' "$IDEA"
 echo ""
 echo "  Cost: ~\$0.30-0.50 in Claude Code subscription usage"
 echo "  (each tier is one LLM call; total ~60-120 sec)"

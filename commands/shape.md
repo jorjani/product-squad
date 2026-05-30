@@ -4,6 +4,10 @@
 
 **Usage:** `/shape [idea or problem]`
 
+**Consumes:** A raw idea OR `/why`'s outcome statement. When given the latter, use it as the "Why it matters" in Step 2 — don't re-derive intent.
+
+**Delivers:** Selected option(s) + capability delta + named bottlenecks + principles + audience hint. Feeds `/experience` (audience hint + selected option become the lens + surface) and `/owit` (the brief to scenario-spec against).
+
 ---
 
 ## Flow
