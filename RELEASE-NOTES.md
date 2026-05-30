@@ -2,9 +2,9 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](https://semver.org/)
 
-## [Unreleased] — V0.6 polish (PR #10, merged 2026-05-30)
+## [Unreleased] — V0.6 polish
 
-This work shipped to `main` but is not yet tagged. Subject to retag as `v0.5.2` (preserving the v0.5 line) or `v0.6.0` (signalling broader user-facing change).
+The work below shipped to `main` in [PR #10](https://github.com/jorjani/product-squad/pull/10) on 2026-05-30 but is not yet tagged. `manifest.yaml` + `.claude-plugin/plugin.json` declare `version: 0.6.0-dev` to reflect the pre-tag state. Final retag decision (`v0.5.2` continuing the 0.5 line vs `v0.6.0` signalling broader user-facing change) is outstanding.
 
 ### Changed
 - **Brand flavors rebranded** `editorial / industrial / playful / brutalist` → `linear / apple / airbnb / uber`. Aesthetic-vocabulary flavors became brand-archetype emulations. Visual lineage, not endorsement.

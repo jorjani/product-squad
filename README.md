@@ -2,13 +2,13 @@
 
 An opinionated agentic operating system for one-person dev teams.
 
-> 🚧 **V0.5 — first playable cut.** Public for validation; pre-1.0 surface, expect change.
+> 🚧 **V0.6-dev — first playable cut, mid-polish.** Private during validation; will go public before the marketplace submission lands.
 
 ## Install
 
-Two paths. Use the first when it's available; fall back to the second.
+Two paths. Use the first once the repo is public + marketplace submission ships; clone-and-run is the path that works today.
 
-**Claude Code marketplace** *(submission pending — see [#11](https://github.com/jorjani/product-squad/issues/11))*
+**Claude Code marketplace** *(requires public repo + marketplace submission — track [#11](https://github.com/jorjani/product-squad/issues/11))*
 
 ```bash
 /plugin marketplace add jorjani/product-squad

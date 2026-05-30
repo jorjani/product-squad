@@ -3,17 +3,17 @@
   "description": "First-party marketplace for the Product Squad agentic dev OS bundle.",
   "owner": {
     "name": "David Jorjani",
-    "email": "d.jorjani@gmail.com"
+    "email": "david@getqatalyst.com"
   },
   "plugins": [
     {
       "name": "product-squad",
       "description": "Agentic dev OS for one-person teams: visual fidelity ladder + product/scoping cluster + 4 brand-archetype flavors.",
-      "version": "0.5.1",
+      "version": "0.6.0-dev",
       "source": "./",
       "author": {
         "name": "David Jorjani",
-        "email": "d.jorjani@gmail.com"
+        "email": "david@getqatalyst.com"
       },
       "homepage": "https://github.com/jorjani/product-squad"
     }
