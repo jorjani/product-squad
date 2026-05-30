@@ -1,0 +1,56 @@
+# Release Notes
+
+Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](https://semver.org/)
+
+## [Unreleased] — V0.6 polish (PR #10, merged 2026-05-30)
+
+This work shipped to `main` but is not yet tagged. Subject to retag as `v0.5.2` (preserving the v0.5 line) or `v0.6.0` (signalling broader user-facing change).
+
+### Changed
+- **Brand flavors rebranded** `editorial / industrial / playful / brutalist` → `linear / apple / airbnb / uber`. Aesthetic-vocabulary flavors became brand-archetype emulations. Visual lineage, not endorsement.
+- **Default flavor** `editorial` → `linear`.
+- **Entry points moved to repo root and renamed**: `bin/visual` → `./draw`, `bin/scope` → `./scope`. `bin/` directory removed.
+- **Demo fixture swapped** from EDU-specific (`students upload resume to course project for peer review`) to universal (`users configure notification preferences across email, push, and in-app channels`).
+
+### Added
+- **`./onboard`** — third entry point. Optional 5-question intake interview that writes `.studio/project.json`; subsequent `./draw` and `./scope` honor those defaults.
+- **`/visualize`, `/scope`, `/onboard`** as project-local Claude Code slash commands at `.claude/commands/`. Auto-discovered when CWD is the bundle directory.
+- **Chain contracts** on all 5 product-cluster commands: each opens with explicit `Consumes:` and `Delivers:` lines naming the chain edges.
+- **Cross-cluster bridge paragraph** in `AGENTS.md` explaining how the product cluster connects to the visual cluster.
+- **`examples/flavor-comparison.html`** — 4-pane visual catalog of the brand flavors.
+- **`teaches:` frontmatter field** on each flavor — one-sentence summary of the aesthetic vocabulary it embodies.
+- **`./draw` and `./scope` read `.studio/project.json`** for `FLAVOR` and `BRAND` defaults. Precedence: env var > project.json > hardcoded.
+
+### Fixed
+- **REPO_ROOT resolution after the `bin/` flatten** — scripts at repo root needed `SCRIPT_DIR` (not `SCRIPT_DIR/..`); caught by smoke test, would have been a runtime failure if shipped.
+
+## [0.5.1] — 2026-05-25
+
+Mopup release before Gabriel onboarding.
+
+### Added
+- **T0 sketch persistence** to `$OUT_DIR/sketch.txt`. Sketch now chains into the T1 wireframe as a predecessor, closing the prior T0 → T1 continuity gap. (#8)
+- **Closing message** lists `T0 → T1 → T3 → T4` and prompts to try other flavors + the secondary `bin/scope` wedge — fixes the silent end-of-run that buried flavor switching. (#8)
+
+### Fixed
+- **Rate-limit false-negative** in `bin/visual` — detects `hit your limit` / `You've hit your limit` / `[Uu]sage limit` in the claude log and treats the run as success if the file landed on disk before the quota fired. (#8)
+- **Per-tier predecessor guards** at the call site — `|| true` was swallowing `run_tier`'s `return 1`, so downstream tiers could inherit dead paths. (#8)
+- **Shell-safe IDEA quoting** in closing-message example lines — now goes through `printf '%q'` for paste-ready output. (#8)
+
+### Changed
+- **QUICKSTART "Next steps"** rewritten from three doc-reading hand-offs to three command-try invitations that build momentum after the demos. (#9)
+
+## [0.5.0] — 2026-05-25
+
+First playable cut. Two demo wedges, both single-command, no API key required.
+
+### Added
+- **Visual fidelity ladder** (PRIMARY): `bin/visual` runs `sketch → wireframe → mockup → prototype`. Each tier auto-opens in browser (macOS) or prints file path (Linux).
+- **Product cluster** (SECONDARY): `bin/scope` writes 5 pre-filled prompts (`why → shape → experience → owit → elon`) for sequential paste into Claude Code.
+- **Four swappable brand flavors** (editorial / industrial / playful / brutalist) with `FLAVOR` and `BRAND` env vars.
+- **Five named agents** in snapshot form (Foreman, Sarge, Inspector, Code-Reviewer, Build-Fixer). Code-Reviewer and Build-Fixer runnable as Claude Code subagents; full runtime crew + Codex adapter + Railway one-click deploy + memory pattern deferred to V1.
+- **Day-5 dogfood fixes** merged in: PR #6 fixed headless `claude -p` permission grant; PR #7 added the brand-flavor system + state-count caps + brand-placeholder constraint.
+
+### Notes
+- Requires Claude Code installed and signed in via subscription. No Anthropic API key required.
+- Tested only on macOS (Linux falls back gracefully). Windows untested.

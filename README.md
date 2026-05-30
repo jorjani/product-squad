@@ -2,7 +2,30 @@
 
 An opinionated agentic operating system for one-person dev teams.
 
-> 🚧 **V0.5 — first playable cut.** Private during validation. Public at V1 (3-4 weeks).
+> 🚧 **V0.5 — first playable cut.** Public for validation; pre-1.0 surface, expect change.
+
+## Install
+
+Two paths. Use the first when it's available; fall back to the second.
+
+**Claude Code marketplace** *(submission pending — see [#11](https://github.com/jorjani/product-squad/issues/11))*
+
+```bash
+/plugin marketplace add jorjani/product-squad
+/plugin install product-squad@product-squad
+```
+
+Surfaces `/product-squad:visualize`, `/product-squad:scope`, `/product-squad:onboard` in Claude Code without you cloning anything.
+
+**Clone and run**
+
+```bash
+git clone https://github.com/jorjani/product-squad.git
+cd product-squad
+./draw "your feature idea"
+```
+
+When CWD is the bundle directory, Claude Code auto-discovers `/visualize`, `/scope`, `/onboard` from `.claude/commands/` — no install step.
 
 ## The 30-second demos
 
