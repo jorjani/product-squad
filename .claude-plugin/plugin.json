@@ -1,0 +1,24 @@
+{
+  "name": "product-squad",
+  "description": "Agentic dev OS for one-person teams: visual fidelity ladder (sketch → wireframe → mockup → prototype) + product/scoping cluster (why → shape → experience → owit → elon) + 4 swappable brand-archetype flavors (linear, apple, airbnb, uber).",
+  "version": "0.6.0-dev",
+  "author": {
+    "name": "David Jorjani",
+    "email": "david@getqatalyst.com"
+  },
+  "homepage": "https://github.com/jorjani/product-squad",
+  "repository": "https://github.com/jorjani/product-squad",
+  "license": "MIT",
+  "keywords": [
+    "agentic",
+    "design-system",
+    "wireframe",
+    "mockup",
+    "prototype",
+    "product-scoping",
+    "commander-intent",
+    "claude-code",
+    "skills",
+    "brand-flavors"
+  ]
+}

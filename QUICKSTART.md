@@ -17,12 +17,28 @@ If you see `authentication_error`:
 unset ANTHROPIC_API_KEY
 ```
 
-## Clone
+## Get the bundle
+
+Two paths. Pick one.
+
+**A. Plugin install** (requires repo to be public + the marketplace submission to ship — track [#11](https://github.com/jorjani/product-squad/issues/11))
 
 ```bash
-git clone git@github.com:jorjani/product-squad.git
+# Inside Claude Code:
+/plugin marketplace add jorjani/product-squad
+/plugin install product-squad@product-squad
+```
+
+Surfaces `/product-squad:visualize`, `/product-squad:scope`, `/product-squad:onboard` in Claude Code's slash-command list. No clone needed.
+
+**B. Clone and run** (the cold-start path; what the rest of this doc assumes — works today)
+
+```bash
+git clone https://github.com/jorjani/product-squad.git
 cd product-squad
 ```
+
+When CWD is the bundle, Claude Code auto-discovers `/visualize`, `/scope`, `/onboard` from `.claude/commands/` — same commands as the plugin install, without the `product-squad:` namespace prefix.
 
 ## Demo 1 — Visual fidelity ladder (PRIMARY)
 
