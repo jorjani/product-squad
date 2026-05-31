@@ -196,7 +196,7 @@ _inspect_short() {
 
 # REFACTOR_ALLOWLIST_RE — top-level dirs a pure structural refactor may touch.
 # A diff confined to these is the 2C fast-lane: instant promote, no 7-day soak.
-REFACTOR_ALLOWLIST_RE='^(config|lib|prompts|specs|docs|\.studio)/'
+REFACTOR_ALLOWLIST_RE='^(config|lib|prompts|specs|docs|design-system)/'
 
 # classify_diff_refactor_only
 # Reads newline-separated changed-file paths from stdin. Exit 0 iff the diff is

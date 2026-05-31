@@ -42,14 +42,14 @@ v1 keeps the v0 path as a fallback under `INSPECT_DISABLE_LLM=1`.
 Heuristic: if a merged PR's diff touches ONLY paths matching:
 
 ```
-^(config|lib|prompts|specs|docs|\.studio)/.*$
+^(config|lib|prompts|specs|docs|design-system)/.*$
 ```
 
 AND the linked issue is CLOSED → promote to Done with `INSPECTOR: PASS (refactor-allowlist) -- diff scoped to <paths>`. No LLM-judge, no Playwright. Verify via:
 
 ```bash
 gh pr diff "$pr_url" --name-only | awk '
-  $1 !~ /^(config|lib|prompts|specs|docs|\.studio)\// { fail=1; exit }
+  $1 !~ /^(config|lib|prompts|specs|docs|design-system)\// { fail=1; exit }
   END { exit fail }
 '
 ```

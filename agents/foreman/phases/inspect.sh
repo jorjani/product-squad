@@ -5,7 +5,7 @@
 # Per Verify-column item, in order:
 #
 #   2C. refactor-allowlist  — closing PR merged AND diff confined to
-#       (config|lib|prompts|specs|docs|.studio)/  -> PASS, instant Done.
+#       (config|lib|prompts|specs|docs|design-system)/  -> PASS, instant Done.
 #   2D. lazy-init           — issue body describes an event-driven producer
 #       AND a grep-able anchor for it exists in the merged code
 #                                                  -> PASS, instant Done.
@@ -435,7 +435,7 @@ except: print("")' 2>/dev/null || echo "")
   if [ -n "$PR_NUM" ] && [ "$PR_STATE" = "MERGED" ] && [ -n "$PR_FILES" ]; then
     if printf '%s\n' "$PR_FILES" | classify_diff_refactor_only; then
       LABEL="PASS (refactor-allowlist)"
-      REASON="diff scoped to refactor allowlist (config|lib|prompts|specs|docs|.studio); $PR_RETURNED file(s) in PR #$PR_NUM"
+      REASON="diff scoped to refactor allowlist (config|lib|prompts|specs|docs|design-system); $PR_RETURNED file(s) in PR #$PR_NUM"
       emit_inspector_jsonl "PASS" "refactor-allowlist" "-1" "" "$REASON"
       if apply_verdict "$REPO" "$ISSUE_NUM" "$LABEL" "$REASON" "inspector-pass"; then
         count_outcome "$LABEL"

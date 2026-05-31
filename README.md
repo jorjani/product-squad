@@ -100,7 +100,7 @@ bin/
   visual         # PRIMARY demo — visual fidelity ladder
   scope          # SECONDARY demo — commander's intent + scoping
 skills/          # 10 skills (5 visual + 5 product), each <name>/SKILL.md
-design-system/         # Bundled generic design tokens + component primitives
+design-system/   # Bundled generic design tokens + component primitives
 examples/        # Idea fixtures + phrasing guidance
 agents/          # Snapshots: foreman, sarge, code-reviewer, build-fixer
 docs/            # MIGRATION.md (source SHAs + scrub log) + roadmap
