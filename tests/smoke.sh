@@ -6,7 +6,7 @@
 #   2. yaml.safe_load on manifest.yaml
 #   3. claude plugin validate .  (skipped with a warning if claude is missing)
 #
-# Exits non-zero on the first failure. Run from the repo root:
+# Exits non-zero if any check fails. Runs all checks before exiting. Run from the repo root:
 #   ./tests/smoke.sh
 
 set -uo pipefail
@@ -36,7 +36,7 @@ done
 step "yaml.safe_load manifest.yaml"
 if [ ! -f manifest.yaml ]; then
   bad "manifest.yaml missing"
-elif python3 -c "import yaml,sys; yaml.safe_load(open('manifest.yaml'))" 2>/dev/null; then
+elif python3 -c "import yaml,sys; yaml.safe_load(open('manifest.yaml'))"; then
   ok "manifest.yaml parses"
 else
   bad "manifest.yaml does not parse"
