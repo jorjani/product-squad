@@ -89,6 +89,6 @@ Each file has a header explaining what to copy. `cat <file> | pbcopy` on macOS c
 
 ## After the demo
 
-The pattern transfers. Each command file (`commands/sketch.md`, `commands/wireframe.md`, etc.) is a reusable scoping artifact you can adopt in your own projects — they're written as Claude Code slash commands, but the prompts work in any agent that takes stdin and emits text.
+The pattern transfers. Each skill file (`skills/sketch/SKILL.md`, `skills/wireframe/SKILL.md`, etc.) is a reusable scoping artifact you can adopt in your own projects — they're written as Claude Code skills with auto-trigger descriptions, but the prompts work in any agent that takes stdin and emits text.
 
 For the commands NOT bundled in V0.5 (e.g., `/flow`, `/api`, `/migrate`, `@eng-deep-dive`), see `manifest.yaml` → `v1_roadmap` — they're planned for V1 (3-4 weeks).
