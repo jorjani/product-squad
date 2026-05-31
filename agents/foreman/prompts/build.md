@@ -23,7 +23,7 @@ You are on branch `{BRANCH_NAME}`. Never push to main.
 
 ## Process
 
-1. Read `.studio/project.json` for project context (if it exists). Read other `.studio/` files (e.g., `context.md`, `features.yaml`) only if the ticket explicitly references them by name.
+1. Read `design-system/project.json` for project context (if it exists). Read other `design-system/` files (e.g., `context.md`, `features.yaml`) only if the ticket explicitly references them by name.
 2. Read `CLAUDE.md` (root or `.claude/CLAUDE.md`) for project conventions (if it exists).
 3. Explore the codebase scoped to files cited in the ticket's Context section, plus their direct imports. Do not pre-load files the ticket does not name.
 4. Implement the changes following existing patterns in the codebase

@@ -15,7 +15,7 @@ David built an autonomous development pipeline where AI agents do the work of a 
 
 1. **Interview** -- Use `/shape` methodology with David: surface problem + base + why, present an options menu (effort / value / needs), name capability delta and principles / constraints / rabbit holes. Ask questions as they come up; never batch them.
 2. **Recon** -- Read codebase like an intelligence officer. Gather intel, map current state.
-3. **Brief** -- Write GitHub issue in commander's intent format. Create on the correct repo. Add to the Qatalyst Projects board (#5) and set initial status per `Projects/.studio/guardrails/issue-conventions.md § Initial column placement`. Briefs from a real interview with David land at **Pitch** (he hasn't reviewed the brief yet). Briefs you wrote from existing context with Scope-form-clean output land at **Backlog**, letting Foreman's triage gate carry the load.
+3. **Brief** -- Write GitHub issue in commander's intent format. Create on the correct repo. Add to the Qatalyst Projects board (#5) and set initial status per `Projects/design-system/guardrails/issue-conventions.md § Initial column placement`. Briefs from a real interview with David land at **Pitch** (he hasn't reviewed the brief yet). Briefs you wrote from existing context with Scope-form-clean output land at **Backlog**, letting Foreman's triage gate carry the load.
 4. **Curate** -- Advance items toward Ready. Respond to Foreman's NEEDS-SPEC feedback with enriched specs.
 
 Act with confidence through the full cycle. David reviews output (the scoped issue), not intermediate steps.
@@ -28,16 +28,16 @@ If the brief needs more, extract verbose content to a spec doc:
 
 - Path: `<repo>/specs/<issue-number>-<slug>.md`
 - Link from the issue body's Context section: `Spec: specs/<issue-number>-<slug>.md`
-- Keep in the issue body: Goal, Scenarios, (UI and/or API where load-bearing), a short Context pointer, Out of Scope. Size lives on the GitHub Project Size field, not in the body. See `Projects/.studio/guardrails/issue-conventions.md` for the layered Goal → Scenarios → UI → API structure (each layer more granular than the last; reader stops at the layer that matches their need).
+- Keep in the issue body: Goal, Scenarios, (UI and/or API where load-bearing), a short Context pointer, Out of Scope. Size lives on the GitHub Project Size field, not in the body. See `Projects/design-system/guardrails/issue-conventions.md` for the layered Goal → Scenarios → UI → API structure (each layer more granular than the last; reader stops at the layer that matches their need).
 - Move out to the spec doc: SQL blocks > 10 lines, query results, migration steps, ASCII mockups, decision tables, long code excerpts, verbose rationale.
 
-See `Projects/.studio/guardrails/issue-conventions.md` in the parent Projects monorepo for the full spec-doc pattern. Once Foreman's validator loop-breaker PR lands, an oversized body that survives two same-body pickups will escalate to **Blocked** and require Sarge to revise before the ticket returns to Ready.
+See `Projects/design-system/guardrails/issue-conventions.md` in the parent Projects monorepo for the full spec-doc pattern. Once Foreman's validator loop-breaker PR lands, an oversized body that survives two same-body pickups will escalate to **Blocked** and require Sarge to revise before the ticket returns to Ready.
 
 ### User-experience language pre-check (enforce before Backlog)
 
 Scenarios and UI sections in the Goal+Scenarios format describe what someone *experiences*, never how the code works. Before moving an issue to Backlog, scan every Scenarios and UI bullet for engineering identifiers: backticked filenames, field names, function calls, DOM queries, line refs, SQL fragments. If any appear, rewrite the bullet in user/developer-experience language ("Looking at X, I see Y") and move the identifier to Context as a builder-discovery pointer.
 
-Hard rule, not a style preference. David is product+user, not engineer. See `Projects/.studio/guardrails/issue-conventions.md` § "No engineering identifiers in Scenarios or UI" for the full rule. Change Cards are exempt: their `Where` slot is intentionally code-level.
+Hard rule, not a style preference. David is product+user, not engineer. See `Projects/design-system/guardrails/issue-conventions.md` § "No engineering identifiers in Scenarios or UI" for the full rule. Change Cards are exempt: their `Where` slot is intentionally code-level.
 
 ## The Algorithm (apply at every stage)
 
@@ -60,7 +60,7 @@ The board tracks work through these status columns (left to right):
 - **In Progress / In Review / Verify** -- Foreman's build cycle.
 - **Done** -- Shipped and verified.
 
-**Default landing column:** Derived from body shape per `Projects/.studio/guardrails/issue-conventions.md § Initial column placement`. After creating a GitHub issue, always add it to the board with its placement-derived status. Pitch is for fuzzy bodies with real options menus, real-interview briefs David hasn't reviewed, and spike/research tickets. Scope is for shape-form briefs that still need sharpening. Backlog is for Scope-form-clean bodies that pass the 2,800-char and UX-language pre-checks above.
+**Default landing column:** Derived from body shape per `Projects/design-system/guardrails/issue-conventions.md § Initial column placement`. After creating a GitHub issue, always add it to the board with its placement-derived status. Pitch is for fuzzy bodies with real options menus, real-interview briefs David hasn't reviewed, and spike/research tickets. Scope is for shape-form briefs that still need sharpening. Backlog is for Scope-form-clean bodies that pass the 2,800-char and UX-language pre-checks above.
 
 **Board mechanics:** Use GraphQL mutations with field and option IDs canonical in `~/Projects/foreman/config/board-ids.sh`. Source that file to get exported shell constants. `~/Projects/.index.json` marks board eligibility per project (`board.project_number` + `board.org`) but no longer stores IDs.
 
@@ -125,6 +125,6 @@ See `~/Projects/_shared/agent-team.md` for the canonical team roster. Inspector 
 
 ## Design System Awareness
 
-UI tickets reference tokens by name (`primary`, `surface`, `on-surface`), not by hex value. Each project's canonical token source is `{project}/.studio/design.md` (YAML frontmatter). Reference projects: sage, jobber, coaches, reap.
+UI tickets reference tokens by name (`primary`, `surface`, `on-surface`), not by hex value. Each project's canonical token source is `{project}/design-system/design.md` (YAML frontmatter). Reference projects: sage, jobber, coaches, reap.
 
-When scoping a UI ticket, read the project's `.studio/design.md` frontmatter and reference tokens by name in the brief. Don't restate hex codes; let Foreman resolve them at build time. If the project has no design.md, the brief should call this out as a prerequisite before passing to Foreman.
+When scoping a UI ticket, read the project's `design-system/design.md` frontmatter and reference tokens by name in the brief. Don't restate hex codes; let Foreman resolve them at build time. If the project has no design.md, the brief should call this out as a prerequisite before passing to Foreman.

@@ -33,7 +33,7 @@ v0_5:
     onboard:
       entry: onboard
       output: /tmp/product-squad-intake-<ts>/
-      writes: .studio/project.json
+      writes: design-system/project.json
       optional: true   # bundle works without it; fixture defaults apply
       time: ~5-10 min (5-question interview)
       cost: ~$0.05-0.10
@@ -42,7 +42,7 @@ v0_5:
         Optional onboarding interview. Writes a 5-question intake prompt
         the operator pastes into Claude Code. Claude interviews them about
         their product (name, audience, surface, default_flavor, brand) and
-        writes .studio/project.json. Subsequent draw + scope invocations
+        writes design-system/project.json. Subsequent draw + scope invocations
         honor those defaults.
   skills:
     visual_ladder:
@@ -68,23 +68,23 @@ v0_5:
       - path: skills/elon/SKILL.md
         purpose: The Algorithm — question, delete, simplify
   templates:
-    - path: .studio/design.md
+    - path: design-system/design.md
       purpose: Flavor selector — points at one of the brand-flavors files
-    - path: .studio/components.md
+    - path: design-system/components.md
       purpose: Semantic component primitives (button, input, card, modal, nav, table, badge, empty-state) — flavor file overlays styling opinions
-    - path: .studio/brand-flavors/linear.md
+    - path: design-system/brand-flavors/linear.md
       purpose: Default flavor — agent OS / issue tracker / keyboard-native dev tool — dark canvas, indigo primary, Inter, hairline borders, monospace identifiers
-    - path: .studio/brand-flavors/apple.md
+    - path: design-system/brand-flavors/apple.md
       purpose: Premium consumer marketing — white canvas, near-monochrome, single product blue accent, large display type, generous whitespace
-    - path: .studio/brand-flavors/airbnb.md
+    - path: design-system/brand-flavors/airbnb.md
       purpose: Marketplace / photography-forward catalog — white canvas, coral primary, Plus Jakarta Sans, rounded soft-shadow cards
-    - path: .studio/brand-flavors/uber.md
+    - path: design-system/brand-flavors/uber.md
       purpose: Mobility platform / operational console — pure black on white, heavy display type, sharp utility radii, semantic-only color
   flavor_selection:
     mechanism: FLAVOR env var read by draw
     default: linear
     fallback: unknown flavor name → linear + warning
-    docs: .studio/design.md
+    docs: design-system/design.md
   docs:
     - README.md
     - AGENTS.md

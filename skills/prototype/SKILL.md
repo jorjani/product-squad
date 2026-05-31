@@ -54,12 +54,12 @@ Tier 4 of the design ladder. The **interaction contract**: how the styled UI beh
 
 ### 1. Read predecessors
 
-Required. Read `<repo>/specs/<num>-wireframe.html` (structure + states) and `<num>-mockup.html` if it exists (aesthetics). If only a wireframe exists, pull design tokens from `<repo>/.studio/design.md` and apply them in the prototype directly.
+Required. Read `<repo>/specs/<num>-wireframe.html` (structure + states) and `<num>-mockup.html` if it exists (aesthetics). If only a wireframe exists, pull design tokens from `<repo>/design-system/design.md` and apply them in the prototype directly.
 
 ### 2. Read design tokens + primitive catalog
 
-- `<repo>/.studio/design.md` — palette, typography, spacing (if absent, fall back to the generic template at the repo root)
-- `<repo>/.studio/components.md` — primitive APIs (reuse, don't reinvent)
+- `<repo>/design-system/design.md` — palette, typography, spacing (if absent, fall back to the generic template at the repo root)
+- `<repo>/design-system/components.md` — primitive APIs (reuse, don't reinvent)
 - Tailwind/CSS variable config if applicable
 
 ### 3. Produce
@@ -113,8 +113,8 @@ Specs go directly to main per `Projects/CLAUDE.md` "Spec File Commits". One comm
 - `/schematic` — Tier 2 optional (annotation overlay)
 - `/mockup` — Tier 3 predecessor (hi-fi static HTML with aesthetics)
 - `/html-to-png` — render to PNG for inline GitHub embedding
-- `<repo>/.studio/design.md` — token source of truth
-- `<repo>/.studio/components.md` — primitive catalog
+- `<repo>/design-system/design.md` — token source of truth
+- `<repo>/design-system/components.md` — primitive catalog
 
 ## Anti-patterns
 

@@ -149,7 +149,7 @@ print(int(delta.total_seconds() // 3600))
   # headless mode.
   CODEBASE_CONTEXT=""
   if [ -n "$PROJECT_DIR" ] && [ -d "$PROJECT_DIR" ]; then
-    for f in ".studio/project.json" ".studio/context.md" ".studio/features.yaml" "CLAUDE.md" ".claude/CLAUDE.md" ".studio/SCHEMA.md"; do
+    for f in "design-system/project.json" "design-system/context.md" "design-system/features.yaml" "CLAUDE.md" ".claude/CLAUDE.md" "design-system/SCHEMA.md"; do
       if [ -f "$PROJECT_DIR/$f" ]; then
         CODEBASE_CONTEXT="${CODEBASE_CONTEXT}### $f"$'\n\n'"$(cat "$PROJECT_DIR/$f")"$'\n\n'
       fi

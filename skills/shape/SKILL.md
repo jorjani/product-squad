@@ -40,7 +40,7 @@ description: Decide what to build via options-menu + capability-delta + cuts (Sh
 
 ## Step 1: Context Check
 
-If the project has `.studio/` files, skim first:
+If the project has `design-system/` files, skim first:
 1. `features.yaml` -- does this already partially exist?
 2. `rules.yaml` -- any constraints?
 

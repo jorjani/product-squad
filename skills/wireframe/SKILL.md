@@ -31,7 +31,7 @@ Tier 1 of the design ladder. The **architecture contract**: where things go, wha
 - **Information architecture** — what data + components live where
 - **Layout / spatial composition** — two-pane vs single, regions, hierarchy
 - **State design** — all states (happy + edge + error + empty + loading)
-- **Component primitive selection** — which existing primitives are reused (from project's `.studio/components.md`)
+- **Component primitive selection** — which existing primitives are reused (from project's `design-system/components.md`)
 - **Microcopy direction** — actual button labels, headings, helper text
 - **Edge-case states** — explicit, not implicit
 
@@ -60,7 +60,7 @@ Fetch the issue body or pasted text. Identify:
 
 - **Surface(s)** — which UI region(s) change
 - **States** — list every state including edge cases (empty, error, loading, cancel, retry)
-- **Primitives reused** — grep `.studio/components.md` (or equivalent) for existing components
+- **Primitives reused** — grep `design-system/components.md` (or equivalent) for existing components
 
 If states or primitives aren't named, ask before drawing.
 
@@ -138,4 +138,4 @@ Specs go directly to main per `Projects/CLAUDE.md` "Spec File Commits". One comm
 - `/prototype` — Tier 4 successor (interactive HTML)
 - `/html-to-png` — render the wireframe HTML to PNG; only for repos without a live-render gateway
 - `/shape` — names "Visual" as the bottleneck that routes to `/wireframe`
-- Trigger map (project guardrail) — designing or prototyping any UI surface → reads project's `.studio/components.md`. A generic template ships at the repo root (`.studio/components.md`) for projects without their own.
+- Trigger map (project guardrail) — designing or prototyping any UI surface → reads project's `design-system/components.md`. A generic template ships at the repo root (`design-system/components.md`) for projects without their own.

@@ -47,5 +47,5 @@ this exact phrase and run.
 
 - [`manifest.yaml`](manifest.yaml) — file inventory, versions, runnable bits
 - [`skills/`](skills/) and [`.claude/skills/`](.claude/skills/) — capability descriptions + prompts
-- [`.studio/design.md`](.studio/design.md) + [`.studio/brand-flavors/`](.studio/brand-flavors/) — design tokens + Do/Don'ts per flavor
+- [`design-system/design.md`](design-system/design.md) + [`design-system/brand-flavors/`](design-system/brand-flavors/) — design tokens + Do/Don'ts per flavor
 - [`RELEASE-NOTES.md`](RELEASE-NOTES.md) — version history

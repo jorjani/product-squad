@@ -25,27 +25,27 @@ source "$SCRIPT_DIR/lib/questions.sh"
 
 ELIGIBLE_REPOS="$(eligible_repos)"
 
-# Collect codebase context from a repo's .studio/ and CLAUDE.md
+# Collect codebase context from a repo's design-system/ and CLAUDE.md
 collect_context() {
   local project_dir="$1"
   local context=""
 
-  if [ -f "$project_dir/.studio/project.json" ]; then
-    context="### .studio/project.json\n\n$(cat "$project_dir/.studio/project.json")\n\n"
+  if [ -f "$project_dir/design-system/project.json" ]; then
+    context="### design-system/project.json\n\n$(cat "$project_dir/design-system/project.json")\n\n"
   fi
-  if [ -f "$project_dir/.studio/context.md" ]; then
-    context="${context}### .studio/context.md\n\n$(cat "$project_dir/.studio/context.md")\n\n"
+  if [ -f "$project_dir/design-system/context.md" ]; then
+    context="${context}### design-system/context.md\n\n$(cat "$project_dir/design-system/context.md")\n\n"
   fi
-  if [ -f "$project_dir/.studio/features.yaml" ]; then
-    context="${context}### .studio/features.yaml\n\n$(cat "$project_dir/.studio/features.yaml")\n\n"
+  if [ -f "$project_dir/design-system/features.yaml" ]; then
+    context="${context}### design-system/features.yaml\n\n$(cat "$project_dir/design-system/features.yaml")\n\n"
   fi
   if [ -f "$project_dir/CLAUDE.md" ]; then
     context="${context}### CLAUDE.md\n\n$(cat "$project_dir/CLAUDE.md")\n\n"
   elif [ -f "$project_dir/.claude/CLAUDE.md" ]; then
     context="${context}### CLAUDE.md\n\n$(cat "$project_dir/.claude/CLAUDE.md")\n\n"
   fi
-  if [ -f "$project_dir/.studio/SCHEMA.md" ]; then
-    context="${context}### SCHEMA.md\n\n$(cat "$project_dir/.studio/SCHEMA.md")\n\n"
+  if [ -f "$project_dir/design-system/SCHEMA.md" ]; then
+    context="${context}### SCHEMA.md\n\n$(cat "$project_dir/design-system/SCHEMA.md")\n\n"
   fi
 
   echo "$context"
@@ -539,7 +539,7 @@ except Exception as e:
   fi
 
   # Write spec doc to project main checkout, commit, push.
-  # Per Projects/.studio/guardrails/spec-commits.md: commit directly to main,
+  # Per Projects/design-system/guardrails/spec-commits.md: commit directly to main,
   # explicit-path `git add`, message `specs(<num>): <slug>`. Pre-commit hook
   # allows commits under specs/ on main.
   SPEC_PATH="$PROJECT_DIR/$SPEC_REL"

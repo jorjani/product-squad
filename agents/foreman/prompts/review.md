@@ -8,7 +8,7 @@ Branch: {BRANCH}
 
 ## Process
 
-1. Read the project's `.studio/context.md` and `CLAUDE.md` for conventions
+1. Read the project's `design-system/context.md` and `CLAUDE.md` for conventions
 2. Get the full diff: `gh pr diff {PR_NUMBER} --repo {REPO}`
 3. Read the PR description: `gh pr view {PR_NUMBER} --repo {REPO}`
 4. Check if an issue is linked (look for "Closes/Refs/Fixes/Resolves #N" in the body); read the issue body for Goal + Acceptance Criteria

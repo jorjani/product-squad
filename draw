@@ -45,10 +45,10 @@ fi
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$SCRIPT_DIR"
 
-# Load project context from .studio/project.json if it exists (written by
+# Load project context from design-system/project.json if it exists (written by
 # ./onboard). Provides per-operator defaults for FLAVOR and BRAND. CLI env
 # vars take precedence; project.json takes precedence over hardcoded defaults.
-PROJECT_FILE="$REPO_ROOT/.studio/project.json"
+PROJECT_FILE="$REPO_ROOT/design-system/project.json"
 PROJECT_FLAVOR=""
 PROJECT_BRAND=""
 if [ -f "$PROJECT_FILE" ] && command -v python3 >/dev/null 2>&1; then
@@ -58,18 +58,18 @@ fi
 
 # Resolve FLAVOR. Precedence: env var > project.json > hardcoded `linear`.
 # Unknown name falls back with a warning so a typo doesn't silently apply the
-# wrong tokens. .studio/design.md is the authoritative list; this script
+# wrong tokens. design-system/design.md is the authoritative list; this script
 # duplicates the names for the fallback check so cold-start runs don't need to
 # parse markdown.
 FLAVOR="${FLAVOR:-${PROJECT_FLAVOR:-linear}}"
-FLAVOR_PATH="$REPO_ROOT/.studio/brand-flavors/$FLAVOR.md"
+FLAVOR_PATH="$REPO_ROOT/design-system/brand-flavors/$FLAVOR.md"
 if [ ! -f "$FLAVOR_PATH" ]; then
   echo "⚠ FLAVOR='$FLAVOR' not found at $FLAVOR_PATH — falling back to linear."
   echo "  Available flavors: linear, apple, airbnb, uber"
-  echo "  See .studio/design.md for the full list."
+  echo "  See design-system/design.md for the full list."
   echo ""
   FLAVOR="linear"
-  FLAVOR_PATH="$REPO_ROOT/.studio/brand-flavors/linear.md"
+  FLAVOR_PATH="$REPO_ROOT/design-system/brand-flavors/linear.md"
 fi
 
 # Brand placeholder. The model otherwise invents specific real-world identifiers
@@ -157,7 +157,7 @@ Apply the above instructions to this idea:
 - For HTML outputs (wireframe, mockup, prototype): write the COMPLETE self-contained HTML file (with all CSS inline) to this exact path: $out_path
 - For ASCII / Mermaid outputs (sketch): write the COMPLETE sketch (ASCII layout or Mermaid diagram) to this exact path: $out_path. The wrapper script will print it back to the terminal after you finish, so downstream tiers can read it as a predecessor.
 - Design flavor: read $FLAVOR_PATH. This file is the FULL aesthetic vocabulary: palette, type, radii, surface treatment, and a Do's and Don'ts section. Apply both the tokens AND the negative constraints in the Do's and Don'ts verbatim. The flavor is the brand; the Don'ts are non-negotiable.
-- Component primitives: read $REPO_ROOT/.studio/components.md. These are SEMANTIC primitives. The flavor file overlays styling opinions onto them.${predecessor_block}
+- Component primitives: read $REPO_ROOT/design-system/components.md. These are SEMANTIC primitives. The flavor file overlays styling opinions onto them.${predecessor_block}
 - Brand chrome (page titles, breadcrumbs, course codes, company names, product names): use exactly this placeholder string verbatim: $BRAND. DO NOT invent specific real-world identifiers like CSC301 or Acme Corp — the operator-provided value above is the only allowed brand string.
 - Self-explanatory rule: state labels and section headings must be plain-English sentences of 5 to 10 words that a first-time viewer can grasp in one glance. No abbreviations, no single-word state codes like S1 or S2, no jargon.
 - For wireframe: produce multi-state HTML with state-toggle navigation. STATE COUNT CAP: 3 to 5 states maximum. Pick one happy-path plus 2 most-instructive edges. Breathable layout, generous whitespace between states. Wireframe is for IA exploration, not exhaustive state coverage.

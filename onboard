@@ -3,12 +3,12 @@
 #
 # Writes a single intake prompt file to a temp dir. Paste it into a fresh
 # Claude Code conversation in this directory; Claude interviews you across
-# 5 questions and writes .studio/project.json with your product context.
+# 5 questions and writes design-system/project.json with your product context.
 # Subsequent ./draw and ./scope invocations honor those defaults
 # (default_flavor + brand string).
 #
 # Optional. The bundle works without project context — running ./draw or
-# ./scope without an .studio/project.json uses the fixture defaults
+# ./scope without an design-system/project.json uses the fixture defaults
 # (FLAVOR=linear, BRAND="AcmeU 101 · ReviewLab"). Use ./onboard when you
 # want the bundle to render IN YOUR BRAND instead of the placeholder.
 #
@@ -37,7 +37,7 @@ cat > "$INTAKE_FILE" <<'HEADER'
 # COPY EVERYTHING FROM THE HORIZONTAL RULE BELOW TO THE END OF
 # THIS FILE INTO A FRESH CLAUDE CODE CONVERSATION INSIDE THE
 # product-squad DIRECTORY. Claude will interview you across 5 questions
-# and write .studio/project.json with your answers.
+# and write design-system/project.json with your answers.
 
 ---
 
@@ -61,7 +61,7 @@ Ask these 5 questions one at a time. Use AskUserQuestion for each — never batc
 
 5. **Brand string.** "What brand string should `./draw` use as the chrome placeholder in titles, breadcrumbs, eyebrows, etc?" — propose `<Product> · <Surface>` (e.g., "Sage · ContentOS" or "Acme · Tasks"). Operator confirms or overrides.
 
-After all 5 are confirmed, write `.studio/project.json` at the bundle's repo root with this exact shape:
+After all 5 are confirmed, write `design-system/project.json` at the bundle's repo root with this exact shape:
 
 ```json
 {
@@ -78,7 +78,7 @@ After all 5 are confirmed, write `.studio/project.json` at the bundle's repo roo
 
 Confirm to the operator with one line:
 
-> ".studio/project.json saved. Your defaults are now: FLAVOR=<flavor>, BRAND='<brand>'. Try `./draw '<a specific feature idea for your product>'` next."
+> "design-system/project.json saved. Your defaults are now: FLAVOR=<flavor>, BRAND='<brand>'. Try `./draw '<a specific feature idea for your product>'` next."
 
 HEADER
 
@@ -111,7 +111,7 @@ echo "    cat $INTAKE_FILE | xclip -selection clipboard  # Linux X11"
 echo "    cat $INTAKE_FILE | wl-copy       # Linux Wayland"
 echo ""
 echo "  Claude will interview you (5 questions) and write"
-echo "  .studio/project.json when done."
+echo "  design-system/project.json when done."
 echo ""
 echo "  After project.json lands, your defaults are live:"
 echo "    ./draw  \"<a specific feature idea for your product>\""
@@ -119,5 +119,5 @@ echo "    ./scope \"<your feature>\""
 echo ""
 echo "  Note: ./onboard is optional. The bundle works without it — the"
 echo "  fixture defaults (FLAVOR=linear, BRAND='AcmeU 101 · ReviewLab')"
-echo "  apply if .studio/project.json doesn't exist."
+echo "  apply if design-system/project.json doesn't exist."
 echo "═══════════════════════════════════════════════════════════════════"

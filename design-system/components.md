@@ -7,9 +7,9 @@ last_updated: 2026-05-24
 
 # Components
 
-Generic primitive catalog. Override with your own `.studio/components.md` when you have a real component library. These are good-enough primitives that wireframe/mockup/prototype commands can reference without inventing fresh shapes per ticket.
+Generic primitive catalog. Override with your own `design-system/components.md` when you have a real component library. These are good-enough primitives that wireframe/mockup/prototype commands can reference without inventing fresh shapes per ticket.
 
-All references use tokens from `.studio/design.md` — no hex codes inline.
+All references use tokens from `design-system/design.md` — no hex codes inline.
 
 ## Button
 
@@ -122,6 +122,6 @@ When there's nothing to show: centered block with an icon (or large emoji), head
 
 ## Notes
 
-- Primitives are deliberately minimal. Add your own (avatars, tooltips, popovers, dropdowns, breadcrumbs) by extending this file in your `.studio/components.md`.
+- Primitives are deliberately minimal. Add your own (avatars, tooltips, popovers, dropdowns, breadcrumbs) by extending this file in your `design-system/components.md`.
 - For prototypes, prefer vanilla HTML + CSS over JS frameworks. Use small `<script>` blocks for interactivity (form validation, modal toggle, tab switching).
 - Tailwind CDN is fine for prototypes; production code should use scoped CSS / CSS modules.

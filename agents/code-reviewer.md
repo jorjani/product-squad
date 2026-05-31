@@ -44,7 +44,7 @@ If the input is ambiguous, pick the simplest interpretation and proceed. Do not 
 
 - **Unstructured error responses.** API/RPC failures should return `{ success: false, error: 'specific message' }` with explicit HTTP status (400 / 401 / 404 / 409 / 422). Plain string errors or generic 500s are a Major.
 - **Missing tests on new behavior.** New public function or new branch without a corresponding test. Bug fixes do not require tests if the change is small and obviously correct, but new features do.
-- **Tech-stack rule violations.** New project not using Bun + Biome (e.g. introducing npm + ESLint into a fresh repo). New file storage code using S3/Cloudinary/Supabase storage when Cloudflare R2 is the project standard. Cross-check `Projects/.studio/guardrails/engineering.md` if uncertain.
+- **Tech-stack rule violations.** New project not using Bun + Biome (e.g. introducing npm + ESLint into a fresh repo). New file storage code using S3/Cloudinary/Supabase storage when Cloudflare R2 is the project standard. Cross-check `Projects/design-system/guardrails/engineering.md` if uncertain.
 - **Type-safety regressions.** New `any` types, `// @ts-ignore`, or `as unknown as X` casts where a real type would compile. Existing usages are not in scope; only newly introduced ones.
 - **try-catch-at-every-layer.** Catching errors at intermediate layers when the caller already handles them. Rule: catch at boundaries (top of request handlers, jobs, CLI entry points), propagate within.
 
