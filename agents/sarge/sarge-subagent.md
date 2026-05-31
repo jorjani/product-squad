@@ -60,7 +60,7 @@ Why a Minion: this check is purely deterministic data fetching. Externalized to 
 
 Then use file tools (Read, Glob, Grep) first. Only use Bash for git, gh, bun.
 
-- Read target repo's `.studio/` files (project.json, context.md, features.yaml)
+- Read target repo's `design-system/` files (project.json, context.md, features.yaml)
 - Search codebase for relevant files
 - Check existing issues/PRs for overlap
 - Note real file paths, real function names, real schemas
@@ -83,10 +83,10 @@ When in doubt, decompose. Reuse is the default; invention requires a candidate r
 
 Follow the `/gh-issue` skill for the mechanism (ground references, create issue, add to board).
 
-Body shape, size budget, visual ladder, and spec-doc pattern all live in `Projects/.studio/guardrails/issue-conventions.md` — that's the single source of truth. Read it once per session, then follow it. Key rules:
+Body shape, size budget, visual ladder, and spec-doc pattern all live in `Projects/design-system/guardrails/issue-conventions.md` — that's the single source of truth. Read it once per session, then follow it. Key rules:
 
-- **Body shape by column.** Pitch carries shape output (Options Menu, Capability Delta, Hardest unknowns callout, Principles, named cuts) per `/shape`. Scope/Ready carry the contract: Goal → Visual → Scenarios → Out of Scope → Context. /spec is the transition that rewrites Pitch-form to Scope-form in place AND advances the column. Full convention: `Projects/.studio/guardrails/issue-conventions.md § "Body shape by column"`. **Drop "How it works", "Acceptance Criteria" checklist, "Current State" prose, "Files affected", API/schema sections, and `## Size` from any column body by default — Size lives on the GitHub Project Size field; the rest belong in the spec doc.**
-- **Loose-end taxonomy.** `/shape` Step 7 names 1-3 hardest unknowns per the 5-category taxonomy in `Projects/.studio/guardrails/issue-conventions.md § Loose-end taxonomy`. Each bottleneck routes to a default tightener (`/wireframe`, `/flow`, `/api`, `/migrate`, `@eng-deep-dive`). Tighteners write artifacts to `<repo>/specs/<num>-<slug>/`; `/spec`'s Step 0 verifies arrival before rewriting the body.
+- **Body shape by column.** Pitch carries shape output (Options Menu, Capability Delta, Hardest unknowns callout, Principles, named cuts) per `/shape`. Scope/Ready carry the contract: Goal → Visual → Scenarios → Out of Scope → Context. /spec is the transition that rewrites Pitch-form to Scope-form in place AND advances the column. Full convention: `Projects/design-system/guardrails/issue-conventions.md § "Body shape by column"`. **Drop "How it works", "Acceptance Criteria" checklist, "Current State" prose, "Files affected", API/schema sections, and `## Size` from any column body by default — Size lives on the GitHub Project Size field; the rest belong in the spec doc.**
+- **Loose-end taxonomy.** `/shape` Step 7 names 1-3 hardest unknowns per the 5-category taxonomy in `Projects/design-system/guardrails/issue-conventions.md § Loose-end taxonomy`. Each bottleneck routes to a default tightener (`/wireframe`, `/flow`, `/api`, `/migrate`, `@eng-deep-dive`). Tighteners write artifacts to `<repo>/specs/<num>-<slug>/`; `/spec`'s Step 0 verifies arrival before rewriting the body.
 - **Goal is one sentence.** Names the intent. Use the word "Goal," not "What you get."
 - **Visual ladder, ascending:** Tier 1 ASCII (default), Tier 2 mermaid (state/flow/sequence diagrams), Tier 3 `/ui-diff` (existing-surface change), Tier 4 `/prototype` (interactive). Body always carries Tier 1 or 2 inline; Tier 3/4 HTML is linked from Context, never replaces in-body content.
 - **Per-state UI:** for state machines, render one ASCII block per state with the trigger to the next state (T1c). For UI tickets size S+ where the flow has side effects, data writes, auth gates, or a "must be verifiable" claim, escalate to T1d (per-state blocks plus an edge table; see "Edge table (T1d)" in issue-conventions.md). The edge table replaces the deprecated `## Acceptance Criteria` checklist for these tickets. Mermaid `stateDiagram` only when the transition graph itself is the point.
@@ -116,7 +116,7 @@ Follow the "Spec File Commits" section in `Projects/CLAUDE.md`. Single source of
 - Board IDs (project, status field, status options, priority, size) canonical in `~/Projects/foreman/config/board-ids.sh`. Source it to get exported constants. `.index.json` only marks board eligibility (`board.project_number` + `board.org`).
 - Use GraphQL mutations with IDs from `foreman/config/board-ids.sh` (canonical)
 - Create issues on correct repo (check `.index.json`)
-- New issues land per `Projects/.studio/guardrails/issue-conventions.md § Initial column placement`. Default is body-shape-derived (Pitch / Scope / Backlog), not unconditional Pitch. Real-interview-derived briefs override to Pitch (David hasn't reviewed the brief yet).
+- New issues land per `Projects/design-system/guardrails/issue-conventions.md § Initial column placement`. Default is body-shape-derived (Pitch / Scope / Backlog), not unconditional Pitch. Real-interview-derived briefs override to Pitch (David hasn't reviewed the brief yet).
 - Comment with protocol tags: NEEDS-SPEC, SPEC-UPDATED, DECISION-NEEDED, ESCALATION (see `sarge/agent-team-spec.md` for definitions)
 - **Body is the spec. Comments are the trail.** When a decision changes what the builder will ship (AC, schema, scope, approach), edit the body to reflect current truth. Git history and commit messages carry the rationale; do NOT add a ceremonial "SPEC-UPDATED" comment just because the body changed. Comments are reserved for coordination tags (NEEDS-SPEC, DECISION-NEEDED, ESCALATION) or genuine discussion, never for announcing edits. A builder reading only the body must get the right story.
 

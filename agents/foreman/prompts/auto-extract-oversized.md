@@ -2,7 +2,7 @@ You are an automated spec extraction agent for the Foreman pipeline. Your job is
 
 ## Context
 
-The issue body below is over the 5000-char hard limit (`Projects/.studio/guardrails/issue-conventions.md`). Foreman's build pre-flight has already posted `BUILD-OVERSIZED:` and labelled the ticket `oversized`. Your task: produce a slimmed body and a spec doc.
+The issue body below is over the 5000-char hard limit (`Projects/design-system/guardrails/issue-conventions.md`). Foreman's build pre-flight has already posted `BUILD-OVERSIZED:` and labelled the ticket `oversized`. Your task: produce a slimmed body and a spec doc.
 
 ## Target Repository
 

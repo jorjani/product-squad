@@ -32,7 +32,7 @@ The enriched issue must pass ALL of the following before it can be promoted to R
 1. Read the triage feedback carefully. Each bullet under "Missing" is something you must address. Use the Ready Checklist above as the definitive list of what triage will check.
 2. Use the codebase context above to find concrete answers — real file paths, real function names, real data structures.
 3. Produce the complete updated issue body (not a diff — the full replacement text).
-4. Follow the three-layer brief format. **Default to brevity — escalate sections only when the change demands them.** Section order matches `Projects/.studio/guardrails/issue-conventions.md`:
+4. Follow the three-layer brief format. **Default to brevity — escalate sections only when the change demands them.** Section order matches `Projects/design-system/guardrails/issue-conventions.md`:
    - **Commander's Intent** — ONE sentence: where + when + what. Names the new behavior in user terms. Legacy heading `## Goal` still accepted; PRESERVE whichever the original used.
    - **Delta** — one line: before → after. The TLDR. Verb-anchored. Example: "Change from original idea to enhanced idea."
    - **Visual** (escalate when prose can't carry the change) — ASCII or mermaid. SKIP when Commander's Intent + Delta convey the change. Required for UI redesigns, multi-state flows, algorithms.

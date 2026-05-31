@@ -185,7 +185,7 @@ Foreman: reviews PR against AC
 ### Phase 3: Foreman Dispatches
 - Foreman stops building directly
 - Foreman spawns project-specific Claude sessions with repo context
-- Each project agent gets: issue body + their CLAUDE.md + their .studio/
+- Each project agent gets: issue body + their CLAUDE.md + their design-system/
 
 ### Phase 4: Autonomous Loop
 - Sarge proactively triages Parking

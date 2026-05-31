@@ -64,7 +64,7 @@
 - Capture the hill before doing any recon
 
 ### C2: Codebase Recon
-- Read target project's `.studio/` files (project.json, context.md, features.yaml, SCHEMA.md)
+- Read target project's `design-system/` files (project.json, context.md, features.yaml, SCHEMA.md)
 - Search codebase for relevant code (real paths, real functions, real columns)
 - Check existing GitHub issues/PRs for related work
 - Present findings with clear recommendation, not a data dump
@@ -123,7 +123,7 @@ Sarge should be a **Claude Code agent** (`.claude/agents/sarge.md`), not a shell
 
 1. **Interactive.** Sarge needs to interview David, ask follow-ups, present options.
 2. **Multi-tool.** Needs Glob, Grep, Read (recon), Bash (gh CLI, board management), Agent (spawn sub-agents for parallel recon).
-3. **Contextual.** Needs to read project .studio/ files, understand the board state, reference previous decisions.
+3. **Contextual.** Needs to read project design-system/ files, understand the board state, reference previous decisions.
 4. **Conversational.** David talks to Sarge like a PM, not a CLI.
 
 The current agent definition at `.claude/agents/sarge.md` is a stub — 56 lines, issue-writer only. It needs to become the full PM agent.
@@ -150,10 +150,10 @@ The foreman enrichment phase (`sarge-enrich.sh`) stays as-is — it's the automa
 - `/Users/jorjani/Projects/foreman/metrics/incidents.md` — What has broken
 
 ### Project context (Sarge reads these during recon)
-- `{project}/.studio/project.json` — What is this project
-- `{project}/.studio/context.md` — Architecture and patterns
-- `{project}/.studio/features.yaml` — Feature → code mapping
-- `{project}/.studio/SCHEMA.md` — Enum reference, DB constraints
+- `{project}/design-system/project.json` — What is this project
+- `{project}/design-system/context.md` — Architecture and patterns
+- `{project}/design-system/features.yaml` — Feature → code mapping
+- `{project}/design-system/SCHEMA.md` — Enum reference, DB constraints
 - `{project}/CLAUDE.md` or `{project}/.claude/CLAUDE.md` — Project instructions
 
 ### Root config

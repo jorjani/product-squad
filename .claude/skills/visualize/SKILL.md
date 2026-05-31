@@ -12,10 +12,10 @@ Runs `./draw "$ARGUMENTS"` from the product-squad bundle's repo root. Generates 
 1. Verify CWD is a product-squad bundle (look for `manifest.yaml` with `name: product-squad` at repo root).
 2. Use the Bash tool to run: `./draw "$ARGUMENTS"`
 3. Stream the output. Each tier announces itself; HTMLs auto-open.
-4. After completion, suggest one of: `/scope "$ARGUMENTS"` to produce a product brief, OR a different flavor (`FLAVOR=apple ./draw "..."` — also airbnb, uber, or default linear), OR `/onboard` if `.studio/project.json` doesn't exist yet (so future runs use the operator's brand defaults).
+4. After completion, suggest one of: `/scope "$ARGUMENTS"` to produce a product brief, OR a different flavor (`FLAVOR=apple ./draw "..."` — also airbnb, uber, or default linear), OR `/onboard` if `design-system/project.json` doesn't exist yet (so future runs use the operator's brand defaults).
 
 **Env vars** the user may prefix to override:
-- `FLAVOR=<linear|apple|airbnb|uber>` — aesthetic vocabulary (default reads from `.studio/project.json` if present, otherwise `linear`)
-- `BRAND="<your-product>"` — chrome placeholder (default reads from `.studio/project.json` if present, otherwise `AcmeU 101 · ReviewLab`)
+- `FLAVOR=<linear|apple|airbnb|uber>` — aesthetic vocabulary (default reads from `design-system/project.json` if present, otherwise `linear`)
+- `BRAND="<your-product>"` — chrome placeholder (default reads from `design-system/project.json` if present, otherwise `AcmeU 101 · ReviewLab`)
 
 $ARGUMENTS

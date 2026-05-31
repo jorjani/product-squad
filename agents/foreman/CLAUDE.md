@@ -12,7 +12,7 @@ Activates the versioned pre-commit policy under `.githooks/` (blocks direct comm
 
 ## How It Works
 
-0. **Intake phase** (interactive): Takes a raw idea + target repo, reads project `.studio/` context, produces a spec'd GitHub issue, and adds it to project board #5 in Pitch status.
+0. **Intake phase** (interactive): Takes a raw idea + target repo, reads project `design-system/` context, produces a spec'd GitHub issue, and adds it to project board #5 in Pitch status.
 1. **Verify phase** (daily): Confirms merged PRs work in deployed environments. Closes linked issues on success, creates bug tickets on failure.
 1b. **Inspect + Code-Review phases** (daily, parallel siblings after Verify, before Review): Inspect (Inspector v1, foreman#209) gates Verify→Done. Per item: a refactor-allowlist diff (`config|lib|prompts|specs|docs|.studio`) or a wired lazy-init producer auto-promotes instantly with no LLM; otherwise the file-extension split-verify classifier and an LLM fallback (Haiku tier classifier + Sonnet judge over captured HTTP/log evidence) render PASS/FAIL/SKIP. A behavior PASS soaks `INSPECT_HOLD_DAYS` (7) in Verify — `INSPECTOR: HOLDING (Nd/7d)` once a day — before promoting to Done. `INSPECT_DISABLE_LLM=1` drops the LLM path (deterministic classes still run); the LLM path stops after `INSPECT_BUDGET` spend. Posts `INSPECTOR:`. Code-Review dispatches the `code-reviewer` subagent against open PRs missing a `REVIEWER:` comment, posts findings (or `REVIEWER: LGTM`), then (foreman#210) runs the auto-merge gate on non-`auto/*` PRs: a clean verdict + allowlisted author (`CODE_REVIEW_MERGE_ALLOWLIST`, default `jorjani`) + repo opt-in (`board.code_review_automerge`, foreman itself defaults on) + green CI + an LLM `AC-MATCH` verdict squash-merges the PR and moves the linked issue to Verify; `AC-MISMATCH` posts `DECISION-NEEDED:` on the issue and leaves the PR open. `auto/*` PRs are untouched — `phases/review.sh` still owns that path. Kill switch: `CODE_REVIEW_DISABLE_AUTOMERGE=1`. The autonomous review phase (next) may consume `REVIEWER:` comments when deciding.
 2. **Review phase** (daily): Fetches open PRs across eligible repos. Runs Claude review (14-point checklist). Auto-merges clean `auto/` PRs. Human PRs get review only. CI pile-up alerting runs after review.
@@ -71,7 +71,7 @@ foreman/
     collect-metrics.sh        # Parse daily logs into metrics/YYYY-MM-DD.json
     self-improve.sh           # Phase 7: autoresearch loop for prompt optimization
   prompts/
-    intake.md                 # Idea-to-issue spec prompt (reads .studio/ context)
+    intake.md                 # Idea-to-issue spec prompt (reads design-system/ context)
     build.md                  # Autonomous build prompt
     review.md                 # Autonomous PR review prompt
     triage.md                 # Triage evaluation prompt (enforces issue contract)
@@ -242,6 +242,6 @@ Priority order is defined by the `priority` field in `.index.json` (lower = high
 
 ## Design System Awareness
 
-UI tickets reference tokens by name (`primary`, `surface`, `on-surface`), not by hex value. Each project's canonical token source is `{project}/.studio/design.md` (YAML frontmatter). Reference projects: sage, jobber, coaches, reap.
+UI tickets reference tokens by name (`primary`, `surface`, `on-surface`), not by hex value. Each project's canonical token source is `{project}/design-system/design.md` (YAML frontmatter). Reference projects: sage, jobber, coaches, reap.
 
-When building a UI ticket, read the project's `.studio/design.md` frontmatter for tokens before generating CSS or component code. Don't invent palette values; if the file is missing or incomplete, the ticket should specify what to add. Long-form recipes (per-page component specs) live in companion `brand-guidelines.md` files when present.
+When building a UI ticket, read the project's `design-system/design.md` frontmatter for tokens before generating CSS or component code. Don't invent palette values; if the file is missing or incomplete, the ticket should specify what to add. Long-form recipes (per-page component specs) live in companion `brand-guidelines.md` files when present.

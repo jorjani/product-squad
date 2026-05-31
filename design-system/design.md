@@ -6,7 +6,7 @@ type: design-system
 
 # Design
 
-This file is the **flavor selector** for the visual ladder. The actual design tokens, type ramps, component opinions, and Do/Don't rules live in `.studio/brand-flavors/<name>.md`.
+This file is the **flavor selector** for the visual ladder. The actual design tokens, type ramps, component opinions, and Do/Don't rules live in `design-system/brand-flavors/<name>.md`.
 
 ## Available flavors
 
@@ -44,7 +44,7 @@ Each flavor teaches a different aesthetic vocabulary. Switching flavors on the s
 
 ## Authoring your own flavor
 
-Drop a new file at `.studio/brand-flavors/<your-flavor-name>.md` using the existing flavors as templates. Required structure:
+Drop a new file at `design-system/brand-flavors/<your-flavor-name>.md` using the existing flavors as templates. Required structure:
 
 1. **YAML frontmatter** with `name`, `identity` (one-line), `teaches` (one-sentence — what does the flavor teach a designer?), `colors`, `typography`, `radii`, `spacing`, `surface-treatment`, `shadows`.
 2. **Overview paragraph** — the theory of the aesthetic. What does this flavor *teach*?
@@ -61,7 +61,7 @@ When you fork this bundle for a real product, replace one flavor with your brand
 
 ```bash
 # Option 1: overwrite the file
-cp my-brand-tokens.md .studio/brand-flavors/linear.md
+cp my-brand-tokens.md design-system/brand-flavors/linear.md
 
 # Option 2: add your brand as a new flavor and set it as default
 echo 'export FLAVOR=mybrand' >> ~/.zshrc

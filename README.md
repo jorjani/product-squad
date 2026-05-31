@@ -48,7 +48,7 @@ Time: ~60-120 seconds. Cost: ~$0.30-0.50 in Claude Code subscription usage.
 ```bash
 FLAVOR=apple ./draw "users configure notification preferences across email, push, and in-app channels"
 # Other flavors: linear (default) · airbnb · uber
-# See .studio/design.md for the full set + how to author your own.
+# See design-system/design.md for the full set + how to author your own.
 ```
 
 ### 🧠 Product cluster (SECONDARY)
@@ -100,7 +100,7 @@ bin/
   visual         # PRIMARY demo — visual fidelity ladder
   scope          # SECONDARY demo — commander's intent + scoping
 skills/          # 10 skills (5 visual + 5 product), each <name>/SKILL.md
-.studio/         # Bundled generic design tokens + component primitives
+design-system/   # Bundled generic design tokens + component primitives
 examples/        # Idea fixtures + phrasing guidance
 agents/          # Snapshots: foreman, sarge, code-reviewer, build-fixer
 docs/            # MIGRATION.md (source SHAs + scrub log) + roadmap

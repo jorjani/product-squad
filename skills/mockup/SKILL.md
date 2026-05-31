@@ -22,7 +22,7 @@ ASCII     Moqups HTML       annotation      styled HTML  +interactive
 
 ## Purpose
 
-Tier 3 of the design ladder. The **aesthetic contract**: how the wireframe-validated structure actually looks in brand-aligned form. Hi-fi static HTML with real design tokens from the project's `.studio/design.md` (or equivalent). Single best state — not multi-state coverage (that's wireframe's job).
+Tier 3 of the design ladder. The **aesthetic contract**: how the wireframe-validated structure actually looks in brand-aligned form. Hi-fi static HTML with real design tokens from the project's `design-system/design.md` (or equivalent). Single best state — not multi-state coverage (that's wireframe's job).
 
 **Use when** aesthetic direction is contested and needs visual decision before the builder applies it. **Skip when** the builder can apply tokens deterministically from a wireframe + design.md.
 
@@ -45,7 +45,7 @@ Tier 3 of the design ladder. The **aesthetic contract**: how the wireframe-valid
 
 ## Visual properties
 
-- **Palette:** real brand colors from `.studio/design.md` (or project equivalent)
+- **Palette:** real brand colors from `design-system/design.md` (or project equivalent)
 - **Typography:** real font stack from design tokens
 - **Spacing:** real px values, real grid
 - **Static:** single best state per page — usually the canonical happy state; or before/after diff if modifying existing UI
@@ -60,15 +60,15 @@ Required. The wireframe (`<repo>/specs/<num>-wireframe.html`) is the IA/layout/s
 ### 2. Read design tokens
 
 Pull from the project's design system:
-- `<repo>/.studio/design.md` — palette, typography, spacing tokens (canonical source). If absent, fall back to the generic template bundled at the repo root.
+- `<repo>/design-system/design.md` — palette, typography, spacing tokens (canonical source). If absent, fall back to the generic template bundled at the repo root.
 - `<repo>/public/css/base.css` or equivalent — runtime truth
 - Tailwind config if applicable
 
-If tokens conflict between files, the `.studio/design.md` doc is canonical; CSS mirrors.
+If tokens conflict between files, the `design-system/design.md` doc is canonical; CSS mirrors.
 
 ### 3. Produce
 
-Write `<repo>/specs/<num>-mockup.html`. Single state (the canonical happy state from the wireframe — usually State 1 Idle or the highest-decision-weight state). Apply tokens. Use real component primitives from `.studio/components.md`.
+Write `<repo>/specs/<num>-mockup.html`. Single state (the canonical happy state from the wireframe — usually State 1 Idle or the highest-decision-weight state). Apply tokens. Use real component primitives from `design-system/components.md`.
 
 For before/after comparisons on existing UI, use a toggle or side-by-side layout within the mockup.
 
@@ -83,7 +83,7 @@ Specs go directly to main per `Projects/CLAUDE.md` "Spec File Commits". One comm
 ## Output checklist
 
 - [ ] All brand tokens applied (color, typography, spacing) — no generic placeholders
-- [ ] Real component primitives used (per `.studio/components.md`); no aesthetic reinvention
+- [ ] Real component primitives used (per `design-system/components.md`); no aesthetic reinvention
 - [ ] Single canonical state — not multi-state (wireframe's job)
 - [ ] If modifying existing UI: before/after toggle for review
 - [ ] Inline image embed pattern matches `/wireframe`'s convention if going into an issue body
@@ -104,12 +104,12 @@ Specs go directly to main per `Projects/CLAUDE.md` "Spec File Commits". One comm
 - `/schematic` — Tier 2 optional (annotation overlay)
 - `/prototype` — Tier 4 successor (interactive HTML with motion)
 - `/html-to-png` — render to PNG for inline GitHub embedding
-- `<repo>/.studio/design.md` — token source of truth
-- `<repo>/.studio/components.md` — primitive catalog
+- `<repo>/design-system/design.md` — token source of truth
+- `<repo>/design-system/components.md` — primitive catalog
 
 ## Anti-patterns
 
 - **Don't redesign structure.** Wireframe locked that. Mockup applies aesthetics only.
 - **Don't show multiple states.** Wireframe owns multi-state coverage. Mockup is single-state.
-- **Don't invent design tokens.** Read from `.studio/design.md`. If a needed token doesn't exist, add it there before using it.
+- **Don't invent design tokens.** Read from `design-system/design.md`. If a needed token doesn't exist, add it there before using it.
 - **Don't skip the wireframe.** Mockup-without-wireframe forces architecture and aesthetic decisions simultaneously — same trap as starting at `/prototype` for a Scope ticket.

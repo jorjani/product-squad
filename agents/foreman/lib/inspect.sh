@@ -3,7 +3,7 @@
 # Pure functions — no gh, no board calls. Imported by phases/inspect.sh
 # and exercised directly by scripts/test-inspect.sh.
 #
-# Tier definitions (option B from .studio/inspector-recon.md):
+# Tier definitions (option B from design-system/inspector-recon.md):
 #   T1 — bullet asserts source-tree state (file exists, file contains string,
 #        symbol defined in path). Compilable to grep/test against a checkout.
 #   T2/T3/T4 — runtime / DOM / mocked-state assertions. v0 SKIPs them.
@@ -196,7 +196,7 @@ _inspect_short() {
 
 # REFACTOR_ALLOWLIST_RE — top-level dirs a pure structural refactor may touch.
 # A diff confined to these is the 2C fast-lane: instant promote, no 7-day soak.
-REFACTOR_ALLOWLIST_RE='^(config|lib|prompts|specs|docs|\.studio)/'
+REFACTOR_ALLOWLIST_RE='^(config|lib|prompts|specs|docs|design-system)/'
 
 # classify_diff_refactor_only
 # Reads newline-separated changed-file paths from stdin. Exit 0 iff the diff is

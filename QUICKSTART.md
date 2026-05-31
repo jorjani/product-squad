@@ -80,7 +80,7 @@ FLAVOR=uber    ./draw "your idea"   # operational console, pure black on white, 
 
 Open [`examples/flavor-comparison.html`](examples/flavor-comparison.html) in your browser to see all four rendered on the same UI side-by-side.
 
-Running the same idea through two flavors back-to-back is the fastest way to feel how design tokens shape output. See [`.studio/design.md`](.studio/design.md) for the full flavor catalog + how to author your own.
+Running the same idea through two flavors back-to-back is the fastest way to feel how design tokens shape output. See [`design-system/design.md`](design-system/design.md) for the full flavor catalog + how to author your own.
 
 ### Override the demo brand string
 
@@ -140,6 +140,6 @@ Total: ~15-30 min of paste-and-think. Cost: ~$0.30-0.50 if you go deep on all 5 
 
 Try these in order — each builds on the last:
 
-1. **Re-run with a different flavor on your own idea** — `FLAVOR=apple ./draw "your idea"`. Same ladder, different aesthetic. The four flavors aren't cosmetic; each teaches a distinct theory of taste (see [`.studio/brand-flavors/`](.studio/brand-flavors/)).
+1. **Re-run with a different flavor on your own idea** — `FLAVOR=apple ./draw "your idea"`. Same ladder, different aesthetic. The four flavors aren't cosmetic; each teaches a distinct theory of taste (see [`design-system/brand-flavors/`](design-system/brand-flavors/)).
 2. **Run `scope` on the same idea** — `./scope "your idea"`. The visual ladder shows *what*; the scoping cluster shows *why* and *what to build first*.
 3. **Then read the system docs** — [`AGENTS.md`](AGENTS.md) for the mental model, [`skills/shape/SKILL.md`](skills/shape/SKILL.md) for the options-menu + capability-delta pattern, [`manifest.yaml`](manifest.yaml) for the V1 roadmap (Foreman + Inspector runtime, Codex adapter, Railway one-click deploy).

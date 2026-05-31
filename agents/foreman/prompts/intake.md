@@ -6,10 +6,10 @@ Working directory: {PROJECT_DIR}
 Repository: {REPO}
 
 Read these files for project context (skip any that don't exist):
-1. `.studio/project.json` — what this project is, current priorities
-2. `.studio/context.md` — architecture, patterns, routing
-3. `.studio/schema.yaml` — data model, business rules, flows
-4. `.studio/BLUEPRINT.md` — code locations and structure
+1. `design-system/project.json` — what this project is, current priorities
+2. `design-system/context.md` — architecture, patterns, routing
+3. `design-system/schema.yaml` — data model, business rules, flows
+4. `design-system/BLUEPRINT.md` — code locations and structure
 5. `CLAUDE.md` or `.claude/CLAUDE.md` — project conventions
 
 ## The Idea

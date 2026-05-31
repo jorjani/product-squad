@@ -9,7 +9,7 @@ The issue body currently states `> 3000 chars` as the trigger. The canonical lim
 
 Sources of truth:
 
-- `Projects/.studio/guardrails/issue-conventions.md:11` — "Foreman-buildable issues (size XS/S/M): body ≤ 5000 chars. Hard limit." Reaffirmed at line 388 in the Enforcement section: "rejects > 5000 chars with `BUILD-OVERSIZED:`".
+- `Projects/design-system/guardrails/issue-conventions.md:11` — "Foreman-buildable issues (size XS/S/M): body ≤ 5000 chars. Hard limit." Reaffirmed at line 388 in the Enforcement section: "rejects > 5000 chars with `BUILD-OVERSIZED:`".
 - `foreman/phases/build-ticket.sh:228` — runtime gate: `if [ "$BODY_CHARS" -gt 5000 ]; then ... BUILD-OVERSIZED: issue body is ${BODY_CHARS} chars (limit 5000)`.
 - `sarge/CLAUDE.md:25` — Sarge target: "keep it under **4,800 chars** to leave headroom for triage comments."
 
