@@ -1,3 +1,8 @@
+---
+name: owit
+description: Map scenarios as On/When/If/Then + Choices. Use when the user needs to think through happy path + edges + decisions for a feature before building.
+---
+
 # /owit — Scenario Specification (On, When, If, Then)
 
 **Purpose:** Define the user experience flow for a feature using On/When/If/Then scenarios. Focus on what the user sees, does, and experiences -- not how it's built. Decisions about implementation belong in eng-deep-dive, not here.

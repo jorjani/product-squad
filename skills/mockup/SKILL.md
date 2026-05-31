@@ -1,3 +1,8 @@
+---
+name: mockup
+description: Single-state hi-fi HTML with the current flavor's brand tokens applied. Use to produce a brand-polished hero shot for one representative state of a wireframe.
+---
+
 # /mockup — Tier 3 hi-fi static HTML with brand aesthetics
 
 **Usage:** `/mockup [issue-number] [repo]` or `/mockup` with pasted issue text.

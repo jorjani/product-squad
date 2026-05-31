@@ -1,3 +1,8 @@
+---
+name: elon
+description: Ruthless cut via question requirements, delete the part, simplify the whole, accelerate cycle time, automate. Use when the user has a shaped plan and needs to stress-test whether each part should exist at all — distinct from shape (which picks between options) and from owit (which maps scenarios).
+---
+
 # /elon — The Algorithm: Critical Build Review
 
 **Usage:** `/elon [what you want to build]`

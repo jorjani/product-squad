@@ -25,7 +25,7 @@ cd product-squad
 ./draw "your feature idea"
 ```
 
-When CWD is the bundle directory, Claude Code auto-discovers `/visualize`, `/scope`, `/onboard` from `.claude/commands/` — no install step.
+When CWD is the bundle directory, Claude Code auto-discovers `/visualize`, `/scope`, `/onboard` from `.claude/skills/` — no install step.
 
 ## The 30-second demos
 
@@ -91,7 +91,7 @@ V1 (3-4 weeks): full runtime for all five, agent abstraction (Claude default + C
 |---|---|
 | 🤖 LLM agent | [`AGENTS.md`](AGENTS.md) → [`manifest.yaml`](manifest.yaml) |
 | 👤 Human | [`QUICKSTART.md`](QUICKSTART.md) → run a demo |
-| 🛠 Forker | Visual ladder: [`sketch`](commands/sketch.md) → [`wireframe`](commands/wireframe.md) → [`mockup`](commands/mockup.md) → [`prototype`](commands/prototype.md) · Product cluster: [`why`](commands/why.md) → [`shape`](commands/shape.md) → [`experience`](commands/experience.md) → [`owit`](commands/owit.md) → [`elon`](commands/elon.md) |
+| 🛠 Forker | Visual ladder: [`sketch`](skills/sketch/SKILL.md) → [`wireframe`](skills/wireframe/SKILL.md) → [`mockup`](skills/mockup/SKILL.md) → [`prototype`](skills/prototype/SKILL.md) · Product cluster: [`why`](skills/why/SKILL.md) → [`shape`](skills/shape/SKILL.md) → [`experience`](skills/experience/SKILL.md) → [`owit`](skills/owit/SKILL.md) → [`elon`](skills/elon/SKILL.md) |
 
 ## Layout
 
@@ -99,7 +99,7 @@ V1 (3-4 weeks): full runtime for all five, agent abstraction (Claude default + C
 bin/
   visual         # PRIMARY demo — visual fidelity ladder
   scope          # SECONDARY demo — commander's intent + scoping
-commands/        # 10 prompts (5 visual + 5 product)
+skills/          # 10 skills (5 visual + 5 product), each <name>/SKILL.md
 .studio/         # Bundled generic design tokens + component primitives
 examples/        # Idea fixtures + phrasing guidance
 agents/          # Snapshots: foreman, sarge, code-reviewer, build-fixer

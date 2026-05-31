@@ -1,3 +1,8 @@
+---
+name: scope
+description: Walk the user through 5 progressive product-craft prompts (why → shape → experience → owit → elon) via ./scope. Use when the user is thinking through what to build before building it.
+---
+
 # /scope — Product cluster brief (why → shape → experience → owit → elon)
 
 Runs `./scope "$ARGUMENTS"` from the product-squad bundle's repo root. Writes 5 pre-filled prompt files (one per stage of the product cluster) to `/tmp/product-squad-scope-<timestamp>/`. The operator pastes each into Claude Code in sequence; each stage's output feeds the next.

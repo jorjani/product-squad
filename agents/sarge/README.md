@@ -4,7 +4,7 @@ Snapshot of **Sarge** — the PM agent that scopes ideas into buildable specs. I
 
 **V0.5 status: readable + partially runnable.**
 
-- ✅ **Runnable via `bin/scope`** — the scoping ladder (why → shape → experience → owit → elon) ships as `commands/` in the bundle root. Paste each prompt into Claude Code; get a brief.
+- ✅ **Runnable via `bin/scope`** — the scoping ladder (why → shape → experience → owit → elon) ships as `skills/` in the bundle root. Paste each prompt into Claude Code; get a brief.
 - ❌ **Full Sarge runtime is V1** — the interactive C0–C5 phase flow (with `/decompose` skill, `/gh-issue` skill, GitHub Project board mutations, `.index.json` project lookup, foreman/config/board-ids.sh sourcing) is tightly coupled to David's setup. V1 ships a `headless` one-shot variant for any agent CLI.
 
 ## How Sarge thinks
@@ -29,15 +29,15 @@ Sarge's job: turn a vague idea into a buildable scope that passes Foreman's cont
 
 ## The scoping ladder (what's runnable today)
 
-Sarge's prompt corpus ships as 5 standalone slash commands in the bundle root's `commands/` directory. Run them via `bin/scope`:
+Sarge's prompt corpus ships as 5 standalone skill prompts in the bundle root's `skills/` directory. Run them via `bin/scope`:
 
-| Command | What it teaches |
+| Skill | What it teaches |
 |---|---|
-| [`commands/why.md`](../../commands/why.md) | Outcome framing (job-to-be-done) |
-| [`commands/shape.md`](../../commands/shape.md) | Decide what to build (Shape Up: options menu + capability delta + cuts) |
-| [`commands/experience.md`](../../commands/experience.md) | Articulate the user delta in observable terms |
-| [`commands/owit.md`](../../commands/owit.md) | Scenario specification (On/When/If/Then) + Choices |
-| [`commands/elon.md`](../../commands/elon.md) | The Algorithm: question, delete, simplify, accelerate, automate |
+| [`skills/why/SKILL.md`](../../skills/why/SKILL.md) | Outcome framing (job-to-be-done) |
+| [`skills/shape/SKILL.md`](../../skills/shape/SKILL.md) | Decide what to build (Shape Up: options menu + capability delta + cuts) |
+| [`skills/experience/SKILL.md`](../../skills/experience/SKILL.md) | Articulate the user delta in observable terms |
+| [`skills/owit/SKILL.md`](../../skills/owit/SKILL.md) | Scenario specification (On/When/If/Then) + Choices |
+| [`skills/elon/SKILL.md`](../../skills/elon/SKILL.md) | The Algorithm: question, delete, simplify, accelerate, automate |
 
 ```bash
 ./bin/scope "your feature idea in one sentence"

@@ -30,4 +30,4 @@ Inspector has no standalone runtime — it exists entirely as foreman phases + p
 
 ## Honest framing
 
-Read `agents/foreman/` and `agents/sarge/` as **documentation of an opinionated system that runs on the original author's box**, not as portable code you can `./orchestrator.sh` against your own GitHub org. The V0.5 demo path (`bin/scope` + `commands/` + `examples/`) IS scrubbed and IS runnable. V1 (3-4 weeks) ships the full portability fixes.
+Read `agents/foreman/` and `agents/sarge/` as **documentation of an opinionated system that runs on the original author's box**, not as portable code you can `./orchestrator.sh` against your own GitHub org. The V0.5 demo path (`bin/scope` + `skills/` + `examples/`) IS scrubbed and IS runnable. V1 (3-4 weeks) ships the full portability fixes.

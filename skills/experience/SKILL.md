@@ -1,3 +1,8 @@
+---
+name: experience
+description: Articulate the felt user delta in observable terms — single lens written in the user's vocabulary. Use when describing what changes for the user after the work ships, especially for issue Why sections.
+---
+
 # /experience — Articulate what changes for the user
 
 **Purpose:** Print a brief, specific description of what happens after the work ships, written in the actual user's vocabulary. Useful mid-conversation when technical detail has drifted from human impact, or when drafting an issue body's "Why" section.

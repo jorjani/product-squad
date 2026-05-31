@@ -66,7 +66,7 @@ write_stage() {
   local num="$1"
   local cmd="$2"
   local teaches="$3"
-  local cmd_path="$REPO_ROOT/commands/$cmd.md"
+  local cmd_path="$REPO_ROOT/skills/$cmd/SKILL.md"
   local out="$OUT_DIR/$num-$cmd.md"
 
   if [ ! -f "$cmd_path" ]; then

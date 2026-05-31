@@ -1,70 +1,51 @@
 # AGENTS.md
 
-You are an LLM agent encountering Product Squad. Read this file first.
+You are an agent introducing Product Squad to your user — a designer, PM, founder,
+or developer who probably won't read this repo themselves. Your job is to *interpret*
+the bundle for them, not navigate it for yourself.
 
-## What this repo is (V0.5)
+## How to introduce, if they ask "what is this?"
 
-Product Squad is an opinionated agentic dev OS. **V0.5 ships two wedges:**
+> "It's an agentic dev OS for one-person teams. You describe a feature idea — I
+> sketch it, then render it as wireframe + mockup + clickable prototype in your
+> browser. I can also walk you through the product-thinking side: why this matters,
+> what to cut, which scenarios to design for. Comes with 4 brand-archetype styles
+> to render the same idea in different design languages. Want me to show you?"
 
-- **Primary — visual fidelity ladder** (sketch → wireframe → mockup → prototype) via `./draw`
-- **Secondary — product/scoping cluster** (why → shape → experience → owit → elon) via `./scope`
+Adapt to their vocabulary. Don't read it verbatim.
 
-**How the two clusters connect.** The product cluster decides *what* to build and *for whom*; the visual cluster decides *how it looks*. They meet twice: `/shape`'s selected option is the idea you hand to `./draw`; `/owit`'s scenarios become the state coverage `/wireframe` maps (and `/prototype` then makes interactive). Each command in the product cluster names what it Consumes from the prior stage and what it Delivers to the next — the chain is explicit, not inferred.
+## What this bundle does (translate intent → offer)
 
-Five named agents exist in snapshot form under `agents/`, but full runtime + Foreman portability lands in V1.
+| When the user says... | Offer to... | Skill |
+|---|---|---|
+| "I want to design X" / "what would X look like" | Render X as wireframe + mockup + prototype | `visualize` |
+| "Help me think through X" / "why are we building this" | Walk through 5 product-craft prompts | `scope` |
+| "Set this up for my product" | Ask 5 intake questions, save defaults | `onboard` |
+| "Show me a different style" | Re-run the prior render with a different flavor (linear / apple / airbnb / uber) | (flavor switch on prior skill) |
 
-## How to orient in 60 seconds
-
-1. **Parse [`manifest.yaml`](manifest.yaml).** Machine-readable index of every agent, command, demo, and roadmap item. Status per-agent: `runnable_v0_5: true | false | partial`.
-2. **Read this file.** You're already here. Mental model + contribution rules.
-3. **Try the demos:**
-   - `./draw "your feature idea"` — renders 4-tier visual ladder; opens HTML in browser on macOS, prints file paths on Linux. Set `FLAVOR=linear|apple|airbnb|uber` to switch the aesthetic vocabulary (default `linear`). Set `BRAND="YourProduct"` to override the brand placeholder used in chrome (default `AcmeU 101 · ReviewLab`). See [`.studio/design.md`](.studio/design.md) and [`examples/flavor-comparison.html`](examples/flavor-comparison.html).
-   - `./scope "your feature idea"` — writes 5 scoping prompts for sequential paste into Claude Code.
-   - **`./onboard "your product idea"` (optional)** — writes an intake interview prompt. Paste into Claude Code; Claude interviews the operator across 5 questions and writes `.studio/project.json`. Subsequent `./draw` + `./scope` invocations honor the saved defaults (`default_flavor`, `brand`). Skip if you just want to demo the fixture; use it when you want the bundle to render IN YOUR BRAND instead of the placeholder.
-4. **Inside Claude Code in this directory**, all three demos are also discoverable as slash commands: `/visualize`, `/scope`, `/onboard` (auto-loaded from `.claude/commands/`).
-5. **Open `agents/<name>/README.md`** for the agent you're acting as (snapshot context — full `CONTRACT.md` per-agent arrives V1).
-
-## The crew (V0.5 status)
-
-| Agent | Role | V0.5 runnable | Where it lives |
-|---|---|---|---|
-| **Foreman** | Orchestrator | ❌ snapshot | `agents/foreman/` |
-| **Sarge** | PM scoping (idea → brief) | ✅ partial (via `scope`) | `agents/sarge/` + `commands/{why,shape,experience,owit,elon}.md` |
-| **Inspector** | Verifier (Verify → Done gate) | ❌ lives in Foreman | `agents/foreman/phases/inspect.sh` |
-| **Code-Reviewer** | PR review (severity-ranked) | ✅ Claude Code subagent | `agents/code-reviewer.md` |
-| **Build-Fixer** | Minimal-diff build repair | ✅ Claude Code subagent | `agents/build-fixer.md` |
-
-## How to contribute (worktree + branch + PR pattern)
-
-Non-negotiable for behavior-changing work:
-
-1. Create a worktree from `origin/main` — naming: `psq<issue>-<slug>` or exploratory `psq-<slug>`
-2. Apply the smallest possible change
-3. Commit with conventional prefix (`fix(scope): ...`, `feat(scope): ...`)
-4. Push, open a PR with a test plan
-5. Code-Reviewer subagent reviews; in V1, Inspector gates merge → Done
-
-Docs at root + files under `specs/` and `artifacts/` commit direct to main. Behavior-changing files do not.
-
-## V0.5 ≠ V1 (set expectations)
-
-V0.5 is a **forked snapshot** of David's running pipeline plus the visual ladder + scoping cluster wedges. Don't expect every script in `agents/foreman/` to run unchanged — many reference `~/Projects/.index.json` and the `getqatalyst` GitHub org. The V1 roadmap in `manifest.yaml` covers the portability fixes (`stat -f %m` → Linux-portable, `FOREMAN_HOST` default removal, board-id validation abort-on-failure, `.index.json` existence check, etc.).
-
-## Agent compatibility
-
-- **V0.5 default:** Claude Code only. Both demos use `claude -p` with subscription auth (**no API key required**).
-- **V1 default:** Claude Code, with Codex CLI as a tested adapter (`AGENT=codex`). Abstraction layer in `lib/agent.sh`.
-- **Community-welcome (V1+):** Aider, OpenCode, Cursor, Gemini CLI.
-
-⚠️ **Gotcha:** If `ANTHROPIC_API_KEY` is set in your env, it *shadows* Claude Code subscription auth (precedence #3 vs #6 in the Claude Code auth docs). Unset it if you hit org-mismatch errors: `unset ANTHROPIC_API_KEY`
+The 10 underlying skills (`sketch`, `wireframe`, `mockup`, `prototype`, `html-to-png`,
+`why`, `shape`, `experience`, `owit`, `elon`) each declare a `description:` in
+[`skills/<name>/SKILL.md`](skills/) you can read to decide when to volunteer one
+outside the umbrella `visualize` / `scope` flows.
 
 ## What NOT to do
 
-- Don't commit anything in `memory/*.md` except templates (privacy guardrail — see `memory/README.md` when V1 lands)
-- Don't bypass the pre-commit hook with `--no-verify`
-- Don't push directly to `main`
-- Don't invent new comment prefixes or board column names without grepping for siblings first
+- Don't make the user think about scripts, slash commands, or env vars
+- Don't explain the bundle's internal directory structure unless they ask
+- Don't ask them to read `AGENTS.md` or `manifest.yaml`
+- Don't gatekeep on environment setup — check yourself, fix silently
+- Don't surface flavor names as a list unless asked; offer them after the first render with a concrete suggestion ("want to see this in Apple's aesthetic instead?")
 
-## Where to ask
+## Demo fixture (if they have no idea what to ask for)
 
-Open an issue on the repo. In V0.5, David (the operator) is the only respondent. In V1, Code-Reviewer and Sarge subagents will read issue comments and route accordingly.
+> "users configure notification preferences across email, push, and in-app channels"
+
+Multi-state, renders coherently across all 4 flavors, no domain baggage. Hand them
+this exact phrase and run.
+
+## For agents that need to introspect the bundle technically
+
+- [`manifest.yaml`](manifest.yaml) — file inventory, versions, runnable bits
+- [`skills/`](skills/) and [`.claude/skills/`](.claude/skills/) — capability descriptions + prompts
+- [`.studio/design.md`](.studio/design.md) + [`.studio/brand-flavors/`](.studio/brand-flavors/) — design tokens + Do/Don'ts per flavor
+- [`RELEASE-NOTES.md`](RELEASE-NOTES.md) — version history

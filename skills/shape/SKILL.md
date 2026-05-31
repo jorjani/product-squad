@@ -1,3 +1,8 @@
+---
+name: shape
+description: Decide what to build via options-menu + capability-delta + cuts (Shape Up methodology). Use when the user has a why but multiple paths forward and needs to commit to one shape before going deeper.
+---
+
 # /shape — Shape Up: Decide What to Build
 
 **Purpose:** Before detailing anything, decide what's worth building and what's not. Present the problem, show what exists, lay out options with effort and value, and let the user configure the scope. Inspired by Basecamp's Shape Up methodology.

@@ -113,7 +113,7 @@ run_tier() {
   local tier_num="$2"
   local out_ext="$3"
   local predecessors="${4:-}"   # comma-separated predecessor file paths (optional)
-  local cmd_path="$REPO_ROOT/commands/$tier.md"
+  local cmd_path="$REPO_ROOT/skills/$tier/SKILL.md"
   local out_path="$OUT_DIR/$tier.$out_ext"
 
   if [ ! -f "$cmd_path" ]; then

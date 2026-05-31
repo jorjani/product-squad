@@ -44,28 +44,28 @@ v0_5:
         their product (name, audience, surface, default_flavor, brand) and
         writes .studio/project.json. Subsequent draw + scope invocations
         honor those defaults.
-  commands:
+  skills:
     visual_ladder:
-      - path: commands/sketch.md
+      - path: skills/sketch/SKILL.md
         purpose: T0 napkin — ASCII or Mermaid layout, IA-only
-      - path: commands/wireframe.md
+      - path: skills/wireframe/SKILL.md
         purpose: T1 mid-fi — multi-state HTML, spatial layout locked
-      - path: commands/mockup.md
+      - path: skills/mockup/SKILL.md
         purpose: T3 hi-fi — brand-styled HTML, single state
-      - path: commands/prototype.md
+      - path: skills/prototype/SKILL.md
         purpose: T4 interactive — single-file HTML with state transitions
-      - path: commands/html-to-png.md
+      - path: skills/html-to-png/SKILL.md
         purpose: Playwright HTML→PNG utility
     product_cluster:
-      - path: commands/why.md
+      - path: skills/why/SKILL.md
         purpose: Outcome framing / job-to-be-done
-      - path: commands/shape.md
+      - path: skills/shape/SKILL.md
         purpose: Shape Up — options menu + capability delta + cuts
-      - path: commands/experience.md
+      - path: skills/experience/SKILL.md
         purpose: Articulate the user delta in observable terms
-      - path: commands/owit.md
+      - path: skills/owit/SKILL.md
         purpose: On/When/If/Then scenarios + Choices
-      - path: commands/elon.md
+      - path: skills/elon/SKILL.md
         purpose: The Algorithm — question, delete, simplify
   templates:
     - path: .studio/design.md
@@ -116,7 +116,7 @@ agents:
     readme: agents/sarge/README.md
     runnable_v0_5: partial
     notes: |
-      The scoping ladder (commands/why, shape, experience, owit, elon)
+      The scoping ladder (skills/why, shape, experience, owit, elon)
       ships as runnable in V0.5 via scope. Full interactive Sarge
       subagent (C0-C5) arrives V1 — see v1_roadmap.sarge_headless.
   inspector:

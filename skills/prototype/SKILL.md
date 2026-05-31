@@ -1,3 +1,8 @@
+---
+name: prototype
+description: Single-file interactive HTML with vanilla JS state transitions. Use for the highest-fidelity tier; covers 6-10 states with click-through walkthrough. Initial landing state must be EMPTY/FIRST-USE, not the populated dashboard.
+---
+
 # /prototype — Tier 4 interactive HTML prototype
 
 **Usage:** `/prototype [issue-number] [repo]` or `/prototype [feature name or paste spec/owit output]`
