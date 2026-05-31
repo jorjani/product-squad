@@ -4,7 +4,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](
 
 ## [Unreleased]
 
-Three unreleased PRs are merged to `main` but not yet tagged: PR #10 (V0.6 polish), PR #17 (plugin shape), PR #19 (skills migration). `manifest.yaml` + `.claude-plugin/plugin.json` declare `version: 0.6.0-dev`.
+Three unreleased PRs are merged to `main` but not yet tagged: PR #10 (V0.6 polish), PR #17 (plugin manifest), PR #19 (skills migration). `manifest.yaml` + `.claude-plugin/plugin.json` declare `version: 0.6.0-dev`.
 
 > **Tag decision pending.** Three candidates, pick one before cutting the next tag:
 > - `v0.5.2` — frame this as a patch line on top of v0.5.1. Understates the surface change.
@@ -12,7 +12,8 @@ Three unreleased PRs are merged to `main` but not yet tagged: PR #10 (V0.6 polis
 > - `v0.7.0` — minor bump that signals the plugin-shape pivot (marketplace.json, `commands/` → `skills/`) is the headline, not the polish. Honest about how much changed for a user installing fresh.
 
 ### Added
-- **`./onboard`** — third entry point. Optional 5-question intake interview that writes `.studio/project.json`. `./draw` and `./scope` honor those defaults.
+- **`./onboard`** — third entry point. Optional 5-question intake interview that writes `.studio/project.json`.
+- **`./draw` and `./scope` read `.studio/project.json`** for `FLAVOR` and `BRAND` defaults. Precedence: env var > project.json > hardcoded. (#10)
 - **`/visualize`, `/scope`, `/onboard`** — slash commands auto-discovered when the bundle is the CWD.
 - **Plugin manifest** at `.claude-plugin/plugin.json` and a first-party marketplace manifest at `.claude-plugin/marketplace.json`. `claude plugin validate .` passes. Once the repo is public, `/plugin marketplace add jorjani/product-squad` works. (#17)
 - **Auto-triggering skills.** Every prompt file moved to `skills/<name>/SKILL.md` with `name:` + `description:` frontmatter. Claude Code matches the description against in-conversation context and offers the skill without an explicit slash command. (#19)
@@ -32,7 +33,7 @@ Three unreleased PRs are merged to `main` but not yet tagged: PR #10 (V0.6 polis
 - **`manifest.yaml`** top-level key `commands:` → `skills:` and all 10 paths updated. (#19)
 
 ### Removed
-- **`bin/`** directory. Both binaries live at repo root now.
+- **`bin/`** directory. Both binaries live at repo root now. (#10)
 - **`commands/*.md`** — replaced by `skills/<name>/SKILL.md` directories. Same applies to `.claude/commands/*.md` → `.claude/skills/<name>/SKILL.md`. (#19)
 - **Stale `commands/README.md`** — no longer applies after the skills migration. (#19)
 - **Stale README copy** — the "Private during validation. Public at V1 (3-4 weeks)" line. (#17)
