@@ -1,3 +1,8 @@
+---
+name: why
+description: Frame the outcome / job-to-be-done one level above the user's stated task. Use when the user is unclear why they're building what they're building, or when restating their request as an outcome would clarify priority.
+---
+
 # /why -- What's the Job and Why Does It Matter?
 
 Before diving in, go one level up. The user said what they want to do. Your job is to articulate **why it matters** -- what does this enable one level above?

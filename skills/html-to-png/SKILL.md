@@ -1,4 +1,5 @@
 ---
+name: html-to-png
 description: Convert an HTML file to a PNG screenshot via Playwright. Auto-detects viewport from body CSS.
 ---
 

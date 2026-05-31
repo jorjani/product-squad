@@ -1,3 +1,8 @@
+---
+name: elon
+description: Ruthless cut via question requirements, delete the part, simplify the whole, accelerate cycle time, automate. Use when the user has a plan that needs aggressive trimming before building.
+---
+
 # /elon — The Algorithm: Critical Build Review
 
 **Usage:** `/elon [what you want to build]`

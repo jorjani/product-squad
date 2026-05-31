@@ -1,3 +1,8 @@
+---
+name: onboard
+description: Ask the user 5 intake questions (name, audience, surface, default_flavor, brand) and save defaults to .studio/project.json. Use when the user is setting up the bundle for a specific product they own.
+---
+
 # /onboard — Set up product-squad with your product's context
 
 Runs `./onboard "$ARGUMENTS"` from the product-squad bundle's repo root. Writes a single intake prompt to `/tmp/product-squad-intake-<timestamp>/intake.md` that asks the operator 5 questions about their product (name, audience, surface, primary action, default flavor, brand string). Claude conducts the interview, then writes `.studio/project.json` with the answers. Subsequent `/visualize` and `/scope` runs honor those defaults.

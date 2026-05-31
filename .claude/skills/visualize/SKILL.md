@@ -1,3 +1,8 @@
+---
+name: visualize
+description: Render a feature idea as wireframe + mockup + prototype HTML by running the visual fidelity ladder via ./draw. Use when the user is describing a UI feature they want to see laid out — early ideation, stakeholder review, "what would this even look like."
+---
+
 # /visualize — 4-tier visual fidelity ladder for an idea
 
 Runs `./draw "$ARGUMENTS"` from the product-squad bundle's repo root. Generates sketch → wireframe → mockup → prototype, writes HTMLs to `/tmp/product-squad-demo-<timestamp>/`, opens each in the browser (macOS). Total: ~60-120 sec, ~$0.30-0.50 in Claude Code subscription usage.

@@ -1,3 +1,8 @@
+---
+name: sketch
+description: Print an ASCII or Mermaid napkin-level layout for an idea to the terminal. Use as the T0 entry point of the visual fidelity ladder, or standalone when the user wants the lightest possible layout sanity-check before committing to HTML.
+---
+
 # /sketch — Tier 0 napkin-level visual (ASCII or Mermaid)
 
 **Usage:** `/sketch [issue-number] [repo]` or `/sketch` with pasted issue text.

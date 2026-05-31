@@ -38,7 +38,7 @@ git clone https://github.com/jorjani/product-squad.git
 cd product-squad
 ```
 
-When CWD is the bundle, Claude Code auto-discovers `/visualize`, `/scope`, `/onboard` from `.claude/commands/` — same commands as the plugin install, without the `product-squad:` namespace prefix.
+When CWD is the bundle, Claude Code auto-discovers `/visualize`, `/scope`, `/onboard` from `.claude/skills/` — same commands as the plugin install, without the `product-squad:` namespace prefix.
 
 ## Demo 1 — Visual fidelity ladder (PRIMARY)
 
@@ -142,4 +142,4 @@ Try these in order — each builds on the last:
 
 1. **Re-run with a different flavor on your own idea** — `FLAVOR=apple ./draw "your idea"`. Same ladder, different aesthetic. The four flavors aren't cosmetic; each teaches a distinct theory of taste (see [`.studio/brand-flavors/`](.studio/brand-flavors/)).
 2. **Run `scope` on the same idea** — `./scope "your idea"`. The visual ladder shows *what*; the scoping cluster shows *why* and *what to build first*.
-3. **Then read the system docs** — [`AGENTS.md`](AGENTS.md) for the mental model, [`commands/shape.md`](commands/shape.md) for the options-menu + capability-delta pattern, [`manifest.yaml`](manifest.yaml) for the V1 roadmap (Foreman + Inspector runtime, Codex adapter, Railway one-click deploy).
+3. **Then read the system docs** — [`AGENTS.md`](AGENTS.md) for the mental model, [`skills/shape/SKILL.md`](skills/shape/SKILL.md) for the options-menu + capability-delta pattern, [`manifest.yaml`](manifest.yaml) for the V1 roadmap (Foreman + Inspector runtime, Codex adapter, Railway one-click deploy).
