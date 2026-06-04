@@ -4,7 +4,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](
 
 ## [Unreleased]
 
-Three unreleased PRs are merged to `main` but not yet tagged: PR #10 (V0.6 polish), PR #17 (plugin manifest), PR #19 (skills migration). `manifest.yaml` + `.claude-plugin/plugin.json` declare `version: 0.6.0-dev`.
+Three unreleased PRs are merged to `main` but not yet tagged: PR #10 (V0.6 polish), PR #17 (plugin manifest), PR #19 (skills migration). `manifest.yaml` + `.claude-plugin/plugin.json` declare `version: 0.7.0-dev`.
 
 > **Tag decision pending.** Three candidates, pick one before cutting the next tag:
 > - `v0.5.2` — frame this as a patch line on top of v0.5.1. Understates the surface change.
@@ -23,6 +23,11 @@ Three unreleased PRs are merged to `main` but not yet tagged: PR #10 (V0.6 polis
 - **Chain contracts** on all 5 product-cluster commands: each opens with explicit `Consumes:` and `Delivers:` lines.
 - **Cross-cluster bridge paragraph** in `AGENTS.md` connecting the product cluster to the visual cluster.
 - **`teaches:` frontmatter field** on each flavor — one-sentence summary of the aesthetic vocabulary.
+- **Product-vision altitude** — `/mission` writes `design-system/mission.md` (mission + value prop + north-star + non-goals); `/vet` gates feature fit against it (Serves / Tangential / Off-mission) as a cheap kill *before* scoping.
+- **`/spec`** — consolidates the cluster outputs (`why → … → elon`) into one authoritative contract. Graduated from the V1 roadmap.
+- **`/decompose`** — bridges the scoping cluster to the visual ladder: splits a spec into single-surface "who/what/where/why" phrasings, each ready for `./draw`.
+- **`/gh-issue`** — packages a spec as a board-agnostic GitHub issue in commander's-intent form (goal + constraints down; how stays with the builder).
+- **`/handoff`** — bundles the visual-ladder outputs into one openable showcase: mockup (looks like) + prototype (works like) + the spec's frame.
 
 ### Changed
 - **Brand flavors rebranded** `editorial / industrial / playful / brutalist` → `linear / apple / airbnb / uber`. Aesthetic-vocabulary names became brand-archetype emulations. Visual lineage, not endorsement.
@@ -31,6 +36,7 @@ Three unreleased PRs are merged to `main` but not yet tagged: PR #10 (V0.6 polis
 - **Demo fixture swapped** from EDU-specific (`students upload resume to course project for peer review`) to universal (`users configure notification preferences across email, push, and in-app channels`).
 - **`AGENTS.md` rewritten** as a 51-line user-mediation brief (down from 70). Agent operator framing, not a tool-navigation guide. (#19)
 - **`manifest.yaml`** top-level key `commands:` → `skills:` and all 10 paths updated. (#19)
+- **`./scope` is now a 7-stage sequencer** — `why → vet → shape → experience → owit → elon → spec` (was 5). README, QUICKSTART, `examples/idea-fixture.md`, and the `.claude/skills/scope` wrapper synced to match.
 
 ### Removed
 - **`bin/`** directory. Both binaries live at repo root now. (#10)

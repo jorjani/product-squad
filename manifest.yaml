@@ -2,7 +2,7 @@
 # Parse this first when introspecting the bundle programmatically.
 # Humans read README.md → QUICKSTART.md. Agents read AGENTS.md then this.
 
-version: 0.6.0-dev
+version: 0.7.0-dev
 name: product-squad
 description: Agentic operating system for one-person dev teams
 license: MIT
