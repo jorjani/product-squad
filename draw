@@ -244,6 +244,9 @@ for ALT in linear apple airbnb uber; do
   printf '    FLAVOR=%-7s ./draw %q\n' "$ALT" "$IDEA"
 done
 echo ""
+echo "  Bundle these into a shareable showcase (looks like + works like):"
+echo "    In Claude Code, run /handoff on $OUT_DIR"
+echo ""
 echo "  Or shape the product around the idea (7-stage scoping cluster):"
 printf '    ./scope %q\n' "$IDEA"
 echo ""
