@@ -55,8 +55,8 @@ FLAVOR=apple ./draw "users configure notification preferences across email, push
 
 ```bash
 ./scope "users configure notification preferences across email, push, and in-app channels"
-# → writes 5 pre-filled prompts to /tmp/product-squad-scope-<ts>/
-# → paste each into Claude Code in sequence (why → shape → experience → owit → elon)
+# → writes 7 pre-filled prompts to /tmp/product-squad-scope-<ts>/
+# → paste each into Claude Code in sequence (why → vet → shape → experience → owit → elon → spec)
 ```
 
 Each stage teaches a transferable product-craft pattern. Time: ~15-30 min of paste-and-think.
