@@ -57,8 +57,12 @@ v0_5:
       - path: skills/html-to-png/SKILL.md
         purpose: Playwright HTML→PNG utility
     product_cluster:
+      - path: skills/mission/SKILL.md
+        purpose: Product mission + value prop + north-star + non-goals → design-system/mission.md (precursor; run once per product)
       - path: skills/why/SKILL.md
         purpose: Outcome framing / job-to-be-done
+      - path: skills/vet/SKILL.md
+        purpose: Mission-fit gate — Serves / Tangential / Off-mission (reads mission.md; runs after /why as a cheap kill)
       - path: skills/shape/SKILL.md
         purpose: Shape Up — options menu + capability delta + cuts
       - path: skills/experience/SKILL.md
@@ -67,6 +71,8 @@ v0_5:
         purpose: On/When/If/Then scenarios + Choices
       - path: skills/elon/SKILL.md
         purpose: The Algorithm — question, delete, simplify
+      - path: skills/spec/SKILL.md
+        purpose: Consolidate the cluster outputs into one authoritative spec (the contract)
   templates:
     - path: design-system/design.md
       purpose: Flavor selector — points at one of the brand-flavors files
@@ -188,7 +194,6 @@ v1_roadmap:
     - /migrate   # DB schema producer
     - '@eng-deep-dive'  # codebase fit producer
     - /decompose # atomic scope decomposition
-    - /spec      # aggregate tightener artifacts; advance Pitch → Scope
     - /is-ready  # pre-build readiness gate
     - /gh-issue  # create GitHub issue in contract format
   scrub: All getqatalyst / jorjani / project-specific refs (~173 hits)

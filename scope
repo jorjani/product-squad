@@ -1,18 +1,23 @@
 #!/bin/bash
 # scope — V0.5 product cluster wrapper
 #
-# Writes 5 pre-filled prompts (the commander's intent + scoping ladder)
+# Writes 7 pre-filled prompts (the commander's intent + scoping ladder)
 # to a temp dir. Paste each into Claude Code in sequence — each stage's
 # output feeds the next.
 #
 # Usage: scope "your feature idea in one sentence"
 #
-# The 5 stages teach a transferable product-craft pattern:
+# The 7 stages teach a transferable product-craft pattern:
 #   1. /why         frame the outcome (job-to-be-done)
-#   2. /shape       decide what to build (options menu + cuts)
-#   3. /experience  articulate the user delta
-#   4. /owit        map scenarios (On/When/If/Then) + choices
-#   5. /elon        ruthless cut (question, delete, simplify)
+#   2. /vet         does this serve the mission? (cheap kill — STOP if Off-mission)
+#   3. /shape       decide what to build (options menu + cuts)
+#   4. /experience  articulate the user delta
+#   5. /owit        map scenarios (On/When/If/Then) + choices
+#   6. /elon        ruthless cut (question, delete, simplify)
+#   7. /spec        consolidate the conversation into one authoritative spec
+#
+# Precursor (run once per product, not per feature): /mission writes
+# design-system/mission.md — the vision /vet judges each feature against.
 #
 # REQUIREMENTS:
 #   - Claude Code installed (https://claude.com/claude-code)
@@ -30,7 +35,7 @@ Usage: scope "your feature idea in one sentence"
 Example:
   scope "users configure notification preferences across email, push, and in-app channels"
 
-Writes 5 pre-filled prompts to a temp dir. Each prompt has your idea
+Writes 7 pre-filled prompts to a temp dir. Each prompt has your idea
 inserted at the end. Paste each into Claude Code in sequence.
 
 See examples/idea-fixture.md for more sample ideas + phrasing guidance.
@@ -53,7 +58,7 @@ cat <<EOF
   Idea:        $IDEA
   Output dir:  $OUT_DIR
 
-  5 pre-filled prompts written below. Each teaches a transferable
+  7 pre-filled prompts written below. Each teaches a transferable
   product-craft pattern. Paste each into Claude Code in sequence —
   each stage's output feeds the next.
 
@@ -75,7 +80,7 @@ write_stage() {
   fi
 
   cat > "$out" <<HEADER
-# Stage $num/5 — /$cmd
+# Stage $num/7 — /$cmd
 # Teaches: $teaches
 #
 # COPY EVERYTHING FROM THE HORIZONTAL RULE BELOW TO THE END OF
@@ -103,15 +108,17 @@ FOOTER
 }
 
 write_stage 1 "why"        "Frame the outcome (job-to-be-done)"
-write_stage 2 "shape"      "Decide what to build (options menu + cuts)"
-write_stage 3 "experience" "Articulate the felt user delta"
-write_stage 4 "owit"       "Map scenarios (On/When/If/Then) + choices"
-write_stage 5 "elon"       "Ruthless cut (question, delete, simplify)"
+write_stage 2 "vet"        "Mission-fit gate (STOP if Off-mission)"
+write_stage 3 "shape"      "Decide what to build (options menu + cuts)"
+write_stage 4 "experience" "Articulate the felt user delta"
+write_stage 5 "owit"       "Map scenarios (On/When/If/Then) + choices"
+write_stage 6 "elon"       "Ruthless cut (question, delete, simplify)"
+write_stage 7 "spec"       "Consolidate the conversation into one spec"
 
 cat <<EOF
 
 ═══════════════════════════════════════════════════════════════════
-  Done. All 5 prompt files in: $OUT_DIR
+  Done. All 7 prompt files in: $OUT_DIR
 
   Suggested flow (copy each stage's file to your clipboard, paste into
   Claude Code, read response, then proceed to the next stage):
@@ -121,16 +128,18 @@ cat <<EOF
     # Wayland:  cat $OUT_DIR/1-why.md | wl-copy
 
     # Then in Claude Code: paste, read the response, move to stage 2.
-    # Repeat through stage 5.
+    # If /vet (stage 2) returns Off-mission, STOP — the rest is wasted
+    # effort on a feature that doesn't belong. Otherwise repeat to stage 7.
 
-  Or open the dir to view all 5 stage files:
+  Or open the dir to view all 7 stage files:
     open $OUT_DIR        # macOS
     xdg-open $OUT_DIR    # Linux
 
-  Cost: ~\$0.30-0.50 total in Claude Code subscription usage if you
-  work through all 5 stages with deep responses.
+  Cost: ~\$0.40-0.70 total in Claude Code subscription usage if you
+  work through all 7 stages with deep responses.
 
-  TIP: /why and /experience are one-shot. /shape, /owit, /elon are
-  multi-turn — they'll ask you to pick options or review choices.
+  TIP: /why, /experience, /spec are one-shot. /vet is a gate — if it
+  returns Off-mission, STOP. /shape, /owit, /elon are multi-turn —
+  they'll ask you to pick options or review choices.
 ═══════════════════════════════════════════════════════════════════
 EOF
