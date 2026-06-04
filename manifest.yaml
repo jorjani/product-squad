@@ -75,6 +75,8 @@ v0_5:
         purpose: Consolidate the cluster outputs into one authoritative spec (the contract)
       - path: skills/decompose/SKILL.md
         purpose: Bridge to the visual ladder — split a spec into single-surface "who/what/where/why" phrasings, each ready for ./draw
+      - path: skills/gh-issue/SKILL.md
+        purpose: Spec → GitHub issue in commander's-intent form (board-agnostic; emits the gh create command)
   templates:
     - path: design-system/design.md
       purpose: Flavor selector — points at one of the brand-flavors files
@@ -196,7 +198,6 @@ v1_roadmap:
     - /migrate   # DB schema producer
     - '@eng-deep-dive'  # codebase fit producer
     - /is-ready  # pre-build readiness gate
-    - /gh-issue  # create GitHub issue in contract format
   scrub: All getqatalyst / jorjani / project-specific refs (~173 hits)
   release: v1.0.0 public + soft launch (X + IndieHackers; Show HN held for V1.1)
 
