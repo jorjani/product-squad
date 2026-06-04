@@ -244,7 +244,7 @@ for ALT in linear apple airbnb uber; do
   printf '    FLAVOR=%-7s ./draw %q\n' "$ALT" "$IDEA"
 done
 echo ""
-echo "  Or shape the product around the idea (5-stage scoping cluster):"
+echo "  Or shape the product around the idea (7-stage scoping cluster):"
 printf '    ./scope %q\n' "$IDEA"
 echo ""
 echo "  Cost: ~\$0.30-0.50 in Claude Code subscription usage"

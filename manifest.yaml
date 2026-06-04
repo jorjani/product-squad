@@ -73,6 +73,8 @@ v0_5:
         purpose: The Algorithm — question, delete, simplify
       - path: skills/spec/SKILL.md
         purpose: Consolidate the cluster outputs into one authoritative spec (the contract)
+      - path: skills/decompose/SKILL.md
+        purpose: Bridge to the visual ladder — split a spec into single-surface "who/what/where/why" phrasings, each ready for ./draw
   templates:
     - path: design-system/design.md
       purpose: Flavor selector — points at one of the brand-flavors files
@@ -193,7 +195,6 @@ v1_roadmap:
     - /api       # API contract producer
     - /migrate   # DB schema producer
     - '@eng-deep-dive'  # codebase fit producer
-    - /decompose # atomic scope decomposition
     - /is-ready  # pre-build readiness gate
     - /gh-issue  # create GitHub issue in contract format
   scrub: All getqatalyst / jorjani / project-specific refs (~173 hits)
