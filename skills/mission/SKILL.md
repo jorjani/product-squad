@@ -5,7 +5,7 @@ description: Capture the product's mission, value proposition, north-star, and e
 
 # /mission — Define What the Product Is For
 
-The scoping cluster (`/why → /shape → /experience → /owit → /elon`) all operates at the **feature** level. `/mission` operates one level up: the **product**. Run it once at the start — and revisit it when the vision shifts — and every feature gets judged against it by `/vet`.
+The scoping cluster (`/why → /vet → /shape → /experience → /owit → /elon → /spec`) all operates at the **feature** level. `/mission` operates one level up: the **product**. Run it once at the start — and revisit it when the vision shifts — and every feature gets judged against it by `/vet`.
 
 **Consumes:** `design-system/project.json` if present (for `audience` / `surface` context, so you don't re-ask) OR the operator's description of the product.
 

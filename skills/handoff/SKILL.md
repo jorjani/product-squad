@@ -17,7 +17,7 @@ The visual ladder produces a folder of artifacts (`sketch`, `wireframe`, `mockup
 
 1. **Locate the artifacts.** Find the most recent `./draw` output dir (or the one the operator names). Confirm which files exist — at minimum you want `mockup.html` (looks like) and `prototype.html` (works like). Note any missing tier rather than failing.
 2. **Frame the feature.** One line of what + why — from `/spec` if present, else the idea the visuals were drawn from. The visuals carry the weight; don't re-narrate the spec.
-3. **Build the showcase.** Write `index.html` into the handoff folder: a brief header (the frame), then two clearly-labeled sections — **"Looks like"** linking `mockup.html`, **"Works like"** linking `prototype.html` (the interactive one, so a viewer can click through states). Add `wireframe.html` / `sketch` as secondary "how we got here" links if present. Self-contained, relative links, opens with no server.
+3. **Build the showcase.** Write `index.html` into the handoff folder: a brief header (the frame), then two clearly-labeled sections — **"Looks like"** linking `mockup.html`, **"Works like"** linking `prototype.html` (the interactive one, so a viewer can click through states). Add `wireframe.html` as a secondary "how we got here" link if present, and the ASCII `sketch.txt` as plain text — not as an HTML surface. Self-contained, relative links, opens with no server.
 4. **Hand it off.** Output the path and open `index.html`. State it's shareable as a folder or droppable into any design-iteration context.
 
 ## Output

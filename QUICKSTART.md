@@ -138,7 +138,7 @@ Total: ~15-30 min of paste-and-think. Cost: ~$0.40-0.70 if you go deep on all 7 
 | `authentication_error` | `unset ANTHROPIC_API_KEY`, then `claude /login` |
 | HTML didn't open in browser (Linux) | Output paths printed; open manually |
 | Visual output looks generic | Idea was too vague; rephrase as "who does what where" |
-| Scope stages 2-5 ask interactive questions | Expected — paste, respond in Claude Code, read response |
+| Scope stages 3, 5, 6 (/shape, /owit, /elon) ask interactive questions | Expected — paste, respond, read response. /vet (stage 2) is a one-shot gate: Off-mission means stop. |
 
 ## Next steps
 

@@ -9,7 +9,7 @@ The cluster produces five slices in conversation: an outcome (`/why`), a chosen 
 
 **Consumes:** This session's `/why`, `/shape`, `/experience`, `/owit`, `/elon` outputs (or the files in a `scope` session dir). Plus any tightener artifacts named as bottlenecks (`/wireframe`, `/api`, etc.).
 
-**Delivers:** One spec document. Feeds `/gh-issue` (→ issue in contract format), the visual ladder (→ extract one idea-phrasing for `./draw`), and `/vet` (→ a final fit check on the fully-scoped feature).
+**Delivers:** One spec document. Feeds `/gh-issue` (→ issue in contract format), the visual ladder (→ extract one idea-phrasing for `./draw`), and optionally `/vet` again (a post-scope fit check on the fully-scoped feature).
 
 ---
 
