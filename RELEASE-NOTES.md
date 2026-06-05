@@ -2,9 +2,11 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](https://semver.org/)
 
-## [0.7.0] — 2026-06-04
+## [0.8.0] — 2026-06-04
 
-Tagged release. Bundles the V0.6 polish (PR #10), the plugin manifest (#17), the skills migration (#19), and the product-vision altitude + scope↔visual bridge (#24). `manifest.yaml` + `.claude-plugin/plugin.json` declare `version: 0.7.0`.
+Adds the **product-vision altitude + scope↔visual bridge** (#24): 6 new skills (`/mission`, `/vet`, `/spec`, `/decompose`, `/gh-issue`, `/handoff`) + the 7-stage `./scope` cluster. `manifest.yaml` + `.claude-plugin/plugin.json` declare `version: 0.8.0`.
+
+> v0.7.0 (skills format + plugin manifest + design-system rename) shipped 2026-05-31. The Added/Changed/Removed/Fixed items below still mix that V0.6→V0.7 work with #24 — flagged for a dedicated changelog cleanup.
 
 ### Added
 - **`./onboard`** — third entry point. Optional 5-question intake interview that writes `.studio/project.json`.
