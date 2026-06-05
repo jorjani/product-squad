@@ -2,7 +2,7 @@
 # Parse this first when introspecting the bundle programmatically.
 # Humans read README.md → QUICKSTART.md. Agents read AGENTS.md then this.
 
-version: 0.6.0-dev
+version: 0.7.0-dev
 name: product-squad
 description: Agentic operating system for one-person dev teams
 license: MIT
@@ -56,9 +56,15 @@ v0_5:
         purpose: T4 interactive — single-file HTML with state transitions
       - path: skills/html-to-png/SKILL.md
         purpose: Playwright HTML→PNG utility
+      - path: skills/handoff/SKILL.md
+        purpose: Bundle the ladder outputs into one openable showcase — mockup (looks like) + prototype (works like) + spec frame
     product_cluster:
+      - path: skills/mission/SKILL.md
+        purpose: Product mission + value prop + north-star + non-goals → design-system/mission.md (precursor; run once per product)
       - path: skills/why/SKILL.md
         purpose: Outcome framing / job-to-be-done
+      - path: skills/vet/SKILL.md
+        purpose: Mission-fit gate — Serves / Tangential / Off-mission (reads mission.md; runs after /why as a cheap kill)
       - path: skills/shape/SKILL.md
         purpose: Shape Up — options menu + capability delta + cuts
       - path: skills/experience/SKILL.md
@@ -67,6 +73,12 @@ v0_5:
         purpose: On/When/If/Then scenarios + Choices
       - path: skills/elon/SKILL.md
         purpose: The Algorithm — question, delete, simplify
+      - path: skills/spec/SKILL.md
+        purpose: Consolidate the cluster outputs into one authoritative spec (the contract)
+      - path: skills/decompose/SKILL.md
+        purpose: Bridge to the visual ladder — split a spec into single-surface "who/what/where/why" phrasings, each ready for ./draw
+      - path: skills/gh-issue/SKILL.md
+        purpose: Spec → GitHub issue in commander's-intent form (board-agnostic; emits the gh create command)
   templates:
     - path: design-system/design.md
       purpose: Flavor selector — points at one of the brand-flavors files
@@ -187,10 +199,7 @@ v1_roadmap:
     - /api       # API contract producer
     - /migrate   # DB schema producer
     - '@eng-deep-dive'  # codebase fit producer
-    - /decompose # atomic scope decomposition
-    - /spec      # aggregate tightener artifacts; advance Pitch → Scope
     - /is-ready  # pre-build readiness gate
-    - /gh-issue  # create GitHub issue in contract format
   scrub: All getqatalyst / jorjani / project-specific refs (~173 hits)
   release: v1.0.0 public + soft launch (X + IndieHackers; Show HN held for V1.1)
 

@@ -17,18 +17,22 @@ Realistic feature ideas to try with `draw` (V0.5 PRIMARY wedge — visual fideli
 
 ## Quick run — Product cluster
 
-`scope "idea"` writes 5 pre-filled prompts (why → shape → experience → owit → elon) to `/tmp/product-squad-scope-<ts>/`. You paste each into Claude Code in sequence — each stage's output feeds the next.
+`scope "idea"` writes 7 pre-filled prompts (why → vet → shape → experience → owit → elon → spec) to `/tmp/product-squad-scope-<ts>/`. You paste each into Claude Code in sequence — each stage's output feeds the next.
 
 ```bash
 ./scope "users configure notification preferences across email, push, and in-app channels"
 ```
 
-The 5 stages teach a transferable product-craft pattern:
+The 7 stages teach a transferable product-craft pattern:
 1. **/why** — frame the outcome (job-to-be-done)
-2. **/shape** — decide what to build (options menu + capability delta + cuts)
-3. **/experience** — articulate the felt user delta
-4. **/owit** — map scenarios (On/When/If/Then) + product choices
-5. **/elon** — ruthless cut (question, delete, simplify)
+2. **/vet** — does this serve the mission? (cheap kill — STOP if Off-mission)
+3. **/shape** — decide what to build (options menu + capability delta + cuts)
+4. **/experience** — articulate the felt user delta
+5. **/owit** — map scenarios (On/When/If/Then) + product choices
+6. **/elon** — ruthless cut (question, delete, simplify)
+7. **/spec** — consolidate the conversation into one authoritative spec
+
+Precursor (run once per product): **/mission** writes `design-system/mission.md` — the vision /vet judges each feature against.
 
 ## How to phrase ideas (the meta-skill)
 
@@ -80,12 +84,24 @@ Each HTML auto-opens in your default browser as it's generated (macOS); on Linux
 | Stage | File | Content |
 |---|---|---|
 | 1 | `1-why.md` | /why prompt pre-filled with your idea |
-| 2 | `2-shape.md` | /shape prompt pre-filled |
-| 3 | `3-experience.md` | /experience prompt pre-filled |
-| 4 | `4-owit.md` | /owit prompt pre-filled |
-| 5 | `5-elon.md` | /elon prompt pre-filled |
+| 2 | `2-vet.md` | /vet prompt pre-filled (mission-fit gate) |
+| 3 | `3-shape.md` | /shape prompt pre-filled |
+| 4 | `4-experience.md` | /experience prompt pre-filled |
+| 5 | `5-owit.md` | /owit prompt pre-filled |
+| 6 | `6-elon.md` | /elon prompt pre-filled |
+| 7 | `7-spec.md` | /spec prompt pre-filled |
 
 Each file has a header explaining what to copy. `cat <file> | pbcopy` on macOS copies it to clipboard ready to paste into Claude Code.
+
+## From scope to visuals (the bridge)
+
+A `/spec` is richer than a sharp visual wants. `/decompose` splits it into single-surface "who does what where why" phrasings — exactly the shape `draw` reads best — each with a ready `./draw` command:
+
+```
+./scope → … → /spec  →  /decompose  →  ./draw "<one phrasing>"
+```
+
+The phrasings are already in `draw`'s input format, so the hand-off is copy-and-run. Visualize the surface `/decompose` recommends first; draw the rest only if they earn it.
 
 ## After the demo
 

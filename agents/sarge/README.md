@@ -4,8 +4,8 @@ Snapshot of **Sarge** — the PM agent that scopes ideas into buildable specs. I
 
 **V0.5 status: readable + partially runnable.**
 
-- ✅ **Runnable via `bin/scope`** — the scoping ladder (why → shape → experience → owit → elon) ships as `skills/` in the bundle root. Paste each prompt into Claude Code; get a brief.
-- ❌ **Full Sarge runtime is V1** — the interactive C0–C5 phase flow (with `/decompose` skill, `/gh-issue` skill, GitHub Project board mutations, `.index.json` project lookup, foreman/config/board-ids.sh sourcing) is tightly coupled to David's setup. V1 ships a `headless` one-shot variant for any agent CLI.
+- ✅ **Runnable via `./scope`** — the scoping ladder (why → vet → shape → experience → owit → elon → spec) ships as `skills/` in the bundle root. Paste each prompt into Claude Code; get a brief.
+- ❌ **Full Sarge runtime is V1** — the interactive C0–C5 phase flow (GitHub Project board mutations, `.index.json` project lookup, foreman/config/board-ids.sh sourcing) is tightly coupled to David's setup. V1 ships a `headless` one-shot variant for any agent CLI. (The standalone `/decompose` and `/gh-issue` skills now ship in `skills/`; it's the integrated board flow that's V1.)
 
 ## How Sarge thinks
 
@@ -29,21 +29,23 @@ Sarge's job: turn a vague idea into a buildable scope that passes Foreman's cont
 
 ## The scoping ladder (what's runnable today)
 
-Sarge's prompt corpus ships as 5 standalone skill prompts in the bundle root's `skills/` directory. Run them via `bin/scope`:
+Sarge's prompt corpus ships as 7 standalone skill prompts in the bundle root's `skills/` directory. Run them via `./scope`:
 
 | Skill | What it teaches |
 |---|---|
 | [`skills/why/SKILL.md`](../../skills/why/SKILL.md) | Outcome framing (job-to-be-done) |
+| [`skills/vet/SKILL.md`](../../skills/vet/SKILL.md) | Mission-fit gate (Serves / Tangential / Off-mission) — a cheap kill before scoping |
 | [`skills/shape/SKILL.md`](../../skills/shape/SKILL.md) | Decide what to build (Shape Up: options menu + capability delta + cuts) |
 | [`skills/experience/SKILL.md`](../../skills/experience/SKILL.md) | Articulate the user delta in observable terms |
 | [`skills/owit/SKILL.md`](../../skills/owit/SKILL.md) | Scenario specification (On/When/If/Then) + Choices |
 | [`skills/elon/SKILL.md`](../../skills/elon/SKILL.md) | The Algorithm: question, delete, simplify, accelerate, automate |
+| [`skills/spec/SKILL.md`](../../skills/spec/SKILL.md) | Consolidate the cluster outputs into one authoritative contract |
 
 ```bash
-./bin/scope "your feature idea in one sentence"
+./scope "your feature idea in one sentence"
 ```
 
-Writes 5 pre-filled prompt files to `/tmp/product-squad-scope-<ts>/`. Paste each into Claude Code in sequence.
+Writes 7 pre-filled prompt files to `/tmp/product-squad-scope-<ts>/`. Paste each into Claude Code in sequence. (Run `/mission` once first to set the vision `/vet` checks against.)
 
 ## What's NOT in V0.5
 

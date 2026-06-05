@@ -34,7 +34,7 @@ description: Decide what to build via options-menu + capability-delta + cuts (Sh
                                         └── /eng-review (pre-merge) → Merge → /verify
 ```
 
-> **V0.5 bundled commands in this diagram:** `/wireframe`, `/mockup`, `/prototype`, `/elon`, `/owit`. **Planned for V1 (not in V0.5):** `/spec`, `/flow`, `/api`, `/migrate`, `@eng-deep-dive`, `/eng-review`, `/verify`, `Foreman` (the orchestrator). For V0.5, manual review takes the place of `/spec`/Foreman/`/verify`.
+> **V0.5 bundled commands:** `/why`, `/vet`, `/shape`, `/experience`, `/owit`, `/elon`, `/spec`, `/wireframe`, `/mockup`, `/prototype`. **Planned for V1 (not in V0.5):** `/flow`, `/api`, `/migrate`, `@eng-deep-dive`, `/eng-review`, `/verify`, `Foreman` (the orchestrator). For V0.5, manual review takes the place of Foreman/`/verify`.
 
 ---
 

@@ -1,7 +1,7 @@
 {
   "name": "product-squad",
-  "description": "Agentic dev OS for one-person teams: visual fidelity ladder (sketch → wireframe → mockup → prototype) + product/scoping cluster (why → shape → experience → owit → elon) + 4 swappable brand-archetype flavors (linear, apple, airbnb, uber).",
-  "version": "0.6.0-dev",
+  "description": "Agentic dev OS for one-person teams: a product/scoping cluster (mission → why → vet → shape → experience → owit → elon → spec) + a visual fidelity ladder (sketch → wireframe → mockup → prototype → handoff), bridged by /decompose and shipped via /gh-issue + 4 swappable brand-archetype flavors (linear, apple, airbnb, uber).",
+  "version": "0.7.0-dev",
   "author": {
     "name": "David Jorjani",
     "email": "david@getqatalyst.com"

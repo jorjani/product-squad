@@ -98,12 +98,16 @@ BRAND="Acme Talent" FLAVOR=linear ./draw "candidates submit applications for rev
 
 What happens:
 
-1. 5 pre-filled prompt files written to `/tmp/product-squad-scope-<ts>/`:
+1. 7 pre-filled prompt files written to `/tmp/product-squad-scope-<ts>/`:
    - `1-why.md` — frame the outcome (job-to-be-done)
-   - `2-shape.md` — decide what to build (options + capability delta + cuts)
-   - `3-experience.md` — articulate user delta
-   - `4-owit.md` — map scenarios (On/When/If/Then) + choices
-   - `5-elon.md` — ruthless cut (question, delete, simplify)
+   - `2-vet.md` — does this serve the mission? (cheap kill — STOP if Off-mission)
+   - `3-shape.md` — decide what to build (options + capability delta + cuts)
+   - `4-experience.md` — articulate user delta
+   - `5-owit.md` — map scenarios (On/When/If/Then) + choices
+   - `6-elon.md` — ruthless cut (question, delete, simplify)
+   - `7-spec.md` — consolidate the conversation into one authoritative spec
+
+   *(Run `/mission` once first to set the product vision `/vet` checks against.)*
 2. You copy each file into Claude Code in sequence. Each stage's output informs the next.
 
 ```bash
@@ -114,16 +118,16 @@ cat /tmp/product-squad-scope-<ts>/1-why.md | xclip -selection clipboard
 # Linux (Wayland):
 cat /tmp/product-squad-scope-<ts>/1-why.md | wl-copy
 
-# Paste into Claude Code, read the response, then repeat for stages 2-5
+# Paste into Claude Code, read the response, then repeat for stages 2-7
 # with the same copy command (substituting the stage file name).
 ```
 
-Total: ~15-30 min of paste-and-think. Cost: ~$0.30-0.50 if you go deep on all 5 stages.
+Total: ~15-30 min of paste-and-think. Cost: ~$0.40-0.70 if you go deep on all 7 stages.
 
 ## What you'll have at the end
 
 - **From `draw`**: 1 ASCII sketch (in terminal) + 3 rendered HTML files showing your feature at progressively higher fidelity
-- **From `scope`**: 5 markdown documents capturing the product reasoning behind your feature
+- **From `scope`**: 7 markdown documents capturing the product reasoning behind your feature
 - **A pattern you can re-apply** to any future feature idea
 
 ## Troubleshooting
@@ -134,7 +138,7 @@ Total: ~15-30 min of paste-and-think. Cost: ~$0.30-0.50 if you go deep on all 5 
 | `authentication_error` | `unset ANTHROPIC_API_KEY`, then `claude /login` |
 | HTML didn't open in browser (Linux) | Output paths printed; open manually |
 | Visual output looks generic | Idea was too vague; rephrase as "who does what where" |
-| Scope stages 2-5 ask interactive questions | Expected — paste, respond in Claude Code, read response |
+| Scope stages 3, 5, 6 (/shape, /owit, /elon) ask interactive questions | Expected — paste, respond, read response. /vet (stage 2) is a one-shot gate: Off-mission means stop. |
 
 ## Next steps
 
