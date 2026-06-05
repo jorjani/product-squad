@@ -2,14 +2,9 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](https://semver.org/)
 
-## [Unreleased]
+## [0.7.0] — 2026-06-04
 
-Three unreleased PRs are merged to `main` but not yet tagged: PR #10 (V0.6 polish), PR #17 (plugin manifest), PR #19 (skills migration). `manifest.yaml` + `.claude-plugin/plugin.json` declare `version: 0.7.0-dev`.
-
-> **Tag decision pending.** Three candidates, pick one before cutting the next tag:
-> - `v0.5.2` — frame this as a patch line on top of v0.5.1. Understates the surface change.
-> - `v0.6.0` — minor bump. Matches the `0.6.0-dev` manifest string and the "V0.6 polish" naming used in PR #10.
-> - `v0.7.0` — minor bump that signals the plugin-shape pivot (marketplace.json, `commands/` → `skills/`) is the headline, not the polish. Honest about how much changed for a user installing fresh.
+Tagged release. Bundles the V0.6 polish (PR #10), the plugin manifest (#17), the skills migration (#19), and the product-vision altitude + scope↔visual bridge (#24). `manifest.yaml` + `.claude-plugin/plugin.json` declare `version: 0.7.0`.
 
 ### Added
 - **`./onboard`** — third entry point. Optional 5-question intake interview that writes `.studio/project.json`.
