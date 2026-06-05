@@ -138,7 +138,7 @@ cat <<EOF
   Cost: ~\$0.40-0.70 total in Claude Code subscription usage if you
   work through all 7 stages with deep responses.
 
-  TIP: /why, /experience, /spec are one-shot. /vet is a gate — if it
+  TIP: /why, /experience, /spec are quick (one main pass). /vet is a gate — if it
   returns Off-mission, STOP. /shape, /owit, /elon are multi-turn —
   they'll ask you to pick options or review choices.
 ═══════════════════════════════════════════════════════════════════

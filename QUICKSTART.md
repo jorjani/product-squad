@@ -127,7 +127,7 @@ Total: ~15-30 min of paste-and-think. Cost: ~$0.40-0.70 if you go deep on all 7 
 ## What you'll have at the end
 
 - **From `draw`**: 1 ASCII sketch (in terminal) + 3 rendered HTML files showing your feature at progressively higher fidelity
-- **From `scope`**: 5 markdown documents capturing the product reasoning behind your feature
+- **From `scope`**: 7 markdown documents capturing the product reasoning behind your feature
 - **A pattern you can re-apply** to any future feature idea
 
 ## Troubleshooting
