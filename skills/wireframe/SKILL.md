@@ -1,6 +1,6 @@
 ---
 name: wireframe
-description: Produce multi-state HTML with state-toggle navigation, in moqups dashed-border aesthetic. Use when the user wants to lay out information architecture and edge states for a feature. State-count cap 3-5 (one happy + two most-instructive edges).
+description: Produce multi-state HTML with state-toggle navigation, in moqups dashed-border aesthetic. Use when the user wants to lay out information architecture and edge states for a feature. Cover the happy path plus all edge states (empty, error, loading, cancel, retry, etc.) as separate stacked, anchor-linked sections.
 ---
 
 # /wireframe — Tier 1 mid-fi visual artifact (Moqups-style HTML)
