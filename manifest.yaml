@@ -111,6 +111,57 @@ v0_5:
     - agents/code-reviewer.md
     - agents/build-fixer.md
 
+# ─── Command skills (wave 1 — migrated from standalone commands) ──────
+# 21 single-file skills, each skills/<name>/SKILL.md. Auto-discovered by
+# Claude Code from skills/; grouped here by cluster for human/agent scan.
+command_skills:
+  ui:
+    - path: skills/a11y/SKILL.md
+      purpose: WCAG AA color-contrast audit — compute ratios in Python, flag + fix failures
+    - path: skills/brand-audit/SKILL.md
+      purpose: Brand-token consistency audit — design-system doc vs. code, file:line precision
+    - path: skills/crap/SKILL.md
+      purpose: Visual-hierarchy audit against the four CRAP principles, code-grounded
+    - path: skills/imagine/SKILL.md
+      purpose: Text-to-image generation via fal.ai (requires FAL_KEY)
+    - path: skills/qa/SKILL.md
+      purpose: Browser QA of a running app via Playwright MCP — find, fix, verify bugs
+    - path: skills/ux-design/SKILL.md
+      purpose: Post-build UX completeness check — states, consistency, a11y, responsiveness
+  audit:
+    - path: skills/harness-audit/SKILL.md
+      purpose: Claude Code config health — hooks, permissions, commands, agents, memory
+    - path: skills/context-diet/SKILL.md
+      purpose: Always-loaded context budget audit — classify HOT/WARM/COLD, propose moves
+    - path: skills/usage-audit/SKILL.md
+      purpose: Live token-burn diagnosis — hottest sessions, tool mix, fan-out
+  eng_tighteners:
+    - path: skills/build/SKILL.md
+      purpose: Autonomous feature-pipeline orchestrator — classify input, route the workflow
+    - path: skills/eng-deep-dive/SKILL.md
+      purpose: Pre-implementation reality check — verify spec assumptions against actual code
+    - path: skills/eng-review/SKILL.md
+      purpose: Adversarial architecture review of an impl plan before any code is written
+    - path: skills/investigate/SKILL.md
+      purpose: Systematic root-cause debugging — no fix without proven root cause
+    - path: skills/pm/SKILL.md
+      purpose: PM scoping interview — interrogate an idea until the underlying job is clear
+    - path: skills/verify/SKILL.md
+      purpose: Terminal "prove it ran" gate — no completion words without real output
+  session_hygiene:
+    - path: skills/checkpoint/SKILL.md
+      purpose: Mid-session status snapshot — done, dirty, context, next actions
+    - path: skills/debrief/SKILL.md
+      purpose: Meeting/notes → decisions, actions (yours vs. theirs), insights, routing
+    - path: skills/list-capabilities/SKILL.md
+      purpose: Enumerate installed skills + commands by scanning live directories
+    - path: skills/pickup/SKILL.md
+      purpose: Resume from a previous session's freeform notes — verify state, lead with intent
+    - path: skills/retro/SKILL.md
+      purpose: Post-session retrospective — process not code, actionable improvements
+    - path: skills/sessions/SKILL.md
+      purpose: List recent Claude Code sessions with context usage + resume IDs
+
 # ─── The agent crew (per-agent V0.5 status) ───────────────────────────
 agents:
   foreman:

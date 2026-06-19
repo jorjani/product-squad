@@ -25,11 +25,11 @@ __pycache__/
 *.pyc
 .venv/
 
-# Build artifacts / logs
+# Build artifacts / logs (anchored to repo root so skills/build/ is not matched)
 *.log
 *.tmp
-dist/
-build/
+/dist/
+/build/
 
 # Worktrees
 .claude/worktrees/
