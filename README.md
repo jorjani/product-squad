@@ -93,13 +93,46 @@ V1 (3-4 weeks): full runtime for all five, agent abstraction (Claude default + C
 | 👤 Human | [`QUICKSTART.md`](QUICKSTART.md) → run a demo |
 | 🛠 Forker | Visual ladder: [`sketch`](skills/sketch/SKILL.md) → [`wireframe`](skills/wireframe/SKILL.md) → [`mockup`](skills/mockup/SKILL.md) → [`prototype`](skills/prototype/SKILL.md) · Product cluster: [`why`](skills/why/SKILL.md) → [`shape`](skills/shape/SKILL.md) → [`experience`](skills/experience/SKILL.md) → [`owit`](skills/owit/SKILL.md) → [`elon`](skills/elon/SKILL.md) |
 
+## Command skills
+
+Beyond the scoping cluster and visual ladder, 21 single-purpose skills — each `skills/<name>/SKILL.md`, auto-discovered by Claude Code. Grouped by what they touch:
+
+**UI & design audits** — judge or fix a built surface.
+- [`a11y`](skills/a11y/SKILL.md) — WCAG AA color-contrast audit (Python math, flag + fix)
+- [`crap`](skills/crap/SKILL.md) — visual-hierarchy audit (Contrast/Repetition/Alignment/Proximity)
+- [`brand-audit`](skills/brand-audit/SKILL.md) — brand-token consistency, doc vs. code
+- [`ux-design`](skills/ux-design/SKILL.md) — post-build UX completeness (states, a11y, responsive)
+- [`qa`](skills/qa/SKILL.md) — browser QA of a running app via Playwright MCP
+- [`imagine`](skills/imagine/SKILL.md) — text-to-image via fal.ai (needs `FAL_KEY`)
+
+**Harness & context audits** — keep the environment lean.
+- [`harness-audit`](skills/harness-audit/SKILL.md) — config health (hooks, permissions, commands, agents, memory)
+- [`context-diet`](skills/context-diet/SKILL.md) — always-loaded context budget (HOT/WARM/COLD)
+- [`usage-audit`](skills/usage-audit/SKILL.md) — live token-burn diagnosis
+
+**Eng tighteners** — scope, verify, and build with discipline.
+- [`pm`](skills/pm/SKILL.md) — PM scoping interview — find the underlying job
+- [`build`](skills/build/SKILL.md) — autonomous feature-pipeline orchestrator
+- [`eng-deep-dive`](skills/eng-deep-dive/SKILL.md) — pre-implementation reality check vs. code
+- [`eng-review`](skills/eng-review/SKILL.md) — adversarial architecture review of a plan
+- [`investigate`](skills/investigate/SKILL.md) — systematic root-cause debugging
+- [`verify`](skills/verify/SKILL.md) — terminal "prove it ran" gate
+
+**Session hygiene** — start, orient, and close out a working session.
+- [`pickup`](skills/pickup/SKILL.md) — resume from prior-session notes
+- [`checkpoint`](skills/checkpoint/SKILL.md) — mid-session status snapshot
+- [`retro`](skills/retro/SKILL.md) — post-session process retrospective
+- [`debrief`](skills/debrief/SKILL.md) — meeting/notes → decisions + actions
+- [`sessions`](skills/sessions/SKILL.md) — list recent Claude Code sessions
+- [`list-capabilities`](skills/list-capabilities/SKILL.md) — enumerate installed skills + commands
+
 ## Layout
 
 ```
 bin/
   visual         # PRIMARY demo — visual fidelity ladder
   scope          # SECONDARY demo — commander's intent + scoping
-skills/          # 10 skills (5 visual + 5 product), each <name>/SKILL.md
+skills/          # scoping cluster + visual ladder + 21 command skills, each <name>/SKILL.md
 design-system/   # Bundled generic design tokens + component primitives
 examples/        # Idea fixtures + phrasing guidance
 agents/          # Snapshots: foreman, sarge, code-reviewer, build-fixer
