@@ -95,7 +95,7 @@ V1 (3-4 weeks): full runtime for all five, agent abstraction (Claude default + C
 
 ## Command skills
 
-Beyond the scoping cluster and visual ladder, 21 single-purpose skills — each `skills/<name>/SKILL.md`, auto-discovered by Claude Code. Grouped by what they touch:
+Beyond the scoping cluster and visual ladder, 29 single-purpose skills — each `skills/<name>/SKILL.md`, auto-discovered by Claude Code. Grouped by what they touch:
 
 **UI & design audits** — judge or fix a built surface.
 - [`a11y`](skills/a11y/SKILL.md) — WCAG AA color-contrast audit (Python math, flag + fix)
@@ -117,6 +117,19 @@ Beyond the scoping cluster and visual ladder, 21 single-purpose skills — each 
 - [`eng-review`](skills/eng-review/SKILL.md) — adversarial architecture review of a plan
 - [`investigate`](skills/investigate/SKILL.md) — systematic root-cause debugging
 - [`verify`](skills/verify/SKILL.md) — terminal "prove it ran" gate
+- [`ship`](skills/ship/SKILL.md) — sync base → test → review → commit → push → PR, one pass
+- [`pr-review`](skills/pr-review/SKILL.md) — open-PR dashboard + two-pass subagent review (present-only)
+
+**Spec contracts** — turn a spec into a build-and-test-ready interface.
+- [`flow`](skills/flow/SKILL.md) — UI state-transition contract (per-state ASCII + edge table)
+- [`api`](skills/api/SKILL.md) — backend API contract (endpoints, auth, shapes, error codes, idempotency)
+
+**Brand & naming** — name it, then claim the domain.
+- [`namer`](skills/namer/SKILL.md) — startup naming agent (Placek sound-symbolism + Igor 9-category rubric)
+- [`domain-check`](skills/domain-check/SKILL.md) — domain availability across TLD tiers (whois + DNS dig)
+
+**Product** — zoom out from the task list.
+- [`mochary`](skills/mochary/SKILL.md) — big-picture priority coach (Mochary frame): the one thing that matters
 
 **Session hygiene** — start, orient, and close out a working session.
 - [`pickup`](skills/pickup/SKILL.md) — resume from prior-session notes
@@ -125,6 +138,7 @@ Beyond the scoping cluster and visual ladder, 21 single-purpose skills — each 
 - [`debrief`](skills/debrief/SKILL.md) — meeting/notes → decisions + actions
 - [`sessions`](skills/sessions/SKILL.md) — list recent Claude Code sessions
 - [`list-capabilities`](skills/list-capabilities/SKILL.md) — enumerate installed skills + commands
+- [`todo`](skills/todo/SKILL.md) — per-project task parking lot (TODO.md-backed)
 
 ## Layout
 

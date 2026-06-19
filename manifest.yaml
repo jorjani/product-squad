@@ -111,8 +111,8 @@ v0_5:
     - agents/code-reviewer.md
     - agents/build-fixer.md
 
-# ─── Command skills (wave 1 — migrated from standalone commands) ──────
-# 21 single-file skills, each skills/<name>/SKILL.md. Auto-discovered by
+# ─── Command skills (waves 1-2 — migrated from standalone commands) ───
+# 29 single-file skills, each skills/<name>/SKILL.md. Auto-discovered by
 # Claude Code from skills/; grouped here by cluster for human/agent scan.
 command_skills:
   ui:
@@ -148,6 +148,23 @@ command_skills:
       purpose: PM scoping interview — interrogate an idea until the underlying job is clear
     - path: skills/verify/SKILL.md
       purpose: Terminal "prove it ran" gate — no completion words without real output
+    - path: skills/ship/SKILL.md
+      purpose: Unified ship workflow — sync base, test, review, commit, push, open PR in one pass
+    - path: skills/pr-review/SKILL.md
+      purpose: Open-PR review queue — dashboard + two-pass subagent review (hygiene + structural), present-only
+  spec_contracts:
+    - path: skills/flow/SKILL.md
+      purpose: UI state-transition contract — per-state ASCII + edge table, each row one verifiable assertion
+    - path: skills/api/SKILL.md
+      purpose: Backend API contract — endpoint list, auth, request/response shapes, error codes, idempotency
+  brand:
+    - path: skills/namer/SKILL.md
+      purpose: Startup naming agent — Placek sound-symbolism + Igor 9-category rubric; score or generate
+    - path: skills/domain-check/SKILL.md
+      purpose: Domain availability across TLD tiers — whois for .com/.co/.io, DNS dig for .app/.so
+  product:
+    - path: skills/mochary/SKILL.md
+      purpose: Big-picture priority coach (Mochary frame) — name the gap, pick the one thing, get a commitment
   session_hygiene:
     - path: skills/checkpoint/SKILL.md
       purpose: Mid-session status snapshot — done, dirty, context, next actions
@@ -161,6 +178,8 @@ command_skills:
       purpose: Post-session retrospective — process not code, actionable improvements
     - path: skills/sessions/SKILL.md
       purpose: List recent Claude Code sessions with context usage + resume IDs
+    - path: skills/todo/SKILL.md
+      purpose: Per-project task parking lot backed by a plain TODO.md — list, add, complete, pick up
 
 # ─── The agent crew (per-agent V0.5 status) ───────────────────────────
 agents:
@@ -245,11 +264,8 @@ v1_roadmap:
     - guardrails/engineering.md
     - guardrails/AUDIT.md
   mcp: mcp/scopes.md
-  bonus_commands:  # not bundled in V0.5; planned for V1
-    - /flow      # T1d edge-table contract
-    - /api       # API contract producer
+  bonus_commands:  # not bundled yet; planned for V1
     - /migrate   # DB schema producer
-    - '@eng-deep-dive'  # codebase fit producer
     - /is-ready  # pre-build readiness gate
   scrub: All getqatalyst / jorjani / project-specific refs (~173 hits)
   release: v1.0.0 public + soft launch (X + IndieHackers; Show HN held for V1.1)

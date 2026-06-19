@@ -1,6 +1,6 @@
 {
   "name": "product-squad",
-  "description": "Agentic dev OS for one-person teams: a product/scoping cluster (mission → why → vet → shape → experience → owit → elon → spec) + a visual fidelity ladder (sketch → wireframe → mockup → prototype → handoff), bridged by /decompose and shipped via /gh-issue + 4 swappable brand-archetype flavors (linear, apple, airbnb, uber). Plus 21 command skills: UI audits (a11y, brand-audit, crap, imagine, qa, ux-design), harness/context audits (harness-audit, context-diet, usage-audit), eng tighteners (build, eng-deep-dive, eng-review, investigate, pm, verify), and session hygiene (checkpoint, debrief, list-capabilities, pickup, retro, sessions).",
+  "description": "Agentic dev OS for one-person teams: a product/scoping cluster (mission → why → vet → shape → experience → owit → elon → spec) + a visual fidelity ladder (sketch → wireframe → mockup → prototype → handoff), bridged by /decompose and shipped via /gh-issue + 4 swappable brand-archetype flavors (linear, apple, airbnb, uber). Plus 29 command skills: UI audits (a11y, brand-audit, crap, imagine, qa, ux-design), harness/context audits (harness-audit, context-diet, usage-audit), eng tighteners (build, eng-deep-dive, eng-review, investigate, pm, verify, ship, pr-review), spec contracts (flow, api), brand & naming (namer, domain-check), product (mochary), and session hygiene (checkpoint, debrief, list-capabilities, pickup, retro, sessions, todo).",
   "version": "0.8.0",
   "author": {
     "name": "David Jorjani",
@@ -22,6 +22,10 @@
     "brand-flavors",
     "accessibility-audit",
     "debugging",
-    "session-management"
+    "session-management",
+    "pr-review",
+    "api-design",
+    "naming",
+    "domain-search"
   ]
 }
