@@ -111,8 +111,8 @@ v0_5:
     - agents/code-reviewer.md
     - agents/build-fixer.md
 
-# ─── Command skills (waves 1-2 — migrated from standalone commands) ───
-# 29 single-file skills, each skills/<name>/SKILL.md. Auto-discovered by
+# ─── Command skills (waves 1-3 — migrated from standalone commands) ───
+# 31 single-file skills, each skills/<name>/SKILL.md. Auto-discovered by
 # Claude Code from skills/; grouped here by cluster for human/agent scan.
 command_skills:
   ui:
@@ -165,6 +165,9 @@ command_skills:
   product:
     - path: skills/mochary/SKILL.md
       purpose: Big-picture priority coach (Mochary frame) — name the gap, pick the one thing, get a commitment
+  safety:
+    - path: skills/guard/SKILL.md
+      purpose: Session safety mode — destructive-command denylist confirmation + an Edit/Write boundary directory
   session_hygiene:
     - path: skills/checkpoint/SKILL.md
       purpose: Mid-session status snapshot — done, dirty, context, next actions
@@ -178,6 +181,8 @@ command_skills:
       purpose: Post-session retrospective — process not code, actionable improvements
     - path: skills/sessions/SKILL.md
       purpose: List recent Claude Code sessions with context usage + resume IDs
+    - path: skills/sync-repos/SKILL.md
+      purpose: Fast-forward every git repo under a workspace folder in one sweep — clean+behind pulls --ff-only, everything else reports for human judgment
     - path: skills/todo/SKILL.md
       purpose: Per-project task parking lot backed by a plain TODO.md — list, add, complete, pick up
 

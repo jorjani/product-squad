@@ -95,7 +95,7 @@ V1 (3-4 weeks): full runtime for all five, agent abstraction (Claude default + C
 
 ## Command skills
 
-Beyond the scoping cluster and visual ladder, 29 single-purpose skills — each `skills/<name>/SKILL.md`, auto-discovered by Claude Code. Grouped by what they touch:
+Beyond the scoping cluster and visual ladder, 31 single-purpose skills — each `skills/<name>/SKILL.md`, auto-discovered by Claude Code. Grouped by what they touch:
 
 **UI & design audits** — judge or fix a built surface.
 - [`a11y`](skills/a11y/SKILL.md) — WCAG AA color-contrast audit (Python math, flag + fix)
@@ -131,12 +131,16 @@ Beyond the scoping cluster and visual ladder, 29 single-purpose skills — each 
 **Product** — zoom out from the task list.
 - [`mochary`](skills/mochary/SKILL.md) — big-picture priority coach (Mochary frame): the one thing that matters
 
+**Safety** — guardrails against destructive commands.
+- [`guard`](skills/guard/SKILL.md) — session safety mode: destructive-command denylist confirmation + an Edit/Write boundary
+
 **Session hygiene** — start, orient, and close out a working session.
 - [`pickup`](skills/pickup/SKILL.md) — resume from prior-session notes
 - [`checkpoint`](skills/checkpoint/SKILL.md) — mid-session status snapshot
 - [`retro`](skills/retro/SKILL.md) — post-session process retrospective
 - [`debrief`](skills/debrief/SKILL.md) — meeting/notes → decisions + actions
 - [`sessions`](skills/sessions/SKILL.md) — list recent Claude Code sessions
+- [`sync-repos`](skills/sync-repos/SKILL.md) — fast-forward every repo in a workspace folder; report what needs judgment
 - [`list-capabilities`](skills/list-capabilities/SKILL.md) — enumerate installed skills + commands
 - [`todo`](skills/todo/SKILL.md) — per-project task parking lot (TODO.md-backed)
 
