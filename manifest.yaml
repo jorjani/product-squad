@@ -186,6 +186,57 @@ command_skills:
     - path: skills/todo/SKILL.md
       purpose: Per-project task parking lot backed by a plain TODO.md — list, add, complete, pick up
 
+# ─── Optional skills (wave 4 — provider/stack-specific examples) ──────
+# A distinct tier from command_skills. These demonstrate a transferable
+# pattern using one concrete provider as the worked example. NOT loaded as
+# defaults; install on demand and swap the provider for your own stack.
+optional_skills:
+  description: >
+    Provider/stack-specific example skills. Each demonstrates a pattern you
+    can adapt to your own provider — the provider named below is the worked
+    example, not a hard dependency. Not loaded as defaults; install on demand.
+  skills:
+    - name: notification-setup
+      path: skills/notification-setup/SKILL.md
+      example_provider: "AWS SES"
+      cluster: integration-templates
+      purpose: Verify a transactional email sending domain (DKIM/SPF/DMARC) on the first try — dig-before-verify, then a real send
+    - name: dns-setup
+      path: skills/dns-setup/SKILL.md
+      example_provider: "Cloudflare"
+      cluster: integration-templates
+      purpose: List/add/delete DNS records via provider API, DNS-only for platform-hosted apps, registry doc kept in sync
+    - name: deploy-status
+      path: skills/deploy-status/SKILL.md
+      example_provider: "Railway"
+      cluster: integration-templates
+      purpose: Walk the deploy chain for a commit (CI → platform → build/migration → live → serving); read-only diagnosis
+    - name: deploy-trigger
+      path: skills/deploy-trigger/SKILL.md
+      example_provider: "Railway"
+      cluster: integration-templates
+      purpose: Pre-flight checklist (typecheck/build/env/health) before triggering a deploy, so failures surface locally
+    - name: analytics-setup
+      path: skills/analytics-setup/SKILL.md
+      example_provider: "PostHog"
+      cluster: integration-templates
+      purpose: Wire client-side product analytics — install, init+UTM, identify, signout flush, custom events
+    - name: weekly-review
+      path: skills/weekly-review/SKILL.md
+      example_provider: "generic cadence"
+      cluster: cadence
+      purpose: Weekly review-and-reset ritual — time allocation, shipped vs. moved, goals grade, one-thing coaching, next-week goals
+    - name: worktree-cleanup
+      path: skills/worktree-cleanup/SKILL.md
+      example_provider: "git worktrees"
+      cluster: workspace-maintenance
+      purpose: Prune provably-merged git worktrees with ordered safety gates (fresh/empty/merged/unmerged/lock/WIP)
+    - name: ship-ready-check
+      path: skills/ship-ready-check/SKILL.md
+      example_provider: "GitHub + autonomous builder"
+      cluster: pipeline-gates
+      purpose: 4-gate readiness check (Value/Clarity/Grounding/Scenarios) before handing a work item to an autonomous builder
+
 # ─── The agent crew (per-agent V0.5 status) ───────────────────────────
 agents:
   foreman:

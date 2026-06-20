@@ -144,6 +144,19 @@ Beyond the scoping cluster and visual ladder, 31 single-purpose skills — each 
 - [`list-capabilities`](skills/list-capabilities/SKILL.md) — enumerate installed skills + commands
 - [`todo`](skills/todo/SKILL.md) — per-project task parking lot (TODO.md-backed)
 
+## Example skills (sample integrations)
+
+Provider/stack-specific skills that demonstrate a transferable pattern using one concrete provider as the worked example. Marked **optional** in [`manifest.yaml`](manifest.yaml) under `optional_skills` — a distinct tier from the command skills above, not loaded as defaults. Install on demand and swap the provider for your own stack.
+
+- [`notification-setup`](skills/notification-setup/SKILL.md) — verify a transactional email sending domain (DKIM/SPF/DMARC) for **AWS SES**. Pattern transfers — swap the provider (Resend, Postmark, SendGrid).
+- [`dns-setup`](skills/dns-setup/SKILL.md) — manage DNS records (list/add/delete) via **Cloudflare** scripts. Pattern transfers — swap the provider (Route 53, Porkbun).
+- [`deploy-status`](skills/deploy-status/SKILL.md) — walk the deploy chain for a commit on **Railway** (read-only). Pattern transfers — swap the platform (Render, Fly, Vercel).
+- [`deploy-trigger`](skills/deploy-trigger/SKILL.md) — pre-flight checklist + deploy on **Railway**. Pattern transfers — swap the platform.
+- [`analytics-setup`](skills/analytics-setup/SKILL.md) — wire client-side product analytics with **PostHog** (init → identify → signout → events). Pattern transfers — swap the SDK (Amplitude, Mixpanel).
+- [`weekly-review`](skills/weekly-review/SKILL.md) — weekly review-and-reset ritual (generic cadence). Adapt the data sources to your own logs.
+- [`worktree-cleanup`](skills/worktree-cleanup/SKILL.md) — prune provably-merged **git worktrees** with ordered safety gates. Pattern transfers — skip the agent-owned check if you don't run one.
+- [`ship-ready-check`](skills/ship-ready-check/SKILL.md) — 4-gate readiness check before an autonomous build, using **GitHub issues** as the example. Pattern transfers — swap the tracker + builder.
+
 ## Layout
 
 ```
