@@ -138,10 +138,22 @@ Beyond the scoping cluster and visual ladder, 40 single-purpose skills — each 
 - [`simplify`](skills/simplify/SKILL.md) — Tesla's 5-step Algorithm on something that feels finished (scope-cut family with `/elon`)
 - [`grill`](skills/grill/SKILL.md) — adversarial Socratic stress-test before commitment (third hardener with `/elon` + `/eng-review`)
 
-**Thinking Primitives** — forcing functions before you build. _Frame band (Rung 1); Kill and Bound bands land in later waves._
+**Thinking Primitives** — forcing functions before you build, organized in bands (rungs):
+
+```
+Frame: /why /goal /who
+Kill:  /grill /elon /vet
+Bound: (Rung 3, coming)
+```
+
+_Frame band (Rung 1) and Kill band (Rung 2) shipped; Bound band lands in a later wave. Kill-band skills are cross-listed from their original clusters._
+
 - [`why`](skills/why/SKILL.md) — frame the outcome / job one level above the stated task
 - [`goal`](skills/goal/SKILL.md) — pin the measurable target + falsifier (catches activity-as-outcome, no-measure, unfalsifiable wins)
 - [`who`](skills/who/SKILL.md) — name the specific user in a specific scenario (guards against generic-audience drift)
+- [`grill`](skills/grill/SKILL.md) — adversarial pre-commitment probe: strongest counter-argument, weakest assumption, worst case, hedges
+- [`elon`](skills/elon/SKILL.md) — ruthless cut (the Algorithm): Build / Rethink / Kill
+- [`vet`](skills/vet/SKILL.md) — mission-fit kill: Serves / Tangential / Off-mission
 
 **Agentic patterns** — building blocks for autonomous agents.
 - [`agent-question`](skills/agent-question/SKILL.md) — route an agent's decision to a human: experience-altitude framing, numbered options, real-time vs. batched routing, confidence gate, state tracking

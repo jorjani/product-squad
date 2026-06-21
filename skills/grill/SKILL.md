@@ -63,4 +63,24 @@ Walk these in order. Don't soften. The goal is to fail the idea on paper so it d
 5. **Attack the idea, respect the person.** Adversarial on the reasoning, never on the human holding it.
 6. **End with a verdict.** Grilling that doesn't resolve to proceed / hedge / reconsider is just anxiety.
 
+---
+
+## Optional: 3-stage deep mode
+
+The five-question interrogation above is the default — one pass, one output. When you have **raw material** to interrogate (a competitor page, a transcript, a spec, a strategy doc) and want a deeper, conversational dig, run the opt-in 3-stage protocol instead. Trigger it with `/grill --deep [material]` or when the user says "go deep" / "pressure-test this material." Each stage is a conversation: present, then **wait for the user to react before moving on**.
+
+Work only from the provided material — do not web search or fill gaps with general knowledge. If the material is thin, say so.
+
+**Stage 1 — Unspoken Truth.** "What does every successful player in this space understand that their customers never say out loud?" Surface 3–5 implicit truths, each one sentence — what's between the lines, not what's written. Then ask which land before moving on.
+
+**Stage 2 — Assumption Map.** "What are the 3 assumptions this is built on, and what would make each one wrong?" For each: the assumption (one sentence) · why it feels true · what breaks it (the specific condition or shift). Then ask which feels most fragile.
+
+**Stage 3 — Adversarial Stress Test.** "Write 5 questions a world-class [investor / senior engineer / skeptical reader / competitor] would ask to destroy this, then answer each using only the evidence in the material." Adapt the adversary to the context (business idea → investor; spec → senior engineer; content → skeptical reader; strategy → competitor). If the material has no answer, say "No evidence in the material" — do not fabricate.
+
+**Close** with a tight summary: sharpest insight · most fragile assumption · hardest unanswered question · recommended action (one sentence each).
+
+---
+
+**Sister skills:** `/elon` ([[elon]]) cuts scope; `/vet` ([[vet]]) kills for mission misfit; `/eng-review` hardens a technical plan. All three sit in the Kill band of the thinking-primitives cluster.
+
 $ARGUMENTS

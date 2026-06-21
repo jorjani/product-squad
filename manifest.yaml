@@ -2,7 +2,7 @@
 # Parse this first when introspecting the bundle programmatically.
 # Humans read README.md → QUICKSTART.md. Agents read AGENTS.md then this.
 
-version: 0.9.0
+version: 0.10.0
 name: product-squad
 description: Agentic operating system for one-person dev teams
 license: MIT
@@ -181,17 +181,27 @@ command_skills:
       purpose: Adversarial Socratic stress-test before commitment — strongest counter-argument, weakest assumption, worst case, hedges (third hardener with /elon + /eng-review)
   # thinking_primitives — forcing functions before you build. Organized in
   # rungs (bands), shipped one wave at a time:
-  #   Rung 1 — Frame (THIS wave): /why /goal /who — pin outcome, target, subject
-  #   Rung 2 — Kill  (future): retag existing /grill /elon /vet into the cluster
-  #   Rung 3 — Bound (future): /bet /tradeoff — frame the wager and the cost
-  # Members below are the Frame band only.
+  #   Rung 1 — Frame (wave 7): /why /goal /who — pin outcome, target, subject
+  #   Rung 2 — Kill  (THIS wave): retag existing /grill /elon /vet into the cluster
+  #   Rung 3 — Bound (wave 9): /bet /tradeoff — frame the wager and the cost
+  # Members below are Frame + Kill bands. Kill-band skills are dual-listed:
+  # they keep their original clusters and are cross-listed here (precedent set
+  # by /why in wave 7).
   thinking_primitives:
+    # ── Frame band (wave 7) — pin outcome, target, subject ──
     - path: skills/why/SKILL.md
       purpose: "Frame the outcome / job-to-be-done one level above the stated task (also listed in the v0_5 product_cluster ladder)"
     - path: skills/goal/SKILL.md
       purpose: "Pin the measurable target + explicit falsifier — catches activity-as-outcome, no-measure, and unfalsifiable wins"
     - path: skills/who/SKILL.md
       purpose: "Name the specific user in a specific scenario — anti-pattern guard against generic-audience drift"
+    # ── Kill band (wave 8) — cut what shouldn't survive (dual-listed) ──
+    - path: skills/grill/SKILL.md
+      purpose: "Adversarial pre-commitment probe — attack the strongest counter-argument, surface the weakest assumption, name the worst case, propose hedges (also in product cluster; optional 3-stage deep mode folds in /pressure-test)"
+    - path: skills/elon/SKILL.md
+      purpose: "Ruthless cut — Tesla's Algorithm (question, delete, simplify, accelerate, automate) returning Build / Rethink / Kill (also in product scope-cut cluster)"
+    - path: skills/vet/SKILL.md
+      purpose: "Mission-fit kill — judge a feature against the mission and return Serves / Tangential / Off-mission (also in product cluster; kills for strategic misfit where /elon kills for internal bloat)"
   agentic_patterns:
     - path: skills/agent-question/SKILL.md
       purpose: Route an autonomous agent's decision to a human — experience-altitude framing, numbered options, real-time vs. batched routing, confidence gate, state-file tracking (emitter → register → post → parse → action → resolve)

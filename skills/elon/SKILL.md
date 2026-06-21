@@ -83,4 +83,8 @@ Steps 1-2 are interactive (STOP and ask). After alignment, output Steps 3-5 and 
 - No implementation details until after verdict — explain WHAT, not HOW
 - Agent Prompt section is the handoff — detailed enough that an agent can execute without asking questions
 
+---
+
+**Sister skills:** `/grill` ([[grill]]) interrogates the reasoning before commitment; `/vet` ([[vet]]) kills for mission misfit. `/elon` kills for internal bloat. All three are the Kill band of the thinking-primitives cluster.
+
 $ARGUMENTS
