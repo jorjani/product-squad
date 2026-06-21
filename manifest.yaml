@@ -2,7 +2,7 @@
 # Parse this first when introspecting the bundle programmatically.
 # Humans read README.md → QUICKSTART.md. Agents read AGENTS.md then this.
 
-version: 0.8.0
+version: 0.9.0
 name: product-squad
 description: Agentic operating system for one-person dev teams
 license: MIT
@@ -111,8 +111,8 @@ v0_5:
     - agents/code-reviewer.md
     - agents/build-fixer.md
 
-# ─── Command skills (waves 1-5) ──────────────────────────────────────
-# 37 single-file skills, each skills/<name>/SKILL.md. Auto-discovered by
+# ─── Command skills (waves 1-6) ──────────────────────────────────────
+# 40 single-file skills, each skills/<name>/SKILL.md. Auto-discovered by
 # Claude Code from skills/; grouped here by cluster for human/agent scan.
 command_skills:
   ui:
@@ -152,6 +152,8 @@ command_skills:
       purpose: Terminal "prove it ran" gate — no completion words without real output
     - path: skills/ship/SKILL.md
       purpose: Unified ship workflow — sync base, test, review, commit, push, open PR in one pass
+    - path: skills/release/SKILL.md
+      purpose: Cut a versioned release — detect last tag, bump semver from commit conventions, group release notes, then tag/push/draft a GitHub Release behind a mandatory dry-run preview (batch primitive to /ship's per-PR primitive)
     - path: skills/pr-review/SKILL.md
       purpose: Open-PR review queue — dashboard + two-pass subagent review (hygiene + structural), present-only
     - path: skills/refactor/SKILL.md
@@ -167,6 +169,10 @@ command_skills:
     - path: skills/domain-check/SKILL.md
       purpose: Domain availability across TLD tiers — whois for .com/.co/.io, DNS dig for .app/.so
   product:
+    - path: skills/pitch-draft/SKILL.md
+      purpose: Raw idea → Shape Up pitch (problem · appetite · solution sketch · rabbit holes · no-gos) — front-of-funnel go/no-go brief; feeds /shape and /spec
+    - path: skills/scope-item/SKILL.md
+      purpose: Accepted pitch → AC-ready backlog item (observable acceptance criteria · decision points · files likely touched · success test) using the spec-boundary test; pairs with /pitch-draft upstream and /decompose downstream
     - path: skills/mochary/SKILL.md
       purpose: Big-picture priority coach (Mochary frame) — name the gap, pick the one thing, get a commitment
     - path: skills/simplify/SKILL.md

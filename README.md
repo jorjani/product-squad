@@ -95,7 +95,7 @@ V1 (3-4 weeks): full runtime for all five, agent abstraction (Claude default + C
 
 ## Command skills
 
-Beyond the scoping cluster and visual ladder, 37 single-purpose skills — each `skills/<name>/SKILL.md`, auto-discovered by Claude Code. Grouped by what they touch:
+Beyond the scoping cluster and visual ladder, 40 single-purpose skills — each `skills/<name>/SKILL.md`, auto-discovered by Claude Code. Grouped by what they touch:
 
 **UI & design audits** — judge or fix a built surface.
 - [`a11y`](skills/a11y/SKILL.md) — WCAG AA color-contrast audit (Python math, flag + fix)
@@ -120,6 +120,7 @@ Beyond the scoping cluster and visual ladder, 37 single-purpose skills — each 
 - [`refactor`](skills/refactor/SKILL.md) — behavior-preserving restructure (smell → pattern → blast radius → safe steps)
 - [`verify`](skills/verify/SKILL.md) — terminal "prove it ran" gate
 - [`ship`](skills/ship/SKILL.md) — sync base → test → review → commit → push → PR, one pass
+- [`release`](skills/release/SKILL.md) — cut a versioned release: last tag → semver bump from commit conventions → grouped notes → tag/push/GitHub Release, behind a dry-run preview (batch primitive to `/ship`'s per-PR one)
 - [`pr-review`](skills/pr-review/SKILL.md) — open-PR dashboard + two-pass subagent review (present-only)
 
 **Spec contracts** — turn a spec into a build-and-test-ready interface.
@@ -130,7 +131,9 @@ Beyond the scoping cluster and visual ladder, 37 single-purpose skills — each 
 - [`namer`](skills/namer/SKILL.md) — startup naming agent (Placek sound-symbolism + Igor 9-category rubric)
 - [`domain-check`](skills/domain-check/SKILL.md) — domain availability across TLD tiers (whois + DNS dig)
 
-**Product** — zoom out, cut scope, stress-test the call.
+**Product** — shape the idea, scope it, cut it, stress-test the call.
+- [`pitch-draft`](skills/pitch-draft/SKILL.md) — raw idea → Shape Up pitch (problem · appetite · solution sketch · rabbit holes · no-gos); feeds `/shape` + `/spec`
+- [`scope-item`](skills/scope-item/SKILL.md) — accepted pitch → AC-ready backlog item (observable ACs · decision points · files likely touched · success test); pairs with `/pitch-draft` upstream, `/decompose` downstream
 - [`mochary`](skills/mochary/SKILL.md) — big-picture priority coach (Mochary frame): the one thing that matters
 - [`simplify`](skills/simplify/SKILL.md) — Tesla's 5-step Algorithm on something that feels finished (scope-cut family with `/elon`)
 - [`grill`](skills/grill/SKILL.md) — adversarial Socratic stress-test before commitment (third hardener with `/elon` + `/eng-review`)
