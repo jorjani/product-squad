@@ -35,3 +35,10 @@ Then ask: "Is this the right why?"
 - Don't list steps, don't plan, don't scope. Just the job and the why.
 - If the why reveals a simpler path to the same outcome, say so. ("If the goal is catching production errors, have you considered just adding a health check endpoint first?")
 - If the user's request is already clearly outcome-oriented, say so and move on. Don't force this when it's obvious.
+
+## Sister skills
+
+Part of the **Thinking Primitives** cluster, Frame band — forcing functions before you build.
+
+- [[goal]] — pins the measurable target after `/why` finds the root. `/why` surfaces motivation up a level; `/goal` fixes the destination.
+- [[who]] — names the *specific* subject the outcome is for, instead of "users".

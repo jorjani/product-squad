@@ -179,6 +179,19 @@ command_skills:
       purpose: Tesla's 5-step Algorithm on something that feels finished — question, delete, simplify, accelerate, automate (scope-cut family with /elon)
     - path: skills/grill/SKILL.md
       purpose: Adversarial Socratic stress-test before commitment — strongest counter-argument, weakest assumption, worst case, hedges (third hardener with /elon + /eng-review)
+  # thinking_primitives — forcing functions before you build. Organized in
+  # rungs (bands), shipped one wave at a time:
+  #   Rung 1 — Frame (THIS wave): /why /goal /who — pin outcome, target, subject
+  #   Rung 2 — Kill  (future): retag existing /grill /elon /vet into the cluster
+  #   Rung 3 — Bound (future): /bet /tradeoff — frame the wager and the cost
+  # Members below are the Frame band only.
+  thinking_primitives:
+    - path: skills/why/SKILL.md
+      purpose: "Frame the outcome / job-to-be-done one level above the stated task (also listed in the v0_5 product_cluster ladder)"
+    - path: skills/goal/SKILL.md
+      purpose: "Pin the measurable target + explicit falsifier — catches activity-as-outcome, no-measure, and unfalsifiable wins"
+    - path: skills/who/SKILL.md
+      purpose: "Name the specific user in a specific scenario — anti-pattern guard against generic-audience drift"
   agentic_patterns:
     - path: skills/agent-question/SKILL.md
       purpose: Route an autonomous agent's decision to a human — experience-altitude framing, numbered options, real-time vs. batched routing, confidence gate, state-file tracking (emitter → register → post → parse → action → resolve)
