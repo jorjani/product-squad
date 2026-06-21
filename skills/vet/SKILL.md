@@ -68,4 +68,8 @@ Deliver the verdict in the format below. Don't soften it — a gate that hedges 
 - **On a kill, point somewhere.** Never just "no." Name the mission-work worth doing instead.
 - **Cheap and early.** This is a verdict, not a document. Run it before scoping, when killing costs nothing. Keep it short.
 
+---
+
+**Sister skills:** `/elon` ([[elon]]) kills for internal bloat; `/grill` ([[grill]]) interrogates the reasoning before commitment. `/vet` kills for strategic misfit against the mission. All three are the Kill band of the thinking-primitives cluster.
+
 $ARGUMENTS
