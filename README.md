@@ -95,7 +95,7 @@ V1 (3-4 weeks): full runtime for all five, agent abstraction (Claude default + C
 
 ## Command skills
 
-Beyond the scoping cluster and visual ladder, 31 single-purpose skills — each `skills/<name>/SKILL.md`, auto-discovered by Claude Code. Grouped by what they touch:
+Beyond the scoping cluster and visual ladder, 37 single-purpose skills — each `skills/<name>/SKILL.md`, auto-discovered by Claude Code. Grouped by what they touch:
 
 **UI & design audits** — judge or fix a built surface.
 - [`a11y`](skills/a11y/SKILL.md) — WCAG AA color-contrast audit (Python math, flag + fix)
@@ -112,10 +112,12 @@ Beyond the scoping cluster and visual ladder, 31 single-purpose skills — each 
 
 **Eng tighteners** — scope, verify, and build with discipline.
 - [`pm`](skills/pm/SKILL.md) — PM scoping interview — find the underlying job
+- [`architecture`](skills/architecture/SKILL.md) — system design before tickets (pattern, boundaries, deps, alternatives) — sits between `/spec` and `/decompose`
 - [`build`](skills/build/SKILL.md) — autonomous feature-pipeline orchestrator
 - [`eng-deep-dive`](skills/eng-deep-dive/SKILL.md) — pre-implementation reality check vs. code
 - [`eng-review`](skills/eng-review/SKILL.md) — adversarial architecture review of a plan
 - [`investigate`](skills/investigate/SKILL.md) — systematic root-cause debugging
+- [`refactor`](skills/refactor/SKILL.md) — behavior-preserving restructure (smell → pattern → blast radius → safe steps)
 - [`verify`](skills/verify/SKILL.md) — terminal "prove it ran" gate
 - [`ship`](skills/ship/SKILL.md) — sync base → test → review → commit → push → PR, one pass
 - [`pr-review`](skills/pr-review/SKILL.md) — open-PR dashboard + two-pass subagent review (present-only)
@@ -128,13 +130,19 @@ Beyond the scoping cluster and visual ladder, 31 single-purpose skills — each 
 - [`namer`](skills/namer/SKILL.md) — startup naming agent (Placek sound-symbolism + Igor 9-category rubric)
 - [`domain-check`](skills/domain-check/SKILL.md) — domain availability across TLD tiers (whois + DNS dig)
 
-**Product** — zoom out from the task list.
+**Product** — zoom out, cut scope, stress-test the call.
 - [`mochary`](skills/mochary/SKILL.md) — big-picture priority coach (Mochary frame): the one thing that matters
+- [`simplify`](skills/simplify/SKILL.md) — Tesla's 5-step Algorithm on something that feels finished (scope-cut family with `/elon`)
+- [`grill`](skills/grill/SKILL.md) — adversarial Socratic stress-test before commitment (third hardener with `/elon` + `/eng-review`)
+
+**Agentic patterns** — building blocks for autonomous agents.
+- [`agent-question`](skills/agent-question/SKILL.md) — route an agent's decision to a human: experience-altitude framing, numbered options, real-time vs. batched routing, confidence gate, state tracking
 
 **Safety** — guardrails against destructive commands.
 - [`guard`](skills/guard/SKILL.md) — session safety mode: destructive-command denylist confirmation + an Edit/Write boundary
 
 **Session hygiene** — start, orient, and close out a working session.
+- [`getting-started`](skills/getting-started/SKILL.md) — first-run plugin orientation: what's installed, starter commands, a 5-minute build path
 - [`pickup`](skills/pickup/SKILL.md) — resume from prior-session notes
 - [`checkpoint`](skills/checkpoint/SKILL.md) — mid-session status snapshot
 - [`retro`](skills/retro/SKILL.md) — post-session process retrospective

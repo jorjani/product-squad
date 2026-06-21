@@ -111,8 +111,8 @@ v0_5:
     - agents/code-reviewer.md
     - agents/build-fixer.md
 
-# ─── Command skills (waves 1-3 — migrated from standalone commands) ───
-# 31 single-file skills, each skills/<name>/SKILL.md. Auto-discovered by
+# ─── Command skills (waves 1-5) ──────────────────────────────────────
+# 37 single-file skills, each skills/<name>/SKILL.md. Auto-discovered by
 # Claude Code from skills/; grouped here by cluster for human/agent scan.
 command_skills:
   ui:
@@ -136,6 +136,8 @@ command_skills:
     - path: skills/usage-audit/SKILL.md
       purpose: Live token-burn diagnosis — hottest sessions, tool mix, fan-out
   eng_tighteners:
+    - path: skills/architecture/SKILL.md
+      purpose: System design before tickets — pick a pattern, define boundaries, name external deps, surface alternatives with tradeoffs (between /spec and /decompose)
     - path: skills/build/SKILL.md
       purpose: Autonomous feature-pipeline orchestrator — classify input, route the workflow
     - path: skills/eng-deep-dive/SKILL.md
@@ -152,6 +154,8 @@ command_skills:
       purpose: Unified ship workflow — sync base, test, review, commit, push, open PR in one pass
     - path: skills/pr-review/SKILL.md
       purpose: Open-PR review queue — dashboard + two-pass subagent review (hygiene + structural), present-only
+    - path: skills/refactor/SKILL.md
+      purpose: Behavior-preserving restructure playbook — smell → named pattern → blast radius → small safe steps (Fowler-referenced)
   spec_contracts:
     - path: skills/flow/SKILL.md
       purpose: UI state-transition contract — per-state ASCII + edge table, each row one verifiable assertion
@@ -165,12 +169,21 @@ command_skills:
   product:
     - path: skills/mochary/SKILL.md
       purpose: Big-picture priority coach (Mochary frame) — name the gap, pick the one thing, get a commitment
+    - path: skills/simplify/SKILL.md
+      purpose: Tesla's 5-step Algorithm on something that feels finished — question, delete, simplify, accelerate, automate (scope-cut family with /elon)
+    - path: skills/grill/SKILL.md
+      purpose: Adversarial Socratic stress-test before commitment — strongest counter-argument, weakest assumption, worst case, hedges (third hardener with /elon + /eng-review)
+  agentic_patterns:
+    - path: skills/agent-question/SKILL.md
+      purpose: Route an autonomous agent's decision to a human — experience-altitude framing, numbered options, real-time vs. batched routing, confidence gate, state-file tracking (emitter → register → post → parse → action → resolve)
   safety:
     - path: skills/guard/SKILL.md
       purpose: Session safety mode — destructive-command denylist confirmation + an Edit/Write boundary directory
   session_hygiene:
     - path: skills/checkpoint/SKILL.md
       purpose: Mid-session status snapshot — done, dirty, context, next actions
+    - path: skills/getting-started/SKILL.md
+      purpose: First-run plugin orientation — detect what's installed, curate 3-5 starters by cluster, show one 5-minute build path (meta; works for any plugin)
     - path: skills/debrief/SKILL.md
       purpose: Meeting/notes → decisions, actions (yours vs. theirs), insights, routing
     - path: skills/list-capabilities/SKILL.md
