@@ -1,6 +1,6 @@
 ---
 name: release
-description: Cut a versioned release — detect the last tag, bump semver from commit conventions, generate grouped release notes, then tag, push, and draft a GitHub Release. Conservative: shows a full dry-run preview and waits for confirmation before any tag, push, or release. Use to cut a release from merged work. Pairs with /ship (per-PR) and /changelog.
+description: "Cut a versioned release — detect the last tag, bump semver from commit conventions, generate grouped release notes, then tag, push, and draft a GitHub Release. Conservative: shows a full dry-run preview and waits for confirmation before any tag, push, or release. Use to cut a release from merged work. Pairs with /ship (per-PR) and /changelog."
 ---
 
 # /release — Cut a Release

@@ -1,6 +1,6 @@
 ---
 name: api
-description: Backend API contract producer — turn a spec or feature description into a Markdown contract: endpoint list, per-endpoint auth model, request shape, success response, error-code table, and idempotency rules. Grounds each endpoint against existing routes in the repo so the contract matches conventions in place. Use when the backend interface is the unknown to lock before building. Pairs with /flow (UI state contract for full-stack tickets); run after /eng-deep-dive has mapped the codebase.
+description: "Backend API contract producer — turn a spec or feature description into a Markdown contract: endpoint list, per-endpoint auth model, request shape, success response, error-code table, and idempotency rules. Grounds each endpoint against existing routes in the repo so the contract matches conventions in place. Use when the backend interface is the unknown to lock before building. Pairs with /flow (UI state contract for full-stack tickets); run after /eng-deep-dive has mapped the codebase."
 ---
 
 # /api — Backend API Contract

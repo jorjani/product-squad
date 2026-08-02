@@ -1,6 +1,6 @@
 ---
 name: pm
-description: PM scoping interview — interrogate an idea until the underlying JOB is clear, staying at the level of human behavior and outcomes with zero technical detail. Use as the front door to the product cluster when an idea is still fuzzy. Outputs a job definition, then hands to /why, /shape, and /spec. Distinct from those: pm interviews to find the job; they detail and build it.
+description: "PM scoping interview — interrogate an idea until the underlying JOB is clear, staying at the level of human behavior and outcomes with zero technical detail. Use as the front door to the product cluster when an idea is still fuzzy. Outputs a job definition, then hands to /why, /shape, and /spec. Distinct from those: pm interviews to find the job; they detail and build it."
 ---
 
 # /pm — PM Scoping Interview

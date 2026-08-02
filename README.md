@@ -2,13 +2,13 @@
 
 An opinionated agentic operating system for one-person dev teams.
 
-> 🚧 **V0.6-dev — first playable cut, mid-polish.** Private during validation; will go public before the marketplace submission lands.
+> **v0.10.0 — 66 skills.** See [RELEASE-NOTES.md](RELEASE-NOTES.md) for what shipped.
 
 ## Install
 
-Two paths. Use the first once the repo is public + marketplace submission ships; clone-and-run is the path that works today.
+Two paths.
 
-**Claude Code marketplace** *(requires public repo + marketplace submission — track [#11](https://github.com/jorjani/product-squad/issues/11))*
+**Claude Code marketplace**
 
 ```bash
 /plugin marketplace add jorjani/product-squad
@@ -26,6 +26,18 @@ cd product-squad
 ```
 
 When CWD is the bundle directory, Claude Code auto-discovers `/visualize`, `/scope`, `/onboard` from `.claude/skills/` — no install step.
+
+## Use with your agent (no install)
+
+Point any coding agent at this repo and let it pick skills that match your current work:
+
+```
+Read https://github.com/jorjani/product-squad/blob/main/llms.txt and pick the
+3 skills most relevant to what I'm working on right now. Fetch each skill's
+SKILL.md and apply it.
+```
+
+[`llms.txt`](llms.txt) is a one-line-per-skill catalog generated from each skill's frontmatter. Every skill is a standalone markdown file — no runtime, no dependencies — so any agent that can read a URL can use them. [`AGENTS.md`](AGENTS.md) is the operator brief if the agent needs the mental model behind the bundle.
 
 ## The 30-second demos
 
