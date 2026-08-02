@@ -45,7 +45,7 @@ You are conducting a 5-question onboarding interview with the operator of a prod
 
 Ask these 5 questions one at a time. Use AskUserQuestion for each — never batch. For each question, propose a sensible default based on what you've already learned, and let the operator confirm or override. Lead with your recommendation.
 
-1. **Product name.** "What is your product called?" — short, 1-3 words (e.g., "Sage", "Trackrec", "Acme Tasks").
+1. **Product name.** "What is your product called?" — short, 1-3 words (e.g., "Sage", "Relay", "Acme Tasks").
 
 2. **Audience.** "Who exactly uses this product? What are they doing when they encounter it?" — specific role + context (e.g., "founders writing newsletters in Claude Code", "candidates browsing AI sales roles", "operators reviewing pending support tickets"). The audience description should be at least 8 words. If the operator gives a vague answer, push back: "Be more specific — who exactly, doing what, where?"
 

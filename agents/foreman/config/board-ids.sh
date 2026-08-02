@@ -1,34 +1,35 @@
 #!/bin/bash
-# GitHub Project Board #5 constants
+# GitHub Project Board constants — PLACEHOLDERS.
+# Run scripts/sync-board-ids.sh against your own org/project to populate real IDs.
 # Source this file: source "$SCRIPT_DIR/config/board-ids.sh"
-PROJECT_ID="PVT_kwDOCiUg2c4BSUWU"
-PROJECT_NUMBER=5
-PROJECT_ORG="getqatalyst"
-STATUS_FIELD_ID="PVTSSF_lADOCiUg2c4BSUWUzg_42AQ"
-PARKING_OPTION_ID="aa4c26d1"
-PITCH_OPTION_ID="54ac2788"
-SCOPE_OPTION_ID="b027b8e4"
-BACKLOG_OPTION_ID="0b0e4c80"
-READY_OPTION_ID="d9f95354"
-IN_PROGRESS_OPTION_ID="68514cd5"
-IN_REVIEW_OPTION_ID="4f455fc6"
-DONE_OPTION_ID="3d1479b1"
-VERIFY_OPTION_ID="e8c4dc17"
-BLOCKED_OPTION_ID="99270911"
+PROJECT_ID="PVT_YOUR_PROJECT_NODE_ID"
+PROJECT_NUMBER=1
+PROJECT_ORG="your-github-org"
+STATUS_FIELD_ID="PVTSSF_YOUR_FIELD_ID"
+PARKING_OPTION_ID="00000000"
+PITCH_OPTION_ID="00000000"
+SCOPE_OPTION_ID="00000000"
+BACKLOG_OPTION_ID="00000000"
+READY_OPTION_ID="00000000"
+IN_PROGRESS_OPTION_ID="00000000"
+IN_REVIEW_OPTION_ID="00000000"
+DONE_OPTION_ID="00000000"
+VERIFY_OPTION_ID="00000000"
+BLOCKED_OPTION_ID="00000000"
 
 # Priority field (single select)
-PRIORITY_FIELD_ID="PVTSSF_lADOCiUg2c4BSUWUzg_42K0"
+PRIORITY_FIELD_ID="PVTSSF_YOUR_FIELD_ID"
 P0_OPTION_ID="79628723"
 P1_OPTION_ID="0a877460"
 P2_OPTION_ID="da944a9c"
 
 # Size field (single select)
-SIZE_FIELD_ID="PVTSSF_lADOCiUg2c4BSUWUzg_42K4"
-SIZE_XS_OPTION_ID="6c6483d2"
-SIZE_S_OPTION_ID="f784b110"
-SIZE_M_OPTION_ID="7515a9f1"
-SIZE_L_OPTION_ID="817d0097"
-SIZE_XL_OPTION_ID="db339eb2"
+SIZE_FIELD_ID="PVTSSF_YOUR_FIELD_ID"
+SIZE_XS_OPTION_ID="00000000"
+SIZE_S_OPTION_ID="00000000"
+SIZE_M_OPTION_ID="00000000"
+SIZE_L_OPTION_ID="00000000"
+SIZE_XL_OPTION_ID="00000000"
 
 # Fetch all board items with status via GraphQL API.
 # gh project item-list does NOT return the Status field — this function does.
@@ -117,7 +118,7 @@ print(json.dumps({'items': items}))
 # Covers Status, Priority, and Size single-select fields.
 validate_board_ids() {
   local live_ids
-  live_ids=$(gh project field-list 5 --owner getqatalyst --format json 2>/dev/null | python3 -c "
+  live_ids=$(gh project field-list "$PROJECT_NUMBER" --owner "$PROJECT_ORG" --format json 2>/dev/null | python3 -c "
 import json, sys
 data = json.load(sys.stdin)
 for field in data.get('fields', []):
