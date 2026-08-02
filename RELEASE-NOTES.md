@@ -2,6 +2,26 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](https://semver.org/)
 
+## [0.10.0] — 2026-08-02
+
+The **skills expansion release**: 8 merged waves (PRs #25–#33, 2026-06-19 → 2026-06-21) grow the bundle from 21 to 66 skills. `manifest.yaml` + `.claude-plugin/plugin.json` declare `version: 0.10.0`.
+
+> Covers everything merged since v0.8.0. The version string was bumped to 0.10.0 during the waves without a tag or changelog entry; this release consolidates that span — no separate v0.9.0 was ever cut.
+
+### Added
+- **21-skill migration wave** (#25) — UI + audit + eng tighteners + session hygiene commands ported into `skills/<name>/SKILL.md` format.
+- **Wave 2** (#26) — `/mochary`, `/namer`, `/domain-check`, `/ship`, `/todo`, `/pr-review`, `/flow`, `/api`.
+- **Wave 3** (#28) — `/guard`, `/sync-repos`.
+- **Wave 4** (#29) — 8 optional integration-template skills (provider-specific patterns to swap for your own stack).
+- **Wave 5** (#30) — `/architecture`, `/refactor`, `/simplify`, `/getting-started`, `/agent-question`, `/grill`.
+- **Wave 6** (#31) — `/pitch-draft`, `/scope-item`, `/release` (+ `/gh-issue` refresh).
+- **Wave 7** (#32) — thinking primitives rung 1, frame band: `/goal`, `/who`.
+- **Wave 8** (#33) — thinking primitives rung 2, kill band: `/grill`, `/elon`, `/vet` retagged.
+
+### Changed
+- **`/wireframe` plugin frontmatter** synced to the exhaustive state model (#27).
+- **`.claude-plugin/marketplace.json`** plugin entry version synced `0.6.0-dev` → `0.10.0` (was silently overridden by `plugin.json` at install time).
+
 ## [0.8.0] — 2026-06-04
 
 Adds the **product-vision altitude + scope↔visual bridge** (#24): 6 new skills (`/mission`, `/vet`, `/spec`, `/decompose`, `/gh-issue`, `/handoff`) + the 7-stage `./scope` cluster. `manifest.yaml` + `.claude-plugin/plugin.json` declare `version: 0.8.0`.

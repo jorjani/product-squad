@@ -9,7 +9,7 @@
     {
       "name": "product-squad",
       "description": "Agentic dev OS for one-person teams: visual fidelity ladder + product/scoping cluster + 4 brand-archetype flavors + 37 command skills (UI audits, harness/context audits, eng tighteners, spec contracts, brand & naming, product, agentic patterns, safety, session hygiene) + 8 optional example/integration-template skills (provider-specific patterns you swap for your own stack).",
-      "version": "0.6.0-dev",
+      "version": "0.10.0",
       "source": "./",
       "author": {
         "name": "David Jorjani",
