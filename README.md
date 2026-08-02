@@ -200,6 +200,10 @@ docs/            # MIGRATION.md (source SHAs + scrub log) + roadmap
 
 See [`manifest.yaml`](manifest.yaml) → `v1_roadmap` for what lands in V1.
 
+## Author
+
+Built by [David Jorjani](https://www.linkedin.com/in/jorjani/) — Lead, Product and Tech at Harvard Business School Foundry; teaches software engineering and applied computing in the Department of Computer Science at the University of Toronto. Prior experience leading product and tech teams at 7 startups.
+
 ## License
 
 [MIT](LICENSE)
