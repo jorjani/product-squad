@@ -21,15 +21,15 @@ unset ANTHROPIC_API_KEY
 
 Two paths. Pick one.
 
-**A. Plugin install** (requires repo to be public + the marketplace submission to ship — track [#11](https://github.com/jorjani/product-squad/issues/11))
+**A. Plugin install** (works today — the public repo is its own marketplace)
 
 ```bash
 # Inside Claude Code:
 /plugin marketplace add jorjani/product-squad
-/plugin install product-squad@product-squad
+/plugin install product-squad@product-squad-marketplace
 ```
 
-Surfaces `/product-squad:visualize`, `/product-squad:scope`, `/product-squad:onboard` in Claude Code's slash-command list. No clone needed.
+Surfaces the bundle's skills as `/product-squad:<name>` in Claude Code's slash-command list — start with `/product-squad:getting-started`. No clone needed.
 
 **B. Clone and run** (the cold-start path; what the rest of this doc assumes — works today)
 
@@ -38,7 +38,7 @@ git clone https://github.com/jorjani/product-squad.git
 cd product-squad
 ```
 
-When CWD is the bundle, Claude Code auto-discovers `/visualize`, `/scope`, `/onboard` from `.claude/skills/` — same commands as the plugin install, without the `product-squad:` namespace prefix.
+When CWD is the bundle, Claude Code auto-discovers `/visualize`, `/scope`, `/onboard` from `.claude/skills/`. These three are clone-only; the plugin install does not include them.
 
 ## Demo 1 — Visual fidelity ladder (PRIMARY)
 

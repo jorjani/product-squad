@@ -12,10 +12,10 @@ Two paths.
 
 ```bash
 /plugin marketplace add jorjani/product-squad
-/plugin install product-squad@product-squad
+/plugin install product-squad@product-squad-marketplace
 ```
 
-Surfaces `/product-squad:visualize`, `/product-squad:scope`, `/product-squad:onboard` in Claude Code without you cloning anything.
+Surfaces the bundle's skills as `/product-squad:<name>` (e.g. `/product-squad:getting-started`) in Claude Code without you cloning anything.
 
 **Clone and run**
 
