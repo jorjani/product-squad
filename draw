@@ -48,7 +48,10 @@ REPO_ROOT="$SCRIPT_DIR"
 # Load project context from design-system/project.json if it exists (written by
 # ./onboard). Provides per-operator defaults for FLAVOR and BRAND. CLI env
 # vars take precedence; project.json takes precedence over hardcoded defaults.
-PROJECT_FILE="$REPO_ROOT/design-system/project.json"
+# Checks the current directory first (plugin installs, where REPO_ROOT is the
+# plugin cache), then the bundle root (clone-and-run).
+PROJECT_FILE="$PWD/design-system/project.json"
+[ -f "$PROJECT_FILE" ] || PROJECT_FILE="$REPO_ROOT/design-system/project.json"
 PROJECT_FLAVOR=""
 PROJECT_BRAND=""
 if [ -f "$PROJECT_FILE" ] && command -v python3 >/dev/null 2>&1; then

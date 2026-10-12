@@ -1,6 +1,6 @@
 # Product Squad
 
-> Agentic dev OS for one-person teams: a product/scoping cluster, a visual fidelity ladder (sketch → wireframe → mockup → prototype), 4 brand-archetype flavors, and 66 skills in Claude Code plugin format. MIT licensed.
+> Agentic dev OS for one-person teams: a product/scoping cluster, a visual fidelity ladder (sketch → wireframe → mockup → prototype), 4 brand-archetype flavors, and 69 skills in Claude Code plugin format. MIT licensed.
 
 Feed this file to an agent to let it pick skills matching the current work. Each skill is a standalone markdown file with `name:` + `description:` frontmatter — the description states when to use it.
 
@@ -9,7 +9,7 @@ Feed this file to an agent to let it pick skills matching the current work. Each
 - [AGENTS.md](AGENTS.md): operator brief — the mental model for driving this bundle
 - [QUICKSTART.md](QUICKSTART.md): 15–30 min guided first run
 - [manifest.yaml](manifest.yaml): full catalog + roadmap
-- Entry scripts: `./draw "idea"` (visual ladder), `./scope "idea"` (7-stage scoping), `./onboard` (project intake)
+- Entry scripts: `./draw "idea"` (visual ladder), `./scope "idea"` (7-stage scoping), `./onboard` (project intake) — as plugin skills: [visualize](skills/visualize/SKILL.md), [scope](skills/scope/SKILL.md), [onboard](skills/onboard/SKILL.md)
 
 ## Command skills (58)
 

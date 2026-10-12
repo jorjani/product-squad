@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "product-squad",
-      "description": "Agentic dev OS for one-person teams: visual fidelity ladder + product/scoping cluster + 4 brand-archetype flavors + 58 command skills (UI audits, harness/context audits, eng tighteners, spec contracts, brand & naming, product, thinking primitives, agentic patterns, safety, session hygiene) + 8 optional example/integration-template skills (provider-specific patterns you swap for your own stack).",
+      "description": "Agentic dev OS for one-person teams: visual fidelity ladder + product/scoping cluster + 4 brand-archetype flavors + 3 entry-point skills (visualize, scope, onboard) + 58 command skills (UI audits, harness/context audits, eng tighteners, spec contracts, brand & naming, product, thinking primitives, agentic patterns, safety, session hygiene) + 8 optional example/integration-template skills (provider-specific patterns you swap for your own stack).",
       "version": "0.10.0",
       "source": "./",
       "author": {

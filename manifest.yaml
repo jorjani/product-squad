@@ -18,6 +18,7 @@ v0_5:
   demos:
     visual:
       entry: draw
+      skill: skills/visualize/SKILL.md   # plugin-install entry; clone uses .claude/skills/visualize
       fixture: examples/idea-fixture.md
       output: /tmp/product-squad-demo-<ts>/
       time: ~60-120 sec
@@ -25,6 +26,7 @@ v0_5:
       requires: [claude-code-subscription]
     scope:
       entry: scope
+      skill: skills/scope/SKILL.md       # plugin-install entry; clone uses .claude/skills/scope
       fixture: examples/idea-fixture.md
       output: /tmp/product-squad-scope-<ts>/
       time: ~15-30 min (paste-and-think)
@@ -32,6 +34,7 @@ v0_5:
       requires: [claude-code-subscription]
     onboard:
       entry: onboard
+      skill: skills/onboard/SKILL.md     # plugin-install entry; clone uses .claude/skills/onboard
       output: /tmp/product-squad-intake-<ts>/
       writes: design-system/project.json
       optional: true   # bundle works without it; fixture defaults apply
