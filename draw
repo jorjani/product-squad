@@ -55,8 +55,8 @@ PROJECT_FILE="$PWD/design-system/project.json"
 PROJECT_FLAVOR=""
 PROJECT_BRAND=""
 if [ -f "$PROJECT_FILE" ] && command -v python3 >/dev/null 2>&1; then
-  PROJECT_FLAVOR=$(python3 -c "import json; print(json.load(open('$PROJECT_FILE')).get('default_flavor',''))" 2>/dev/null || echo "")
-  PROJECT_BRAND=$(python3 -c "import json; print(json.load(open('$PROJECT_FILE')).get('brand',''))" 2>/dev/null || echo "")
+  PROJECT_FLAVOR=$(python3 -c "import json,sys; print(json.load(open(sys.argv[1])).get('default_flavor',''))" "$PROJECT_FILE" 2>/dev/null || echo "")
+  PROJECT_BRAND=$(python3 -c "import json,sys; print(json.load(open(sys.argv[1])).get('brand',''))" "$PROJECT_FILE" 2>/dev/null || echo "")
 fi
 
 # Resolve FLAVOR. Precedence: env var > project.json > hardcoded `linear`.
@@ -181,7 +181,9 @@ EOF
   # message, which sometimes fires AFTER the file has already been written.
   local claude_log="$OUT_DIR/.${tier}-claude.log"
   local claude_ok=1
-  if ! claude --permission-mode acceptEdits --add-dir "$OUT_DIR" -p < "$prompt_file" 2>&1 | tee "$claude_log" | sed 's/^/    /'; then
+  # REPO_ROOT is added so the model can read the flavor + components files
+  # when CWD is not the bundle (plugin installs run from the user's project).
+  if ! claude --permission-mode acceptEdits --add-dir "$OUT_DIR" "$REPO_ROOT" -p < "$prompt_file" 2>&1 | tee "$claude_log" | sed 's/^/    /'; then
     claude_ok=0
   fi
 
