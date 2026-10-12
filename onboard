@@ -61,7 +61,7 @@ Ask these 5 questions one at a time. Use AskUserQuestion for each — never batc
 
 5. **Brand string.** "What brand string should `./draw` use as the chrome placeholder in titles, breadcrumbs, eyebrows, etc?" — propose `<Product> · <Surface>` (e.g., "Sage · ContentOS" or "Acme · Tasks"). Operator confirms or overrides.
 
-After all 5 are confirmed, write `design-system/project.json` at the bundle's repo root with this exact shape:
+After all 5 are confirmed, write `design-system/project.json` in the current working directory with this exact shape:
 
 ```json
 {

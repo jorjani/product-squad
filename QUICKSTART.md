@@ -29,7 +29,7 @@ Two paths. Pick one.
 /plugin install product-squad@product-squad
 ```
 
-Surfaces the bundle's skills as `/product-squad:<name>` in Claude Code's slash-command list — start with `/product-squad:getting-started`. No clone needed.
+Surfaces the bundle's skills as `/product-squad:<name>` in Claude Code's slash-command list — including `/product-squad:visualize`, `/product-squad:scope`, `/product-squad:onboard`; start with `/product-squad:getting-started`. No clone needed.
 
 **B. Clone and run** (the cold-start path; what the rest of this doc assumes — works today)
 
@@ -38,7 +38,7 @@ git clone https://github.com/jorjani/product-squad.git
 cd product-squad
 ```
 
-When CWD is the bundle, Claude Code auto-discovers `/visualize`, `/scope`, `/onboard` from `.claude/skills/`. These three are clone-only; the plugin install does not include them.
+When CWD is the bundle, Claude Code auto-discovers `/visualize`, `/scope`, `/onboard` from `.claude/skills/` — same commands as the plugin install, without the `product-squad:` namespace prefix.
 
 ## Demo 1 — Visual fidelity ladder (PRIMARY)
 

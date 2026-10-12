@@ -2,7 +2,7 @@
 
 An opinionated agentic operating system for one-person dev teams.
 
-> **v0.10.0 — 66 skills.** See [RELEASE-NOTES.md](RELEASE-NOTES.md) for what shipped.
+> **v0.10.0 — 69 skills.** See [RELEASE-NOTES.md](RELEASE-NOTES.md) for what shipped.
 
 ## Install
 
@@ -15,7 +15,7 @@ Two paths.
 /plugin install product-squad@product-squad
 ```
 
-Surfaces the bundle's skills as `/product-squad:<name>` (e.g. `/product-squad:getting-started`) in Claude Code without you cloning anything.
+Surfaces the bundle's skills as `/product-squad:<name>` (e.g. `/product-squad:visualize`, `/product-squad:getting-started`) in Claude Code without you cloning anything.
 
 **Clone and run**
 
