@@ -26,7 +26,7 @@ Two paths. Pick one.
 ```bash
 # Inside Claude Code:
 /plugin marketplace add jorjani/product-squad
-/plugin install product-squad@product-squad-marketplace
+/plugin install product-squad@product-squad
 ```
 
 Surfaces the bundle's skills as `/product-squad:<name>` in Claude Code's slash-command list — start with `/product-squad:getting-started`. No clone needed.
