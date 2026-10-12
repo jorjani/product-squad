@@ -7,7 +7,7 @@ name: product-squad
 description: Agentic operating system for one-person dev teams
 license: MIT
 status: pre-release
-public: false  # flips to true at V1 launch
+public: true
 
 # ─── V0.5 (what exists now — runnable bits) ───────────────────────────
 v0_5:
